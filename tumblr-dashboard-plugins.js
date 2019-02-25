@@ -254,9 +254,9 @@
                     }
                 });
 
-                //calls plug-in's functions
                 $.each(Object.keys(plugin), function(i,pluginId){
 
+                    //calls plug-in's functions
                     if ('functions' in plugin[pluginId]) {
                         $.each(Object.keys(plugin[pluginId].functions), function(i,funcId){
                             if (!('context' in plugin[pluginId].functions[funcId]) || plugin[pluginId].functions[funcId].context.every(function(i){return window.location.href.indexOf(i) > -1})){
