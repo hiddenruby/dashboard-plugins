@@ -31,9 +31,14 @@
                                     $('.dashboardPlugins-cfg .setting:not(:last)').remove();
                                     $('.dashboardPlugins-cfg .group_label').addClass('media-holder').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_editor_plus').attr('id','user_findPlugins'));
                                     $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder' + (Object.keys(plugin).length > 1 ? ' invis' : ''));
-                                    $('.dashboardPlugins-cfg .setting label').text(plugin.main.str.cfg.settings_group[lang].split('|')[1]);
+                                    $('.dashboardPlugins-cfg .setting label').text(plugin.main.str.cfg.settings_group[lang].split('|')[0]);
                                     $('.dashboardPlugins-cfg .setting .binary_switch').remove();
-                                    $('.dashboardPlugins-cfg .settings_subheading').text(plugin.main.str.cfg.settings_group[lang].split('|')[0]);
+                                    $('.dashboardPlugins-cfg .settings_subheading').text(plugin.main.str.general[lang].split('|')[0]);
+
+                                    $(document).on('click', '#user_findPlugins', function(){
+                                        window.location.href = '/dashboard/blog/dashboard-plugins';
+                                    });
+
                                 } else {
                                     $.each(Object.keys(plugin), function(index, id){
                                         if (id !== 'main') {
@@ -78,6 +83,21 @@
                             }, 1);
                         },
                     },
+
+                    adddesc: { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
+
+                        context: ['.com/settings'],
+                        func:
+
+                        function(){
+                            let adddesc = setInterval(function(){
+                                if ($('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text').length) {
+                                $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text').append(', ' + plugin.main.str.general[lang].split('|')[0].toLowerCase())
+                                    clearInterval(adddesc);
+                                }
+                            }, 1)
+                        }
+                    },
                 },
 
                 str: {
@@ -86,41 +106,41 @@
 
                         settings_group: {
 
-                            de: "Plugins|Niets geïnstalleerd|Voeg meer toe",
-                            fr: "x|x|Ajouter plus",
-                            it: "x|x|Aggiungere altro",
-                            ja: "x|x|さらに追加",
-                            tr: "x|x|Daha ekle",
-                            es: "x|x|Añadir más",
-                            ru: "x|x|Добавить больше",
-                            pl: "x|x|Dodaj więcej",
-                            pt: "x|x|Adicione mais",
-                            nl: "Plugins|Niets geïnstalleerd|Voeg meer toe",
-                            ko: "플러그인|x|더 추가하기",
-                            zh: "插件|x|添加更多",
-                            id: "Pengaya|x|Tambah lagi",
-                            hi: "प्लगइन्स|x|अधिक जोड़ें",
-                            en: "Plug-ins|Nothing installed|Add more",
+                            de: "Niets geïnstalleerd|Voeg meer toe",
+                            fr: "x|Ajouter plus",
+                            it: "x|Aggiungere altro",
+                            ja: "x|さらに追加",
+                            tr: "x|Daha ekle",
+                            es: "x|Añadir más",
+                            ru: "x|Добавить больше",
+                            pl: "x|Dodaj więcej",
+                            pt: "x|Adicione mais",
+                            nl: "Niets geïnstalleerd|Voeg meer toe",
+                            ko: "x|더 추가하기",
+                            zh: "x|添加更多",
+                            id: "x|Tambah lagi",
+                            hi: "x|अधिक जोड़ें",
+                            en: "Nothing installed|Add more",
                         },
                     },
 
                     general: {
 
-                        de: "x|x|x",
-                        fr: "x|x|x",
-                        it: "x|x|x",
-                        ja: "x|x|x",
-                        tr: "x|x|x",
-                        es: "x|x|x",
-                        ru: "x|x|x",
-                        pl: "x|x|x",
-                        pt: "x|x|x",
-                        nl: "x|x|x",
-                        ko: "x|x|x",
-                        zh: "x|x|x",
-                        id: "x|x|x",
-                        hi: "x|x|x",
-                        en: "What's this?|x|x",
+                        de: "Plugins|x",
+                        fr: "x|x",
+                        it: "x|x",
+                        ja: "x|x",
+                        tr: "x|x",
+                        es: "x|x",
+                        ru: "x|x",
+                        pl: "x|x",
+                        pt: "x|x",
+                        nl: "Plugins|x",
+                        ko: "플러그인|x",
+                        zh: "插件|x",
+                        id: "Pengaya|x",
+                        hi: "प्लगइन्स|x",
+                        en: "Plug-ins|What's this?",
                     },
                 },
 
@@ -133,6 +153,10 @@
                             `.flag--dashboardPlugins .invis {
                                 opacity: 0 !important;
                                 pointer-events: none !important;
+                            }
+
+                            .flag--dashboardPlugins .inline_notification {
+                                pointer-events: none;
                             }
 
                             .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg {
@@ -230,7 +254,7 @@
                     }
                 });
 
-                //call plug-in functions
+                //calls plug-in's functions
                 $.each(Object.keys(plugin), function(i,pluginId){
 
                     if ('functions' in plugin[pluginId]) {
@@ -242,7 +266,7 @@
                         });
                     };
 
-                    //attach plug-in stylesheets
+                    //attaches plug-in's stylesheets
                     if ('css' in plugin[pluginId]){
                         $.each(Object.keys(plugin[pluginId].css), function(i,cssId){
                             if ($('link[href*="' + plugin[pluginId].css[cssId].match + '"]').length
