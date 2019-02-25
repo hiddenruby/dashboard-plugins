@@ -26,25 +26,19 @@
 
                         function(){
                             let cfg = setInterval(function(){
-                                if (!$('.dashboardPlugins-cfg').length){
+                                if (!$('.dashboardPlugins-cfg').length){ //create plug-ins section
                                     $('.settings_group.interface').after($('.settings_group.interface').clone().removeClass('interface').addClass('dashboardPlugins-cfg editor'));
                                     $('.dashboardPlugins-cfg .setting:not(:last)').remove();
-                                    $('.dashboardPlugins-cfg .group_label').addClass('media-holder');
-                                    $('.dashboardPlugins-cfg .group_label').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_editor_plus invis').attr('id','user_findPlugins'));
-                                    $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder invis').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_editor_plus').attr('id','user_findPlugins'));
+                                    $('.dashboardPlugins-cfg .group_label').addClass('media-holder').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_editor_plus').attr('id','user_findPlugins'));
+                                    $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder' + (Object.keys(plugin).length > 1 ? ' invis' : ''));
                                     $('.dashboardPlugins-cfg .setting label').text(plugin.main.str.cfg.settings_group[lang].split('|')[1]);
                                     $('.dashboardPlugins-cfg .setting .binary_switch').remove();
                                     $('.dashboardPlugins-cfg .settings_subheading').text(plugin.main.str.cfg.settings_group[lang].split('|')[0]);
                                 } else {
-                                    if (Object.keys(plugin).length <= 1){
-                                        $('.dashboardPlugins-cfg .group_label .dashboardPlugins-btn').addClass('invis');
-                                        $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
-                                    }
                                     $.each(Object.keys(plugin), function(index, id){
                                         if (id !== 'main') {
-                                            $('.dashboardPlugins-cfg .group_label .dashboardPlugins-btn').removeClass('invis');
                                             if (!$('#user_enable_' + id).length && $('.dashboardPlugins-cfg.group_content').length !== plugin.length){
-                                                if('str' in plugin[id]){
+                                                if('str' in plugin[id]){ //populate plug-ins section
                                                     $('.dashboardPlugins-cfg .group_content').append( plugin[id].str[lang].indexOf('|') > -1 ? $('.interface .group_content > div p').closest('.checkbox').clone()
                                                                                                                                              : $('.interface .checkbox:last').clone());
                                                     $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_close').attr('id','user_uninstall_' + id));
@@ -60,14 +54,9 @@
                                                         setTimeout(function(){
                                                             $('#user_uninstall_' + id).closest('.setting').remove();
                                                             if (!$('.dashboardPlugins-cfg .checkbox').length){
-                                                                $('.dashboardPlugins-cfg .group_label .dashboardPlugins-btn').addClass('invis');
                                                                 $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
                                                             }
                                                         }, 300)
-                                                    });
-
-                                                    $(document).on('click', '#user_findPlugins', function(){
-                                                        window.location.href = '/dashboard/blog/dashboard-plugins';
                                                     });
 
                                                     $(document).on('click', '#user_enable_' + id, function(){
@@ -146,29 +135,18 @@
                                 pointer-events: none !important;
                             }
 
-                            .flag--dashboardPlugins .inline_notification {
-                                border: 2px solid #fff;
-                                margin: -2px;
-                                border-radius: 4px;
-                            }
-
-                            .flag--dashboardPlugins .inline_notification.pre_animation {
-                                pointer-events: none;
-                            }
-
-                            .flag--dashboardPlugins .dashboardPlugins-cfg {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg {
                                 min-height: 64px;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting {
-                                transform: scaleY(1);
-                                padding-right: 50px !important;
-                                margin-right: 0px !important;
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting {
+                                padding-right: 50px;
+                                margin-right: 0px;
                                 background: white;
                                 transition: .2s ease;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.placeholder {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.placeholder {
                                 height: 0px;
                                 margin: 0px;
                                 color: #999;
@@ -176,66 +154,61 @@
                                 padding-left: 0px;
                             }
 
-                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-                                transition-delay: .42s;
-                            }
-
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:last-of-type {
-                                margin-bottom: -20px;
-                                padding-bottom: 20px;
-                            }
-
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:not(:last-of-type) {
-                                padding-bottom: 10px;
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox {
                                 margin-bottom: 0px;
+                                padding-bottom: 10px;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox .help_text {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox .help_text {
                                 margin: 0 0 10px;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:last-of-type .help_text {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type {
+                                margin-bottom: -20px;
+                                padding-bottom: 19px;
+                            }
+
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type .help_text {
                                 margin: 0px;
                                 padding-bottom: 0px;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox.invis {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox.invis {
                                 transform: scale(0.7);
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .dashboardPlugins-btn {
-                                transition-delay: .05s;
-                            }
-
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting .dashboardPlugins-btn {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn {
                                 top: 0px;
                                 right: 53px;
-                            }
-
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .group_label .dashboardPlugins-btn {
-                                top: -2px;
-                                right: 31px;
+                                transition-delay: .05s;
                             }
 
                             .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
                                 font-size: 25px;
                                 background: none;
                                 color: #56bc8a;
+                                animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
+                                top: -2px;
+                                right: 27px;
+                                pointer-events: all;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg span.dashboardPlugins-btn.invis, .flag--dashboardPlugins .dashboardPlugins-cfg .invis dashboardPlugins-btn {
-                                transform: scale(0);
+                            @keyframes dashboardPlugins-btn-grow {
+                                100% {
+                                transform: scale(1);
+                                opacity: 1;
+                                }
                             }
 
-                            .flag--dashboardPlugins .flag--accessibility-design-update .dashboardPlugins-cfg .setting.placeholder .dashboardPlugins-btn, .flag--dashboardPlugins .flag--accessibility-design-update .dashboardPlugins-cfg .group_label .dashboardPlugins-btn {
+                            .flag--dashboardPlugins .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
                                 color: #00cf35;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
+                            .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
                                 left: -3px;
                             }
 
-                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn, .flag--dashboardPlugins .dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
+                            .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn.icon_close {
                                 transform: scale(1);
                                 opacity: 1;
                                 pointer-events: all;
@@ -250,12 +223,14 @@
 
                 $('html').addClass('flag--dashboardPlugins');
 
+                //load plug-ins from localstorage into objects
                 $.each(Object.keys(localStorage), function(i,id){
                     if (id.indexOf('dashboardPlugins-') > -1) {
                         plugin[id.split('-')[1]] = new Object(JSON.parse(localStorage.getItem(id)));
                     }
                 });
 
+                //call plug-in functions
                 $.each(Object.keys(plugin), function(i,pluginId){
 
                     if ('functions' in plugin[pluginId]) {
@@ -267,6 +242,7 @@
                         });
                     };
 
+                    //attach plug-in stylesheets
                     if ('css' in plugin[pluginId]){
                         $.each(Object.keys(plugin[pluginId].css), function(i,cssId){
                             if ($('link[href*="' + plugin[pluginId].css[cssId].match + '"]').length
