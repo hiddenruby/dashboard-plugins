@@ -258,25 +258,25 @@
 
                 $.each(Object.keys(plugin), function(i,pluginId){
 
-                        if ('functions' in plugin[pluginId]) {
-                            $.each(Object.keys(plugin[pluginId].functions), function(i,funcId){
-                                if (!('context' in plugin[pluginId].functions[funcId]) || plugin[pluginId].functions[funcId].context.every(function(i){return window.location.href.indexOf(i) > -1})){
-                                    plugin[pluginId].functions[funcId].func = eval('(' + plugin[pluginId].functions[funcId].func + ')');
-                                    plugin[pluginId].functions[funcId].func();
-                                }
-                            });
-                        };
+                    if ('functions' in plugin[pluginId]) {
+                        $.each(Object.keys(plugin[pluginId].functions), function(i,funcId){
+                            if (!('context' in plugin[pluginId].functions[funcId]) || plugin[pluginId].functions[funcId].context.every(function(i){return window.location.href.indexOf(i) > -1})){
+                                plugin[pluginId].functions[funcId].func = eval('(' + plugin[pluginId].functions[funcId].func + ')');
+                                plugin[pluginId].functions[funcId].func();
+                            }
+                        });
+                    };
 
-                        if ('css' in plugin[pluginId]){
-                            $.each(Object.keys(plugin[pluginId].css), function(i,cssId){
-                                if ($('link[href*="' + plugin[pluginId].css[cssId].match + '"]')
-                                    || ((!('match' in plugin[pluginId].css[cssId]) && !('context' in plugin[pluginId].css[cssId]))
-                                        || plugin[pluginId].css[cssId].context.every(function(i){return window.location.href.indexOf(i) > -1})
-                                        )
-                                    ){
-                                    $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-' + cssId}).text(plugin[pluginId].css[cssId].sheet))
-                                }
-                            })
-                        };
+                    if ('css' in plugin[pluginId]){
+                        $.each(Object.keys(plugin[pluginId].css), function(i,cssId){
+                            if ($('link[href*="' + plugin[pluginId].css[cssId].match + '"]').length
+                                || ((!('match' in plugin[pluginId].css[cssId]) && !('context' in plugin[pluginId].css[cssId]))
+                                    || (('context' in plugin[pluginId].css[cssId]) && plugin[pluginId].css[cssId].context.every(function(i){return window.location.href.indexOf(i) > -1}))
+                                    )
+                                ){
+                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-' + cssId}).text(plugin[pluginId].css[cssId].sheet))
+                            }
+                        })
+                    };
                 });
 })(jQuery)
