@@ -1,0 +1,28 @@
+{
+    "context": [
+      ".com/dashboard",
+      ".com/edit/",
+      ".com/reblog/"
+    ],
+    "pref": {
+      "toggle": true
+    },
+    "str": {
+      "de": "x|x",
+      "fr": "x|x",
+      "it": "x|x",
+      "ja": "x|x",
+      "tr": "x|x",
+      "es": "x|x",
+      "ru": "x|x",
+      "pl": "x|x",
+      "pt": "x|x",
+      "nl": "x|x",
+      "ko": "x|x",
+      "zh": "x|x",
+      "id": "x|x",
+      "hi": "x|x",
+      "en": "Dismiss suggested posts automatically|Suggested posts won't appear repeatedly after scrolling past them once."
+    },
+    "func": "function(){ if (plugin.dspa.pref.toggle && plugin.dspa.context){ $(window).scroll(function(){ if ($('.post_dismiss').length) { let top = $(window).scrollTop(), postBottom = $('.post_dismiss').parents().eq(5).offset().top + $('.post_dismiss').parents().eq(5).outerHeight() + 300; if (postBottom < top){ $('.post_dismiss').children().last()[0].click() }; if (!$('.post_dismiss').length) { postBottom = null; } } }) }}"
+  }
