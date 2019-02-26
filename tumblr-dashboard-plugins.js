@@ -210,7 +210,7 @@
                             .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
                                 font-size: 25px;
                                 background: none;
-                                color: #56bc8a;
+                                color: #00cf35;
                                 animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
                                 top: -2px;
                                 right: 27px;
@@ -222,10 +222,6 @@
                                 transform: scale(1);
                                 opacity: 1;
                                 }
-                            }
-
-                            .flag--dashboardPlugins .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-                                color: #00cf35;
                             }
 
                             .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
