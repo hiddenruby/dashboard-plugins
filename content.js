@@ -1,17 +1,6 @@
-// ==UserScript==
-// @name         Tumblr Dashboard Plug-ins
-// @version      0.1
-// @namespace    https://greasyfork.org/users/65414
-// @description  Additional options and features for Tumblr, including an Accessibility UI design toggle
-// @match        http://*.tumblr.com/*
-// @match        https://*.tumblr.com/*
-// @require      https://code.jquery.com/jquery-3.2.1.min.js
-// @run-at       document-start
-// ==/UserScript==
-
 (function($){
 
-    let version = GM_info.script.version, lang = $('html').attr('lang').split('-')[0],
+    let lang = $('html').attr('lang').split('-')[0],
 
         plugin = {
 
@@ -84,16 +73,39 @@
                         },
                     },
 
-                    adddesc: { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
+                    addDesc: { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
 
                         context: ['.com/settings'],
                         func:
 
                         function(){
-                            let adddesc = setInterval(function(){
+                            let addDesc = setInterval(function(){
                                 if ($('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text').length) {
                                 $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text').append(', ' + plugin.main.str.general[lang].split('|')[0].toLowerCase())
-                                    clearInterval(adddesc);
+                                    clearInterval(addDesc);
+                                }
+                            }, 1)
+                        }
+                    },
+
+                    sidebarNav: { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
+
+                        context: [
+                          ".com/dashboard",
+                          ".com/edit/",
+                          ".com/reblog/",
+                          ".com/blog/"
+                        ],
+
+                        func:
+
+                        function(){
+                            let sidebarNav = setInterval(function(){
+                                $('body').append($('<span>').addClass('jsonContainer'));
+                                $('jsonContainer').load("https://hiddenruby.github.io/dashboard-plugins/plugins/eaud/eaud.json");
+                                if ($('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').length) {
+                                    $('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').before($('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').clone());
+                                    clearInterval(sidebarNav);
                                 }
                             }, 1)
                         }
@@ -235,6 +247,20 @@
                                 transition-delay: 0s;
                             }`
                     },
+
+                    sidebarNav: {
+
+                        context: [
+                            ".com/dashboard",
+                            ".com/edit/",
+                            ".com/reblog/",
+                            ".com/blog/"
+                        ],
+                        sheet:
+                            `.jsonContainer {
+                                display:none;
+                            }`
+                    },
                 },
             },
         },
@@ -263,7 +289,9 @@
                     };
 
                     //attaches plug-in's stylesheets
-                    if ('css' in plugin[pluginId]){
+                    if ('css' in plugin[pluginId]){                      
+                        let addcss = setInterval(function(){
+                        if ($('head').length) {
                         $.each(Object.keys(plugin[pluginId].css), function(i,cssId){
                             if ($('link[href*="' + plugin[pluginId].css[cssId].match + '"]').length
                                 || ((!('match' in plugin[pluginId].css[cssId]) && !('context' in plugin[pluginId].css[cssId]))
@@ -273,6 +301,16 @@
                                 $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-' + cssId}).text(plugin[pluginId].css[cssId].sheet))
                             }
                         })
+                        clearInterval(addcss);
+                    }
+                    },1);
                     };
                 });
+         
+    chrome.runtime.onMessage.addListener(function(msg,sender,sendResponse){
+        if(msg.task==="settings"){
+            window.location.href = 'https://www.tumblr.com/settings/dashboard'
+        }
+    });
+            
 })(jQuery)
