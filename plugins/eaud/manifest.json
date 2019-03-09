@@ -61,24 +61,24 @@
             "css":      ["assets/styles/dashboard.css"]
         },
         {
-            "matches":  ["https://assets.tumblr.com/client/prod/app/matches/settings/index.build.css"],
-            "css":      ["client/prod/app/matches/settings/index.build.css"]
+            "matches":  ["https://assets.tumblr.com/client/prod/app/context/settings/index.build.css"],
+            "css":      ["client/prod/app/context/settings/index.build.css"]
         },
         {
             "matches":  ["https://assets.tumblr.com/assets/styles/settings/settings.css"],
             "css":      ["assets/styles/settings/settings.css"]
         },
         {
-            "matches":  ["https://assets.tumblr.com/client/prod/app/matches/dashboard/index.build.css"],
-            "css":      ["client/prod/app/matches/dashboard/index.build.css"]
+            "matches":  ["https://assets.tumblr.com/client/prod/app/context/dashboard/index.build.css"],
+            "css":      ["client/prod/app/context/dashboard/index.build.css"]
         },
         {
-            "matches":  ["https://assets.tumblr.com/client/prod/app/matches/search/index.build.css"],
-            "css":      ["client/prod/app/matches/search/index.build.css"]
+            "matches":  ["https://assets.tumblr.com/client/prod/app/context/search/index.build.css"],
+            "css":      ["client/prod/app/context/search/index.build.css"]
         },
         {
-            "matches":  ["https://assets.tumblr.com/client/prod/app/matches/discover/index.build.css"],
-            "css":      ["client/prod/app/matches/discover/index.build.css"]
+            "matches":  ["https://assets.tumblr.com/client/prod/app/context/discover/index.build.css"],
+            "css":      ["client/prod/app/context/discover/index.build.css"]
         },
         {
             "matches":  ["https://assets.tumblr.com/assets/styles/inbox.css"],
