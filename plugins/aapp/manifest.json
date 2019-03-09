@@ -1,0 +1,45 @@
+{
+    "version": "0.0.01",
+    "author": "Jo Ruby P",
+    "name":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Click album art to play audio posts"
+    },
+    "description":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Allows the album art of an dashboard audio post to act as a play/pause button."
+    },
+    "content_scripts": [
+        {
+            "matches":  ["*://www.tumblr.com/*"],
+            "js":       ["content.js"],
+            "css":      ["content.css"]
+        }
+    ]
+}

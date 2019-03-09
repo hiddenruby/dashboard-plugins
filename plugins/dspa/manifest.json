@@ -1,0 +1,44 @@
+{
+    "version": "0.0.01",
+    "author": "Jo Ruby P",
+    "name":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Dismiss Suggested Posts Automatically"
+    },
+    "description":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Suggested posts won't appear repeatedly after scrolling past them once."
+    },
+    "content_scripts": [
+        {
+            "matches":  ["*://www.tumblr.com/dashboard","*://www.tumblr.com/edit/*","*://www.tumblr.com/reblog/*","*://www.tumblr.com/blog/*"],
+            "js":       ["content.js"]
+        }
+    ]
+}

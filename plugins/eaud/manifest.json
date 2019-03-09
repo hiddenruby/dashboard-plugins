@@ -1,0 +1,100 @@
+{
+    "version": "0.0.01",
+    "author": "Jo Ruby P",
+    "default": false,
+    "use_description": false,
+    "name":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Accessibility UI Design Toggle"
+    },
+    "description":{
+        "de": "",
+        "fr": "",
+        "it": "",
+        "ja": "",
+        "tr": "",
+        "es": "",
+        "ru": "",
+        "pl": "",
+        "pt": "",
+        "nl": "",
+        "ko": "",
+        "zh": "",
+        "id": "",
+        "hi": "",
+        "en": "Disables the newer, high contrast, accesibility UI design by default, and adds a toggle to re-enable/disable it in your Dashboard settings page."
+    },
+    "content_scripts": [
+        {
+            "matches":  ["*://www.tumblr.com/*"],
+            "js":       ["content.js"],
+            "css":      ["tumblelog_assets.css"]
+        },    
+        {
+            "matches":  ["*://www.tumblr.com/settings/dashboard"],
+            "js":       ["toggle.js"],
+            "str":      ["settings.json"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/global.css"],
+            "css":      ["assets/styles/global.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/client/prod/app/global.build.css"],
+            "css":      ["client/prod/app/global.build.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/dashboard.css"],
+            "css":      ["assets/styles/dashboard.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/client/prod/app/matches/settings/index.build.css"],
+            "css":      ["client/prod/app/matches/settings/index.build.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/settings/settings.css"],
+            "css":      ["assets/styles/settings/settings.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/client/prod/app/matches/dashboard/index.build.css"],
+            "css":      ["client/prod/app/matches/dashboard/index.build.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/client/prod/app/matches/search/index.build.css"],
+            "css":      ["client/prod/app/matches/search/index.build.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/client/prod/app/matches/discover/index.build.css"],
+            "css":      ["client/prod/app/matches/discover/index.build.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/inbox.css"],
+            "css":      ["assets/styles/inbox.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/notifications.css"],
+            "css":      ["assets/styles/notifications.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/dashboard/notes_notifications.css"],
+            "css":      ["assets/styles/dashboard/notes_notifications.css"]
+        },
+        {
+            "matches":  ["*://assets.tumblr.com/assets/styles/theme_garden.css"],
+            "css":      ["assets/styles/theme_garden.css"]
+        }
+    ]
+}

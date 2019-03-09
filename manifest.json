@@ -3,24 +3,27 @@
     "name": "Dashboard Plug-ins",
     "description": "Additional options and features for Tumblr.",
     "homepage_url": "https://github.com/hiddenruby/dashboard-plugins",
-    "permissions": ["storage", "unlimitedStorage", "*://*.tumblr.com/*", "https://hiddenruby.github.io/dashboard-plugins/*"],
-    "version": "0.1",
-    "author": "Jo Ruby Pitt",
+    "permissions": ["tabs", "storage", "unlimitedStorage", "*://*.tumblr.com/*", "https://hiddenruby.github.io/dashboard-plugins/*"],
+    "version": "0.0.99",
+    "author": "Jo Ruby P",
     "browser_action": {
-        "default_icon": "/images/circle-plus.png",
+        "default_icon": "/images/circle-plus-filled.png",
         "default_title": "Dashboard Plug-ins"
     },
+    "options_ui": {
+        "open_in_tab": true,
+        "page": "/options.html"
+      },
     "background":{
-        "scripts":["background.js"]
+        "scripts":["background.js"],
+        "persistent": false
     },
     "content_scripts": [
         {
-        "matches": [
-        "*://*.tumblr.com/*"
-        ],
-        "js": ["jquery-3.2.1.min.js", "content.js"],
-        "run_at": "document_start",
-        "all_frames": true
+            "matches": ["*://*.tumblr.com/*"],
+            "js": ["jquery-3.3.1.min.js", "content.js"],
+            "run_at": "document_start",
+            "all_frames": true
         }
     ]
 }
