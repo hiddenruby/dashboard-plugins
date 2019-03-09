@@ -1,4 +1,4 @@
-.split .chrome.options::after,.option.selected::before{
+.chrome.options::after,.option.selected::before{
     font-family:'tumblr-icons', 'Blank';
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
@@ -247,28 +247,28 @@
     -ms-text-overflow:ellipsis 
 }
 .grab{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/openhand.cur"),move;
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/openhand.cur"),move;
     cursor:-webkit-grab;
     cursor:-moz-grab 
 }
 .is_ie .grab{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/openhand.cur"),move 
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/openhand.cur"),move 
 }
 .grabbing{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/closedhand.cur"),move;
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/closedhand.cur"),move;
     cursor:-webkit-grabbing;
     cursor:-moz-grabbing 
 }
 .is_ie .grabbing{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/closedhand.cur"),move 
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/closedhand.cur"),move 
 }
 body.grabbing *{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/closedhand.cur"),move !important;
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/closedhand.cur"),move !important;
     cursor:-webkit-grabbing !important;
     cursor:-moz-grabbing !important 
 }
 body.is_ie.grabbing *{
-    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/closedhand.cur"),move !important 
+    cursor:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/closedhand.cur"),move !important 
 }
 body.scrolling *{
     cursor:default !important 
@@ -303,7 +303,7 @@ body.scrolling *{
     right:0;
     bottom:0;
     left:0;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/transparent-pixel.png");
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/transparent-pixel.png");
     z-index:2147483645 
 }
 div.clear,br.clear{
@@ -491,7 +491,7 @@ pre.debug{
     height:5px;
     margin-left:7px;
     display:inline-block;
-    background:-400px -230px url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_master_sprite.png") no-repeat transparent 
+    background:-400px -230px url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_master_sprite.png") no-repeat transparent 
 }
 #nav .nav_item .nav_menu{
     position:absolute;
@@ -519,7 +519,7 @@ pre.debug{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     #nav .nav_item div .nav_item_menu_arrow{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_master_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_master_sprite_2x.png");
         background-size:972px 471px 
     }
 }
@@ -608,7 +608,7 @@ button.giant_blue_button::-moz-focus-inner{
     padding:0 
 }
 button.giant_blue_button .blue_button{
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/giant_blue_button_sprite.png") -30px 0;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/giant_blue_button_sprite.png") -30px 0;
     position:relative;
     min-width:0;
     white-space:nowrap;
@@ -621,14 +621,14 @@ button.giant_blue_button .blue_button{
     }
 }
 button.giant_blue_button .blue_button .blue_button_left{
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/giant_blue_button_sprite.png") 0 0;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/giant_blue_button_sprite.png") 0 0;
     position:absolute;
     top:0;
     left:-30px;
     padding:31px 15px 
 }
 button.giant_blue_button .blue_button .blue_button_right{
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/giant_blue_button_sprite.png") -960px 0;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/giant_blue_button_sprite.png") -960px 0;
     position:absolute;
     top:0;
     right:-30px;
@@ -966,7 +966,7 @@ a.chrome{
     vertical-align:middle;
     white-space:nowrap;
     font-size:0;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/platform_logo_sprite.png") 0 0 no-repeat 
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/platform_logo_sprite.png") 0 0 no-repeat 
 }
 .chrome>.icon.ios{
     background-position:-3px -3px 
@@ -1010,7 +1010,7 @@ a.chrome{
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/chrome_arrow_button_sprite.png") 0 0 no-repeat 
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/chrome_arrow_button_sprite.png") 0 0 no-repeat 
 }
 .chrome_arrow:after{
     content:'';
@@ -1019,7 +1019,7 @@ a.chrome{
     left:100%;
     bottom:0;
     width:18px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/chrome_arrow_button_sprite.png") right 0 no-repeat 
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/chrome_arrow_button_sprite.png") right 0 no-repeat 
 }
 .chrome_arrow:active{
     background-position:0 -50px 
@@ -1057,7 +1057,7 @@ a.chrome{
     padding:0px 15px;
     overflow:visible;
     border-radius:5px;
-    background:#87b500 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/big_button_bg.png") top repeat-x;
+    background:#87b500 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/big_button_bg.png") top repeat-x;
     border-width:0px;
     border-right:solid 1px #689300;
     border-bottom:solid 1px #689300;
@@ -1071,7 +1071,7 @@ a.chrome{
 .big_button.red{
     border-top:solid 1px #cc293c;
     border-left:solid 1px #cc293c;
-    background:#bc2133 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/big_red_button_bg.png") top repeat-x;
+    background:#bc2133 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/big_red_button_bg.png") top repeat-x;
     border-right:solid 1px #570710;
     border-bottom:solid 1px #570710;
     text-shadow:#a61727 1px 1px 
@@ -1129,7 +1129,7 @@ a.chrome{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     .chrome_arrow,.chrome_arrow:after{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/chrome_arrow_button_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/chrome_arrow_button_sprite_2x.png");
         background-size:354px 186px 
     }
 }
@@ -1199,7 +1199,7 @@ img#loading{
     color:#4F940F 
 }
 .blue_note{
-    background:#556a81 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/blue_note_fold.png") top right no-repeat;
+    background:#556a81 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/blue_note_fold.png") top right no-repeat;
     padding:15px;
     color:#eef2fa 
 }
@@ -1233,7 +1233,7 @@ img#loading{
     bottom:0;
     left:0;
     right:0;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/white_80.png") center repeat transparent;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/white_80.png") center repeat transparent;
     background:rgba(244,246,248,0.9);
     border-top:1px solid #fcfdfd;
     text-align:right;
@@ -1336,7 +1336,7 @@ img#loading{
 .menu li a .overflow_gradient{
     width:39px;
     height:25px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/standard/header/all_blogs_menu_sprite.png") top left;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/standard/header/all_blogs_menu_sprite.png") top left;
     background-position:0px -300px;
     position:absolute;
     left:151px;
@@ -1383,7 +1383,7 @@ img#loading{
     width:100%;
     height:2px;
     border-top:1px solid #b0bfcd;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/standard/header/all_blogs_menu_sprite.png");
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/standard/header/all_blogs_menu_sprite.png");
     background-position:0px -500px;
     position:absolute;
     top:0;
@@ -1418,7 +1418,7 @@ img#loading{
 .recessed_pane{
     margin:-30px 0 0 -30px;
     width:840px;
-    background:#fff url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/texture_recessed.png");
+    background:#fff url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/texture_recessed.png");
     box-shadow:0 0 15px rgba(0,0,0,0.4),0 0 15px rgba(0,0,0,0.25) inset,0 0 0 3px rgba(255,255,255,0.8) inset;
     padding:30px;
     display:block;
@@ -1729,7 +1729,7 @@ img#loading{
     text-align:left 
 }
 .sponsored_badge .sponsored_badge_icon .dollar_sign,.sponsored_badge .sponsored_badge_icon .ring{
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/sponsored_post_sprite_new.png") no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/sponsored_post_sprite_new.png") no-repeat;
     position:absolute;
     left:0;
     top:0;
@@ -1946,7 +1946,7 @@ img#loading{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     .sponsored_badge .sponsored_badge_icon .dollar_sign,.sponsored_badge .sponsored_badge_icon .ring{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/sponsored_post_sprite_new_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/sponsored_post_sprite_new_2x.png");
         background-size:184px 160px 
     }
 }
@@ -1957,7 +1957,7 @@ img#loading{
     border-radius:2px;
     vertical-align:-3px;
     margin:3px 5px 0 0;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/audio_results_icons.png") 0 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/audio_results_icons.png") 0 0 no-repeat;
     overflow:hidden;
     direction:ltr;
     text-indent:-9999px 
@@ -2115,14 +2115,14 @@ img#loading{
     transition-timing-function:ease 
 }
 .tab_post_type .post_type_icon{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite.png");
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite.png");
     opacity:1;
     transition-property:opacity, margin;
     transition-duration:0.12s, 0.12s;
     transition-timing-function:ease 
 }
 .flag--accessibility-design-update .tab_post_type .post_type_icon{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_bright.png") 
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_bright.png") 
 }
 .post_tab_switching.undimmed .tab_post_type span,.post_tab_switching.undimmed .tab_post_type .post_type_icon{
     opacity:1 
@@ -2176,7 +2176,7 @@ img#loading{
     opacity:1 
 }
 .tab_blog .blog_icon.private{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/tab_switching_lock.png") !important 
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tab_switching_lock.png") !important 
 }
 .tab_blog.tab_dashboard .tab_notice{
     display:none !important 
@@ -2235,11 +2235,11 @@ img#loading{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     .tab_post_type .post_type_icon{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_2x.png");
         background-size:200px 700px 
     }
     .flag--accessibility-design-update .tab_post_type .post_type_icon{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_bright_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_bright_2x.png");
         background-size:100px 700px 
     }
 }
@@ -2265,7 +2265,7 @@ img#loading{
     height:15px;
     width:15px;
     margin:-8px 0 0 -8px;
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_controls/dashboard_controls_sprite.png");
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_controls/dashboard_controls_sprite.png");
     background-position:0 -1900px;
     background-repeat:no-repeat;
     opacity:0.35 
@@ -2313,7 +2313,7 @@ img#loading{
     margin:-7px 0 0 0;
     height:14px;
     width:14px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -3px -3px no-repeat 
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -3px -3px no-repeat 
 }
 #language_switcher .popover_menu_item .language_switcher_spinner{
     margin-left:10px;
@@ -2335,11 +2335,11 @@ img#loading{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     #language_switcher .language_icon:before{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_controls/dashboard_controls_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_controls/dashboard_controls_sprite_2x.png");
         background-size:473px 2700px 
     }
     #language_switcher .popover_menu_item.current a:after{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite_2x.png");
         background-size:960px 400px 
     }
 }
@@ -3213,7 +3213,7 @@ body.scrollverlay_active{
 .post_form_wrapper.detached .arrow{
     width:12px;
     height:23px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_master_sprite.png") no-repeat -396px -247px transparent;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_master_sprite.png") no-repeat -396px -247px transparent;
     position:absolute;
     left:-11px;
     top:22px;
@@ -3521,7 +3521,7 @@ a.post_avatar_link.animating,.ask-form a.post_avatar_link{
     margin:-10px 0 0;
     overflow:hidden;
     text-indent:-999em;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/dashboard_master_sprite.png") -397px -94px no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/dashboard_master_sprite.png") -397px -94px no-repeat;
     opacity:0.31 
 }
 #reblog_as{
@@ -3545,7 +3545,7 @@ a.post_avatar_link.animating,.ask-form a.post_avatar_link{
     left:2px;
     height:20px;
     width:20px;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -480px 0 no-repeat 
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -480px 0 no-repeat 
 }
 .reblog_select[data-type="photo"]:before{
     background-position:-480px 0 
@@ -3598,7 +3598,7 @@ a.post_avatar_link.animating,.ask-form a.post_avatar_link{
     right:0;
     height:20px;
     width:20px;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -40px 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -40px 0 no-repeat;
     opacity:0.31;
     cursor:pointer 
 }
@@ -3609,7 +3609,7 @@ a.post_avatar_link.animating,.ask-form a.post_avatar_link{
     right:-6px;
     width:15px;
     height:15px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -845px 0 no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -845px 0 no-repeat;
     opacity:0 
 }
 .cog .badge.active{
@@ -3833,7 +3833,7 @@ html.ie9 #post_form .advanced_post_options .full_row{
     height:20px;
     top:7px;
     left:10px;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -80px 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -80px 0 no-repeat;
     opacity:0.31 
 }
 .tag_editor .tags{
@@ -4035,7 +4035,7 @@ textarea.preview{
     overflow:hidden;
     direction:ltr;
     text-indent:-9999px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/find_stuff/find_stuff_sprite.png") -20px 0 no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/find_stuff/find_stuff_sprite.png") -20px 0 no-repeat;
     opacity:0.25;
     cursor:pointer;
     z-index:1 
@@ -4207,7 +4207,7 @@ label.optional{
     height:20px;
     width:20px;
     cursor:pointer;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -120px 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -120px 0 no-repeat;
     opacity:0.31 
 }
 .share_btns .checked label{
@@ -4577,7 +4577,7 @@ label.optional{
     margin-left:-37px;
     width:74px;
     height:74px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/link_anim.gif") 0 0 no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/link_anim.gif") 0 0 no-repeat;
     opacity:0.14 
 }
 .link_button_container.loading .link_button{
@@ -4972,7 +4972,7 @@ label.optional{
 .photos .item .controls .icon,#webcam_container .item .controls .icon{
     padding:5px;
     background-origin:content-box;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") no-repeat;
     cursor:pointer;
     width:30px;
     height:30px;
@@ -5101,7 +5101,7 @@ label.optional{
 #audio_search .search_loader{
     display:none;
     position:absolute;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/loader_grey.gif") 0 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/loader_grey.gif") 0 0 no-repeat;
     height:16px;
     width:16px;
     right:20px;
@@ -5167,7 +5167,7 @@ label.optional{
     position:absolute;
     content:'';
     display:none;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/audio_results_icons.png") 0 0 no-repeat 
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/audio_results_icons.png") 0 0 no-repeat 
 }
 .audio_search_results .search_result:before{
     width:16px;
@@ -5451,7 +5451,7 @@ label.optional{
     padding-left:1px 
 }
 .dismiss_preview{
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -200px 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -200px 0 no-repeat;
     cursor:pointer;
     height:20px;
     margin-top:-10px;
@@ -5482,7 +5482,7 @@ label.optional{
     height:0 
 }
 .preview_player.soundcloud{
-    background:#000 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/audio_logo_soundcloud.png") 95% 50% no-repeat;
+    background:#000 url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/audio_logo_soundcloud.png") 95% 50% no-repeat;
     width:360px;
     height:27px 
 }
@@ -5575,7 +5575,7 @@ form[data-post-type="audio"] #audio_description{
 .upload_container #file_list .status_icon{
     content:'';
     display:none;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/small_green_check.png") 0 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/small_green_check.png") 0 0 no-repeat;
     width:16px;
     height:16px;
     vertical-align:middle;
@@ -5644,7 +5644,7 @@ form[data-post-type="audio"] #audio_description{
     animation:pulse 1s linear infinite alternate 
 }
 #file_list .iframe_progress{
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/loader_grey.gif") 0 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/loader_grey.gif") 0 0 no-repeat;
     height:16px;
     width:16px;
     display:inline-block;
@@ -5785,7 +5785,7 @@ form[data-post-type="audio"] #audio_description{
 }
 #audio_upload .drop_zone .help .audio_icon,#video_upload .drop_zone .help .video_icon,.photo_form .drop_zone .help .photo_icon{
     display:block;
-    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite.png") -760px 0 no-repeat;
+    background:transparent url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite.png") -760px 0 no-repeat;
     width:54px;
     height:48px;
     margin:0 auto 10px;
@@ -5869,15 +5869,15 @@ form[data-post-type="audio"] #audio_description{
     width:70px;
     height:66px;
     margin:0 auto 10px;
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/transcoding-icon.gif") center center no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/transcoding-icon.gif") center center no-repeat;
     background-size:cover;
     opacity:0.44 
 }
 .video_preview_container.unavailable .video_preview_loading .message:before,.video_preview_container.loaded .video_preview_loading .message:before{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/video-uploaded-check.png") 
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/video-uploaded-check.png") 
 }
 .video_preview_container.failed .video_preview_loading .message:before{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/transcoding-failed-icon.gif") 
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/transcoding-failed-icon.gif") 
 }
 .video_preview_container .cancel{
     top:0;
@@ -6044,7 +6044,7 @@ form[data-post-type="audio"] #audio_description{
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx){
     .option.selected:before,.reblog_select:before,.cog,.cog .badge,.tag_editor:before,.share_btns label,.photo_form .drop_zone .help .photo_icon,.photos .item .controls .icon,#webcam_container .item .controls .icon,.dismiss_preview,#audio_upload .drop_zone .help .audio_icon,#video_upload .drop_zone .help .video_icon{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/ajax_post_forms/ajax_post_forms_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/ajax_post_forms/ajax_post_forms_sprite_2x.png");
         background-size:960px 400px 
     }
     #post_form .editor_button{
@@ -6131,7 +6131,7 @@ body.flag--always-opaque-peepr.flag--accessibility-design-update .ui_peepr_glass
     animation-delay:0.5s 
 }
 .ui_peepr_arrows .previous_arrow,.ui_peepr_arrows .next_arrow{
-    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/search_sprite.png") no-repeat;
+    background:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/search_sprite.png") no-repeat;
     cursor:pointer;
     display:inline-block;
     height:50px;

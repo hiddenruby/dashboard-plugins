@@ -22026,10 +22026,10 @@ li:not(#new_post_buttons) .post-form .post-container [data-subview=reblogTree]~.
     height:100%;
     width:100%;
     z-index:2;
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite.png")
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite.png")
 }
 .flag--accessibility-design-update .tab-post-type .post-type-icon{
-    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_bright.png")
+    background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_bright.png")
 }
 .tab-post-type .post-type-name{
     text-decoration:none;
@@ -22065,11 +22065,11 @@ li:not(#new_post_buttons) .post-form .post-container [data-subview=reblogTree]~.
 }
 @media only screen and (-webkit-min-device-pixel-ratio:1.5),only screen and (min--moz-device-pixel-ratio:1.5),only screen and (min-resolution:1.5dppx),only screen and (min-resolution:144dpi){
     .tab-post-type .post-type-icon{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_2x.png");
         background-size:200px 700px
     }
     .flag--accessibility-design-update .tab-post-type .post-type-icon{
-        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/images/quick_compose_sprite_bright_2x.png");
+        background-image:url("https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/quick_compose_sprite_bright_2x.png");
         background-size:100px 700px
     }
 }
