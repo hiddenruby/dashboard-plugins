@@ -248,42 +248,50 @@
 
     init = 
     $('html').addClass('flag--dashboardPlugins');
-
+/*
     $.each(Object.keys(localStorage), function(i,id){ //load plug-ins into objects
         if (id.indexOf('dashboardPlugins-') > -1) {
             plugin[id.split('-')[1]] = new Object(JSON.parse(localStorage.getItem(id)));
         }
     });
+*/
 
-    $.each(Object.keys(plugin), function(i,pluginId){
-
-        if ('functions' in plugin[pluginId]) {
-            $.each(Object.keys(plugin[pluginId].functions), function(i,funcId){pluginFunc(pluginId,funcId)});
-        };
-
-        if ('css' in plugin[pluginId]){
-            let loadCSS = setInterval(function(){
-                if ($('head').length) {
-                    $.each(Object.keys(plugin[pluginId].css), function(i,cssId){pluginCSS(pluginId,cssId)})
-                    clearInterval(loadCSS);
+    $.getJSON('https://api.github.com/repos/jorubyp/dashboard-plugins/contents/plugins', function(data){
+        $.each(Object.keys(data), function(i){
+            let pluginId = data[i].name
+            $.getJSON('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/manifest.json', function(data){
+                plugin[pluginId] = new Object(data)
+                $.each(Object.keys(plugin[pluginId].content_scripts), function(i){
+                    
+                    let linkwait = setInterval(function(){
+        
+                        if ($('link').length) {
+                    console.log('matches' in plugin[pluginId].content_scripts[i],plugin[pluginId].content_scripts[i].matches.every(function(y){console.log(y)}));
+                    if ('matches' in plugin[pluginId].content_scripts[i] && plugin[pluginId].content_scripts[i].matches.some(function(y){return (window.location.href.indexOf(y) > -1 || $('link[href*="' + plugin[pluginId].content_scripts[i].matches[y] + '"]').length)})) {
+                        if ('js' in plugin[pluginId].content_scripts[i]) {
+                            $.each(Object.keys(plugin[pluginId].content_scripts[i].js), function(i,path){
+                                $('head').append($('<script>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + 'js'}).text($.get('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/js/' + path)))
+                            });
+                        };
+                        if ('css' in plugin[pluginId].content_scripts[i]) {
+                            $.each(Object.keys(plugin[pluginId].content_scripts[i].css), function(i,path){
+                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + 'css'}).text($.get('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/css/' + path)))
+                            });
+                        };
+                        if ('str' in plugin[pluginId].content_scripts[i]) {
+                            $.each(Object.keys(plugin[pluginId].content_scripts[i].str), function(i,path){
+                                $.getJSON('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/' + path, function(data){
+                                    plugin[pluginId].content_scripts.str[path.split('.json')[0]] = new Object(data)
+                                });
+                            });
+                        };
+                    };
+                    clearInterval(linkwait);
                 }
-            },1);
-        };
+                },1);
+                });
+            });
+        });
     });
-    
-    function pluginFunc(pluginId,funcId){ //calls plug-in from function
-        if (!('matches' in plugin[pluginId].functions[funcId]) || plugin[pluginId].functions[funcId].matches.some(function(i){return window.location.href.indexOf(i) > -1})){
-            plugin[pluginId].functions[funcId].func = eval('(' + plugin[pluginId].functions[funcId].func + ')');
-            plugin[pluginId].functions[funcId].func();
-        }
-    }
 
-    function pluginCSS(pluginId,cssId){ //appends stylesheet from plugin
-        if ($('link[href*="' + plugin[pluginId].css[cssId].replace + '"]').length
-            || ((!('replace' in plugin[pluginId].css[cssId]) && !('matches' in plugin[pluginId].css[cssId]))
-                || (('matches' in plugin[pluginId].css[cssId]) && plugin[pluginId].css[cssId].matches.some(function(i){return window.location.href.indexOf(i) > -1})))){
-                    $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-' + cssId}).text(plugin[pluginId].css[cssId].sheet))
-                }
-    };
-            
 })(jQuery)
