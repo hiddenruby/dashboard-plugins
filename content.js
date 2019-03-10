@@ -13,6 +13,7 @@
         installedPlugins = {};
 
     loadPlugins();
+    addFlag('html');
 
     window.addEventListener("keydown", function (event) {
         if (event.key == "i") {
@@ -103,12 +104,12 @@
             let pluginPath = 'plugins/' + pluginId + '/',
                 totalItems = 0,
                 itemsLoaded = 0,
-                expandTypes = ['css','msg'];
+                excludeTypes = ['matches','run_at'];
             $.getJSON(git_pagesURL + pluginPath + 'manifest.json', function(data){
                 let plugin = new Object(data);
                 $.each(Object.keys(plugin.content_scripts), function(index){
                     $.each(Object.keys(plugin.content_scripts[index]), function(contentType){
-                        if (expandTypes.includes(Object.keys(plugin.content_scripts[index])[contentType])) {
+                        if (!excludeTypes.includes(Object.keys(plugin.content_scripts[index])[contentType])) {
                             totalItems = totalItems + Object.values(plugin.content_scripts[index])[contentType].length;
                             $.each(Object.values(plugin.content_scripts[index])[contentType], function(i,path){
                                 $.get(git_pagesURL + pluginPath + Object.keys(plugin.content_scripts[index])[contentType] +'/' + path, function(data){
@@ -177,6 +178,7 @@
         }
         $.each(Object.values(initQueue), function(i,pluginId){
             console.log('initializing:',Object.values(initQueue));
+            addFlag('html',pluginId);
             let pluginPath = 'plugins/' + pluginId + '/';
             chrome.storage.local.get('plugins', function(data) {
                 let installedPlugins = data.plugins;
@@ -199,8 +201,8 @@
         initQueue = [];
     }
     function addFlag(target,flagId){
-        if ($(target).length) {
-            $(target).addClass('flag--dashboardPlugins' + flagId ? '-' + flagId : '');
+        if ($(target)) {
+            $(target).addClass('flag--dashboardPlugins' + (flagId ? '-' + flagId : ''));
         }
     }
 
