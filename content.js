@@ -1,297 +1,214 @@
 (function($){
 
-    let lang = $('html').attr('lang').split('-')[0],plugin = {
-        main: {functions: {
+    let git_username =  'jorubyp',
+        git_repo =      'dashboard-plugins'
+        git_apiURL =    'https://api.github.com/repos/' + git_username + '/' + git_repo + '/contents/',
+        git_rawURL =    'https://raw.githubusercontent.com/' + git_username + '/' + git_repo + '/master/',
+        git_pagesURL =  'https://' + git_username + '.github.io/' + git_repo + '/'
+        locale = $('html').attr('lang').split('-')[0],
+        remotePlugins = [],
+        buildQueue = [],
+        installQueue = {},
+        initQueue = [],
+        installedPlugins = {};
 
-            cfg: { //adds plug-in management section to dashboard settings page
-        
-                matches: ['.com/settings'],
-                func:
-        
-                function(){
-                    let cfg = setInterval(function(){
-        
-                        let descDash = $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text'),
-                            descDashStr = plugin.main.str.general[lang].split('|')[0].toLowerCase();
-                        if (descDash.length && descDash.text().indexOf(descDashStr) < 0) { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
-                            descDash.append(', ' + descDashStr)
-                        }
-        
-                        if ($('.settings_group.interface').length) { //create plug-ins section
-                            if (!$('.dashboardPlugins-cfg').length){
-                                $('.settings_group.interface').after($('.settings_group.interface').clone().removeClass('interface').addClass('dashboardPlugins-cfg editor'));
-                                $('.dashboardPlugins-cfg .setting:not(:last)').remove();
-                                $('.dashboardPlugins-cfg .group_label').addClass('media-holder').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_editor_plus').attr('id','user_findPlugins'));
-                                $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder' + (Object.keys(plugin).length > 1 ? ' invis' : ''));
-                                $('.dashboardPlugins-cfg .setting label').text(plugin.main.str.cfg.settings_group[lang].split('|')[0]);
-                                $('.dashboardPlugins-cfg .setting .binary_switch').remove();
-                                $('.dashboardPlugins-cfg .settings_subheading').text(plugin.main.str.general[lang].split('|')[0]);
-        
-                                $(document).on('click', '#user_findPlugins', function(){
-                                    window.location.href = '/dashboard/blog/dashboard-plugins';
-                                });
-        
-                            } else {
-                                $.each(Object.keys(plugin), function(index, id){
-                                    if (id !== 'main') {
-                                        if (!$('#user_enable_' + id).length && $('.dashboardPlugins-cfg.group_content').length !== plugin.length){
-                                            if('str' in plugin[id]){ //populate plug-ins section
-                                                $('.dashboardPlugins-cfg .group_content').append( plugin[id].str[lang].indexOf('|') > -1 ? $('.interface .group_content > div p').closest('.checkbox').clone()
-                                                                                                                                        : $('.interface .checkbox:last').clone());
-                                                $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder').append($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_close').attr('id','user_uninstall_' + id));
-                                                $('.dashboardPlugins-cfg .checkbox:last label:last').attr('for', 'user_enable_' + id).text( plugin[id].str[lang].split('|')[0] );
-                                                if ($('.dashboardPlugins-cfg .checkbox:last p').length) {
-                                                    $('.dashboardPlugins-cfg .checkbox:last p').text( plugin[id].str[lang].split('|')[1])
-                                                };
-                                                $('.dashboardPlugins-cfg .checkbox:last input').prop('checked', plugin[id].pref.toggle).attr({id: 'user_enable_' + id, name: 'user[enable_' + id + ']'}).removeAttr('value');
-        
-                                                $(document).on('click', '#user_uninstall_' + id, function(){
-                                                    localStorage.removeItem('dashboardPlugins-' + id);
-                                                    $('#user_uninstall_' + id).closest('.setting').addClass('invis');
-                                                    setTimeout(function(){
-                                                        $('#user_uninstall_' + id).closest('.setting').remove();
-                                                        if (!$('.dashboardPlugins-cfg .checkbox').length){
-                                                            $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
-                                                        }
-                                                    }, 300)
-                                                });
-        
-                                                $(document).on('click', '#user_enable_' + id, function(){
-                                                    plugin[id].pref.toggle = !plugin[id].pref.toggle;
-                                                    localStorage.setItem('dashboardPlugins-' + id, JSON.stringify(plugin[id], function(key, value) {
-                                                        return (typeof value === 'function' ? value.toString() : value );
-                                                    }));
-                                                    if ('func' in plugin[id]) {
-                                                        plugin[id].func(plugin[id].pref.toggle)
-                                                    }
-                                                })
-                                            }
-                                        } else {
-                                            clearInterval(cfg);
-                                        }
-                                    }
-                                })
-                            }
-                    }
-                    }, 1);
-                },
-            },
-        
-            update: { //checks for and performs plugin updates
-        
-                func:
-        
-                function(){                            
-                    let sidebarNav = setInterval(function(){
-                        if ($('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').length) {
-                            //$.ajax("https://hiddenruby.github.io/dashboard-plugins/plugins/eaud/eaud.json",{success: function(response) {console.log(response); $('html').innerHTML = response;}});
-                            console.log(3);
-                            $('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').before($('.pinned_sidebar_footer .sidebar_nav_item#popover_legal').clone());
-                            clearInterval(sidebarNav);
-                        }
-                    }, 1)
-                }
-            },
-        },
-        
-        str: {
-        
-            cfg: {
-        
-                settings_group: {
-        
-                    de: "Niets geïnstalleerd|Voeg meer toe",
-                    fr: "x|Ajouter plus",
-                    it: "x|Aggiungere altro",
-                    ja: "x|さらに追加",
-                    tr: "x|Daha ekle",
-                    es: "x|Añadir más",
-                    ru: "x|Добавить больше",
-                    pl: "x|Dodaj więcej",
-                    pt: "x|Adicione mais",
-                    nl: "Niets geïnstalleerd|Voeg meer toe",
-                    ko: "x|더 추가하기",
-                    zh: "x|添加更多",
-                    id: "x|Tambah lagi",
-                    hi: "x|अधिक जोड़ें",
-                    en: "Nothing installed|Add more",
-                },
-            },
-        
-            general: {
-        
-                de: "Plugins|x",
-                fr: "x|x",
-                it: "x|x",
-                ja: "x|x",
-                tr: "x|x",
-                es: "x|x",
-                ru: "x|x",
-                pl: "x|x",
-                pt: "x|x",
-                nl: "Plugins|x",
-                ko: "플러그인|x",
-                zh: "插件|x",
-                id: "Pengaya|x",
-                hi: "प्लगइन्स|x",
-                en: "Plug-ins|What's this?",
-            },
-        },
-        
-        css: {
-        
-            cfg: {
-        
-                matches: ['.com/settings/dashboard'],
-                sheet:
-                    `.flag--dashboardPlugins .invis {
-                        opacity: 0 !important;
-                        pointer-events: none !important;
-                    }
-        
-                    .flag--dashboardPlugins .inline_notification {
-                        pointer-events: none;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg {
-                        min-height: 64px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting {
-                        padding-right: 50px;
-                        margin-right: 0px;
-                        background: white;
-                        transition: .2s ease;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.placeholder {
-                        height: 0px;
-                        margin: 0px;
-                        color: #999;
-                        transition-delay: .4s;
-                        padding-left: 0px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox {
-                        margin-bottom: 0px;
-                        padding-bottom: 10px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox .help_text {
-                        margin: 0 0 10px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type {
-                        margin-bottom: -20px;
-                        padding-bottom: 19px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type .help_text {
-                        margin: 0px;
-                        padding-bottom: 0px;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox.invis {
-                        transform: scale(0.7);
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn {
-                        top: 0px;
-                        right: 53px;
-                        transition-delay: .05s;
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-                        font-size: 25px;
-                        background: none;
-                        color: #00cf35;
-                        animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
-                        top: -2px;
-                        right: 27px;
-                        pointer-events: all;
-                    }
-        
-                    @keyframes dashboardPlugins-btn-grow {
-                        100% {
-                        transform: scale(1);
-                        opacity: 1;
-                        }
-                    }
-        
-                    .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
-                        left: -3px;
-                    }
-        
-                    .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn.icon_close {
-                        transform: scale(1);
-                        opacity: 1;
-                        pointer-events: all;
-                        transition-delay: 0s;
-                    }`
-            },
-        
-            sidebarNav: {
-        
-                matches: [
-                    ".com/dashboard",
-                    ".com/edit/",
-                    ".com/reblog/",
-                    ".com/blog/"
-                ],
-                sheet:
-                    `.jsonContainer {
-                        display:none;
-                    }`
-            },
-        },}
-    },
+    loadPlugins();
 
-    init = 
-    $('html').addClass('flag--dashboardPlugins');
-/*
-    $.each(Object.keys(localStorage), function(i,id){ //load plug-ins into objects
-        if (id.indexOf('dashboardPlugins-') > -1) {
-            plugin[id.split('-')[1]] = new Object(JSON.parse(localStorage.getItem(id)));
+    window.addEventListener("keydown", function (event) {
+        if (event.key == "i") {
+            $.getJSON(git_apiURL + 'plugins', function(data){ //fetch remote plugins list
+                $.each(Object.keys(data), function(i){
+                    remotePlugins.push(data[i].name);
+                })
+                updateStorage('sync');
+            });
         }
     });
-*/
 
-    $.getJSON('https://api.github.com/repos/jorubyp/dashboard-plugins/contents/plugins', function(data){
-        $.each(Object.keys(data), function(i){
-            let pluginId = data[i].name
-            $.getJSON('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/manifest.json', function(data){
-                plugin[pluginId] = new Object(data)
-                $.each(Object.keys(plugin[pluginId].content_scripts), function(i){
-                    
-                    let linkwait = setInterval(function(){
-        
-                        if ($('link').length) {
-                    console.log('matches' in plugin[pluginId].content_scripts[i],plugin[pluginId].content_scripts[i].matches.every(function(y){console.log(y)}));
-                    if ('matches' in plugin[pluginId].content_scripts[i] && plugin[pluginId].content_scripts[i].matches.some(function(y){return (window.location.href.indexOf(y) > -1 || $('link[href*="' + plugin[pluginId].content_scripts[i].matches[y] + '"]').length)})) {
-                        if ('js' in plugin[pluginId].content_scripts[i]) {
-                            $.each(Object.keys(plugin[pluginId].content_scripts[i].js), function(i,path){
-                                $('head').append($('<script>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + 'js'}).text($.get('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/js/' + path)))
-                            });
-                        };
-                        if ('css' in plugin[pluginId].content_scripts[i]) {
-                            $.each(Object.keys(plugin[pluginId].content_scripts[i].css), function(i,path){
-                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + 'css'}).text($.get('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/css/' + path)))
-                            });
-                        };
-                        if ('str' in plugin[pluginId].content_scripts[i]) {
-                            $.each(Object.keys(plugin[pluginId].content_scripts[i].str), function(i,path){
-                                $.getJSON('https://raw.githubusercontent.com/jorubyp/dashboard-plugins/master/plugins/' + pluginId + '/' + path, function(data){
-                                    plugin[pluginId].content_scripts.str[path.split('.json')[0]] = new Object(data)
-                                });
-                            });
-                        };
-                    };
-                    clearInterval(linkwait);
+    function updateStorage(type) {
+        switch(type) {
+            case 'sync':
+            let syncQueue = remotePlugins;
+            chrome.storage.sync.get('plugins', function(data) {
+                if (!syncQueue.length) {
+                    return;
                 }
-                },1);
+                if (!data.plugins) {
+                    data.plugins = []
+                }
+                $.each(Object.keys(syncQueue), function(i){
+                    if (data.plugins[syncQueue[i]]) {
+                        syncQueue.splice(syncQueue[i],syncQueue[0])
+                    }
+                });
+                data.plugins = [].concat(data.plugins || [], syncQueue);
+                syncQueue = [];
+                chrome.storage.sync.set(data);
+                loadPlugins();
+            });
+            break;
+            case 'local':
+            chrome.storage.local.get('plugins', function(data) {
+                if (!Object.keys(installQueue).length) {
+                    return;
+                }
+                if (!data.plugins) {
+                    data.plugins = {}
+                }
+                $.each(Object.keys(installQueue), function(i){
+                    if (data.plugins[installQueue[i]]) {
+                        installQueue.splice(installQueue[i],installQueue[0])
+                    }
+                });
+                data.plugins = Object.assign(data.plugins, installQueue);
+                installQueue = {};
+                chrome.storage.local.set(data);
+                $.each(Object.keys(data.plugins), function(i,pluginId){
+                    initQueue.push(pluginId)
+                    initPlugins();
                 });
             });
+            break;
+        }
+    }
+
+    function loadPlugins(){
+        chrome.storage.sync.get('plugins', function(syncData) {
+            let userPlugins = syncData.plugins;
+            if (userPlugins){
+                $.each(Object.values(userPlugins), function(i,pluginId){
+                    chrome.storage.local.get('plugins', function(localData) {
+                        if (!localData.plugins) { localData.plugins = {} }
+                        let installedPlugins = localData.plugins;
+                        if (!installedPlugins[pluginId]) {
+                        //if (!Object.keys(localStorage).includes('dashboardPlugins-' + pluginId)){
+                            buildQueue.push(pluginId);
+                            updatePlugins();
+                        } else {
+                            initQueue.push(pluginId);
+                            initPlugins();
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    function updatePlugins(){
+        if (!buildQueue.length) {
+            return;
+        }
+        $.each(Object.values(buildQueue), function(i,pluginId){
+            console.log('installing:',buildQueue);
+            let pluginPath = 'plugins/' + pluginId + '/',
+                totalItems = 0,
+                itemsLoaded = 0,
+                expandTypes = ['css','msg'];
+            $.getJSON(git_pagesURL + pluginPath + 'manifest.json', function(data){
+                let plugin = new Object(data);
+                $.each(Object.keys(plugin.content_scripts), function(index){
+                    $.each(Object.keys(plugin.content_scripts[index]), function(contentType){
+                        if (expandTypes.includes(Object.keys(plugin.content_scripts[index])[contentType])) {
+                            totalItems = totalItems + Object.values(plugin.content_scripts[index])[contentType].length;
+                            $.each(Object.values(plugin.content_scripts[index])[contentType], function(i,path){
+                                $.get(git_pagesURL + pluginPath + Object.keys(plugin.content_scripts[index])[contentType] +'/' + path, function(data){
+                                    switch(Object.keys(plugin.content_scripts[index])[contentType]) {
+                                        case 'css':
+                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
+                                        break;
+                                        case 'msg':
+                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
+                                        break;
+                                    }
+                                    if (!itemsLoaded) { console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
+                                    itemsLoaded++;          
+                                    console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%');
+                                    if (itemsLoaded == totalItems) {
+                                        //localStorage.setItem('dashboardPlugins-' + pluginId, JSON.stringify(plugin));
+                                        Object.assign(installQueue,{[pluginId]:plugin});
+                                        updateStorage('local');
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+            });
+        });     
+        buildQueue = [];
+    }
+
+    /*
+    $.each(Object.keys(localStorage), function(i,id){ //load plug-ins into objects
+        if (id.indexOf('dashboardPlugins-') > -1) {
+            installedPlugins[id.split('-')[1]] = new Object(JSON.parse(localStorage.getItem(id)));
+        }
+    });
+    $.each(Object.keys(installedPlugins), function(i,pluginId){
+        console.log(installedPlugins[pluginId]);
+        let pluginPath = 'plugins/' + pluginId + '/';
+        $.each(Object.keys(installedPlugins[pluginId].content_scripts), function(index){
+            console.log(installedPlugins[pluginId].content_scripts[index]);
+            if ('matches' in installedPlugins[pluginId].content_scripts[index] && installedPlugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
+                if ('css' in installedPlugins[pluginId].content_scripts[index]) {
+                    let addcss = setInterval(function(){
+                        if ($('head').length) {
+                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].css), function(i){
+                                console.log(Object.keys(installedPlugins[pluginId].content_scripts[index]).length)
+                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-css'}).text(installedPlugins[pluginId].content_scripts[index].css[i]))
+                            });
+                            clearInterval(addcss);
+                        }
+                    },1);
+                };
+                if ('js' in installedPlugins[pluginId].content_scripts[index]) {
+                    $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].js), function(i){
+                        $('head').append($('<script>').attr({async:'', src: git_pagesURL + pluginPath + 'js/' + installedPlugins[pluginId].content_scripts[index].js[i], class: 'dashboardPlugins-' + pluginId + '-js'}))
+                    });
+                };
+            };
         });
     });
 
+    */
+    function initPlugins(){
+        if (!initQueue.length) {
+            return;
+        }
+        $.each(Object.values(initQueue), function(i,pluginId){
+            console.log('initializing:',Object.values(initQueue));
+            let pluginPath = 'plugins/' + pluginId + '/';
+            chrome.storage.local.get('plugins', function(data) {
+                let installedPlugins = data.plugins;
+                $.each(Object.keys(installedPlugins[pluginId].content_scripts), function(index){
+                    if ('matches' in installedPlugins[pluginId].content_scripts[index] && installedPlugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
+                        if ('css' in installedPlugins[pluginId].content_scripts[index]) {
+                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].css), function(i){
+                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-css'}).text(installedPlugins[pluginId].content_scripts[index].css[i]))
+                            });
+                        };
+                        if ('js' in installedPlugins[pluginId].content_scripts[index]) {
+                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].js), function(i){
+                                $('head').append($('<script>').attr({async:'', src: git_pagesURL + pluginPath + 'js/' + installedPlugins[pluginId].content_scripts[index].js[i], class: 'dashboardPlugins-' + pluginId + '-js'}))
+                            });
+                        };
+                    };
+                });
+            });
+        });     
+        initQueue = [];
+    }
+    function addFlag(target,flagId){
+        if ($(target).length) {
+            $(target).addClass('flag--dashboardPlugins' + flagId ? '-' + flagId : '');
+        }
+    }
+
+    function msg(pluginId,msgId){
+        if (!msgId){
+            console.log('msg: not enough arguments')
+            return
+        }
+        return plugin[pluginId].msg[msgId].message[locale]
+    }
 })(jQuery)
