@@ -24,6 +24,16 @@
             "js": ["jquery-3.3.1.min.js", "content.js"],
             "run_at": "document_start",
             "all_frames": true
+        },
+        {
+            "matches": ["*://www.tumblr.com/settings*"],
+            "js": ["cfg.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://www.tumblr.com/settings/dashboard"],
+            "css": ["cfg.css"],
+            "run_at": "document_start"
         }
     ]
 }
