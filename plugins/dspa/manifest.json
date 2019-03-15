@@ -1,5 +1,5 @@
 {
-    "version": "0.0.01",
+    "version": "0.01",
     "author": "Jo Ruby P",
     "name":{
         "de": "",
@@ -39,7 +39,7 @@
         {
             "matches":  ["https://www.tumblr.com/dashboard","https://www.tumblr.com/edit/","https://www.tumblr.com/reblog/","https://www.tumblr.com/blog/"],
             "js":       ["content.js"],
-            "run_at": "document_start"
+            "run_at":   "document_start"
         }
     ]
 }
