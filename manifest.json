@@ -4,7 +4,7 @@
     "description": "Additional options and features for Tumblr.",
     "homepage_url": "https://github.com/hiddenruby/dashboard-plugins",
     "permissions": ["tabs", "storage", "unlimitedStorage", "*://*.tumblr.com/*", "https://hiddenruby.github.io/dashboard-plugins/*"],
-    "version": "0.0.99",
+    "version": "0.0.01",
     "author": "Jo Ruby P",
     "browser_action": {
         "default_icon": "/images/circle-plus-filled.png",

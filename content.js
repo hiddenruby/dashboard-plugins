@@ -3,33 +3,121 @@
     let git_username =  'jorubyp',
         git_repo =      'dashboard-plugins'
         git_apiURL =    'https://api.github.com/repos/' + git_username + '/' + git_repo + '/contents/',
-        git_rawURL =    'https://raw.githubusercontent.com/' + git_username + '/' + git_repo + '/master/',
-        git_pagesURL =  'https://' + git_username + '.github.io/' + git_repo + '/'
-        locale = $('html').attr('lang').split('-')[0],
-        remotePlugins = [],
-        buildQueue = [],
-        installQueue = {},
-        initQueue = [],
-        installedPlugins = {};
+        git_envURL =    'https://' + git_username + '.github.io/' + git_repo + '/'
+        locale =        $('html').attr('lang').split('-')[0],
+        remotePlugins = [], buildQueue = [], installQueue = {}, initQueue = {};
 
-    loadPlugins();
+    queryPlugins();
     addFlag('html');
 
-    window.addEventListener("keydown", function (event) {
-        if (event.key == "i") {
-            $.getJSON(git_apiURL + 'plugins', function(data){ //fetch remote plugins list
-                $.each(Object.keys(data), function(i){
-                    remotePlugins.push(data[i].name);
-                })
-                updateStorage('sync');
-            });
+    function queryPlugins(){
+        chrome.storage.sync.get('plugins', function(syncData) {
+            if (syncData.plugins){
+                $.each(Object.values(syncData.plugins), function(i,pluginId){
+                    chrome.storage.local.get('plugins', function(localData) {
+                        if (!localData.plugins) {
+                            localData.plugins = {}
+                        }
+                        if (!localData.plugins[pluginId]) { //the plugin was not found in storage.local, so we need to build it
+                            buildQueue.push(pluginId);
+                            buildPlugins();
+                        } else { //the plugin is already installed and can be added to the init queue
+                            Object.assign(initQueue,{[pluginId]:localData.plugins[pluginId]});
+                            initPlugins();
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    function initPlugins(){ //attaches the content scripts of plugins in the queue to the document
+        if (!Object.keys(initQueue).length) {
+            return;
         }
-    });
+        $.each(Object.keys(initQueue), function(i,pluginId){
+            console.log('initializing:',pluginId);
+            let pluginPath = 'plugins/' + pluginId + '/';
+            $.each(Object.keys(initQueue[pluginId].content_scripts), function(index){
+                if ('matches' in initQueue[pluginId].content_scripts[index] && initQueue[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
+                    if ('css' in initQueue[pluginId].content_scripts[index]) {
+                        $.each(Object.keys(initQueue[pluginId].content_scripts[index].css), function(i){
+                            $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-css'}).text(initQueue[pluginId].content_scripts[index].css[i]))
+                        });
+                    };
+                    if ('js' in initQueue[pluginId].content_scripts[index]) {
+                        $.each(Object.keys(initQueue[pluginId].content_scripts[index].js), function(i){
+                            $('head').append($('<script>').attr({src: git_envURL + pluginPath + 'js/' + initQueue[pluginId].content_scripts[index].js[i], class: 'dashboardPlugins-' + pluginId + '-js'}))
+                        });
+                    };
+                };
+            });
+            addFlag('html',pluginId);
+        });     
+        initQueue = {};
+    }
+
+    function addFlag(target,flagId){
+        target = target ? target : 'html';
+        flagId = 'flag--dashboardPlugins' + (flagId ? '-' + flagId : '');
+        let tryFlag = setInterval(function(){
+            if ($(target)) {
+                $(target).addClass(flagId);
+                clearInterval(tryFlag);
+            } 
+        },1)
+        setTimeout(function(){
+            clearInterval(tryFlag);
+            console.log(flagId,(!$(target + '.' + flagId).length ? 'timed out' : 'added to ' + target));
+        },2000)
+    }
+
+    function buildPlugins(){ //store the manifests of the plugins in the build queue in objects, expanding css and msg content scripts
+        if (!buildQueue.length) {
+            return;
+        }
+        $.each(Object.values(buildQueue), function(i,pluginId){
+            console.log('installing:',buildQueue);
+            let pluginPath = 'plugins/' + pluginId + '/',
+                excludeTypes = ['matches','run_at'];
+                totalItems = 0, itemsLoaded = 0;
+            $.getJSON(git_envURL + pluginPath + 'manifest.json', function(data){
+                let plugin = new Object(data);
+                $.each(Object.keys(plugin.content_scripts), function(index){
+                    $.each(Object.keys(plugin.content_scripts[index]), function(contentType){
+                        if (!excludeTypes.includes(Object.keys(plugin.content_scripts[index])[contentType])) {
+                            totalItems = totalItems + Object.values(plugin.content_scripts[index])[contentType].length;
+                            $.each(Object.values(plugin.content_scripts[index])[contentType], function(i,path){
+                                $.get(git_envURL + pluginPath + Object.keys(plugin.content_scripts[index])[contentType] +'/' + path, function(data){
+                                    switch(Object.keys(plugin.content_scripts[index])[contentType]) {
+                                        case 'css':
+                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
+                                        break;
+                                        case 'msg':
+                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
+                                        break;
+                                    }
+                                    if (!itemsLoaded) { console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
+                                    itemsLoaded++;          
+                                    console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%');
+                                    if (itemsLoaded == totalItems) {
+                                        Object.assign(installQueue,{[pluginId]:plugin}); //sends the expanded plugin manifest as an object to the queue of plugins to be saved to storage.local
+                                        updateStorage('local');
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+            });
+        });     
+        buildQueue = [];
+    }
 
     function updateStorage(type) {
         switch(type) {
-            case 'sync':
-            let syncQueue = remotePlugins;
+            case 'sync': //names of plugin to be installed by user are saved to storage.sync
+            let syncQueue = remotePlugins; //for now just save all plugins in the repo
             chrome.storage.sync.get('plugins', function(data) {
                 if (!syncQueue.length) {
                     return;
@@ -45,10 +133,10 @@
                 data.plugins = [].concat(data.plugins || [], syncQueue);
                 syncQueue = [];
                 chrome.storage.sync.set(data);
-                loadPlugins();
+                queryPlugins();
             });
             break;
-            case 'local':
+            case 'local': //expanded manifest files are saved to storage.local
             chrome.storage.local.get('plugins', function(data) {
                 if (!Object.keys(installQueue).length) {
                     return;
@@ -56,161 +144,27 @@
                 if (!data.plugins) {
                     data.plugins = {}
                 }
-                $.each(Object.keys(installQueue), function(i){
-                    if (data.plugins[installQueue[i]]) {
-                        installQueue.splice(installQueue[i],installQueue[0])
-                    }
-                });
                 data.plugins = Object.assign(data.plugins, installQueue);
                 installQueue = {};
                 chrome.storage.local.set(data);
-                $.each(Object.keys(data.plugins), function(i,pluginId){
-                    initQueue.push(pluginId)
-                    initPlugins();
-                });
+                queryPlugins();
             });
             break;
         }
     }
 
-    function loadPlugins(){
-        chrome.storage.sync.get('plugins', function(syncData) {
-            let userPlugins = syncData.plugins;
-            if (userPlugins){
-                $.each(Object.values(userPlugins), function(i,pluginId){
-                    chrome.storage.local.get('plugins', function(localData) {
-                        if (!localData.plugins) { localData.plugins = {} }
-                        let installedPlugins = localData.plugins;
-                        if (!installedPlugins[pluginId]) {
-                        //if (!Object.keys(localStorage).includes('dashboardPlugins-' + pluginId)){
-                            buildQueue.push(pluginId);
-                            updatePlugins();
-                        } else {
-                            initQueue.push(pluginId);
-                            initPlugins();
-                        }
-                    });
-                });
-            }
-        });
-    }
+// temp
 
-    function updatePlugins(){
-        if (!buildQueue.length) {
-            return;
-        }
-        $.each(Object.values(buildQueue), function(i,pluginId){
-            console.log('installing:',buildQueue);
-            let pluginPath = 'plugins/' + pluginId + '/',
-                totalItems = 0,
-                itemsLoaded = 0,
-                excludeTypes = ['matches','run_at'];
-            $.getJSON(git_pagesURL + pluginPath + 'manifest.json', function(data){
-                let plugin = new Object(data);
-                $.each(Object.keys(plugin.content_scripts), function(index){
-                    $.each(Object.keys(plugin.content_scripts[index]), function(contentType){
-                        if (!excludeTypes.includes(Object.keys(plugin.content_scripts[index])[contentType])) {
-                            totalItems = totalItems + Object.values(plugin.content_scripts[index])[contentType].length;
-                            $.each(Object.values(plugin.content_scripts[index])[contentType], function(i,path){
-                                $.get(git_pagesURL + pluginPath + Object.keys(plugin.content_scripts[index])[contentType] +'/' + path, function(data){
-                                    switch(Object.keys(plugin.content_scripts[index])[contentType]) {
-                                        case 'css':
-                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
-                                        break;
-                                        case 'msg':
-                                        Object.values(plugin.content_scripts[index])[contentType][i] = data;
-                                        break;
-                                    }
-                                    if (!itemsLoaded) { console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
-                                    itemsLoaded++;          
-                                    console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%');
-                                    if (itemsLoaded == totalItems) {
-                                        //localStorage.setItem('dashboardPlugins-' + pluginId, JSON.stringify(plugin));
-                                        Object.assign(installQueue,{[pluginId]:plugin});
-                                        updateStorage('local');
-                                    }
-                                });
-                            });
-                        }
-                    });
+    window.addEventListener("keydown", function (event) {
+        if (event.key == "i") {
+            $.getJSON(git_apiURL + 'plugins', function(data){
+                $.each(data, function(i){
+                    remotePlugins.push(data[i].name);
+                    console.log('found',remotePlugins[i],'in repo')
                 });
+                updateStorage('sync');
             });
-        });     
-        buildQueue = [];
-    }
-
-    /*
-    $.each(Object.keys(localStorage), function(i,id){ //load plug-ins into objects
-        if (id.indexOf('dashboardPlugins-') > -1) {
-            installedPlugins[id.split('-')[1]] = new Object(JSON.parse(localStorage.getItem(id)));
         }
     });
-    $.each(Object.keys(installedPlugins), function(i,pluginId){
-        console.log(installedPlugins[pluginId]);
-        let pluginPath = 'plugins/' + pluginId + '/';
-        $.each(Object.keys(installedPlugins[pluginId].content_scripts), function(index){
-            console.log(installedPlugins[pluginId].content_scripts[index]);
-            if ('matches' in installedPlugins[pluginId].content_scripts[index] && installedPlugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
-                if ('css' in installedPlugins[pluginId].content_scripts[index]) {
-                    let addcss = setInterval(function(){
-                        if ($('head').length) {
-                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].css), function(i){
-                                console.log(Object.keys(installedPlugins[pluginId].content_scripts[index]).length)
-                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-css'}).text(installedPlugins[pluginId].content_scripts[index].css[i]))
-                            });
-                            clearInterval(addcss);
-                        }
-                    },1);
-                };
-                if ('js' in installedPlugins[pluginId].content_scripts[index]) {
-                    $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].js), function(i){
-                        $('head').append($('<script>').attr({async:'', src: git_pagesURL + pluginPath + 'js/' + installedPlugins[pluginId].content_scripts[index].js[i], class: 'dashboardPlugins-' + pluginId + '-js'}))
-                    });
-                };
-            };
-        });
-    });
 
-    */
-    function initPlugins(){
-        if (!initQueue.length) {
-            return;
-        }
-        $.each(Object.values(initQueue), function(i,pluginId){
-            console.log('initializing:',Object.values(initQueue));
-            addFlag('html',pluginId);
-            let pluginPath = 'plugins/' + pluginId + '/';
-            chrome.storage.local.get('plugins', function(data) {
-                let installedPlugins = data.plugins;
-                $.each(Object.keys(installedPlugins[pluginId].content_scripts), function(index){
-                    if ('matches' in installedPlugins[pluginId].content_scripts[index] && installedPlugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
-                        if ('css' in installedPlugins[pluginId].content_scripts[index]) {
-                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].css), function(i){
-                                $('head').append($('<style>').attr({type: 'text/css', class: 'dashboardPlugins-' + pluginId + '-css'}).text(installedPlugins[pluginId].content_scripts[index].css[i]))
-                            });
-                        };
-                        if ('js' in installedPlugins[pluginId].content_scripts[index]) {
-                            $.each(Object.keys(installedPlugins[pluginId].content_scripts[index].js), function(i){
-                                $('head').append($('<script>').attr({async:'', src: git_pagesURL + pluginPath + 'js/' + installedPlugins[pluginId].content_scripts[index].js[i], class: 'dashboardPlugins-' + pluginId + '-js'}))
-                            });
-                        };
-                    };
-                });
-            });
-        });     
-        initQueue = [];
-    }
-    function addFlag(target,flagId){
-        if ($(target)) {
-            $(target).addClass('flag--dashboardPlugins' + (flagId ? '-' + flagId : ''));
-        }
-    }
-
-    function msg(pluginId,msgId){
-        if (!msgId){
-            console.log('msg: not enough arguments')
-            return
-        }
-        return plugin[pluginId].msg[msgId].message[locale]
-    }
 })(jQuery)
