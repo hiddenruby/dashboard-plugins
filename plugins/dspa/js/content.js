@@ -1,5 +1,5 @@
-(function(pluginId){
-    if (plugin[pluginId].settings.toggle){
+(function($,pluginId){
+    //if (plugin[pluginId].settings.toggle){
         $(window).scroll(function(){
             if ($('.post_dismiss').length) {
                 let top = $(window).scrollTop(),
@@ -14,5 +14,5 @@
                 }
             }
         })
-    }
-})
+    //}
+})(jQuery)
