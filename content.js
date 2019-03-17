@@ -91,7 +91,7 @@
                     };
                     if ('js' in localData.plugins[pluginId].content_scripts[index]) {
                         asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].js), async(i) => {
-                            $('head').append($('<script>').attr({src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}).data({'pluginId':pluginId,'contentType':'css'}))
+                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardPlugins-pluginId':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}))
                         });
                     };
                 };
