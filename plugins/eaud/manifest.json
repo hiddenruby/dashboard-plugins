@@ -109,6 +109,11 @@
             "matches":  ["https://assets.tumblr.com/assets/styles/theme_garden.css"],
             "css":      ["assets/styles/theme_garden.css"],
             "run_at":   "document_start"
+        },
+        {
+            "matches":  ["https://assets.tumblr.com/client/prod/app/context/archive/index.build.css"],
+            "css":      ["client/prod/app/context/archive/index.build.css"],
+            "run_at":   "document_start"
         }
     ]
 }
