@@ -1,4 +1,4 @@
-(function(){
+(function($){
     let cfg = setInterval(function(){
 
         let descDash = $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text'),
@@ -62,4 +62,4 @@
             })
         }
     }, 1);
-})
+})(jQuery)
