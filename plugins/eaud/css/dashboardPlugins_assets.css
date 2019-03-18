@@ -1,0 +1,18 @@
+.flag--dashboardPlugins *[style*='8fa900b180f1_64'] {
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_64.png) !important;
+}
+.flag--dashboardPlugins .flag--accessibility-design-update *[style*='8fa900b180f1_64'] {
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_bright_64.png) !important;
+}
+.flag--dashboardPlugins *[style*='8fa900b180f1_128'] {
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_128.png) !important;
+}
+.flag--dashboardPlugins .flag--accessibility-design-update *[style*='8fa900b180f1_128'] {
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_bright_128.png) !important;
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
+    color: #56bc8a;
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
+    color: #00cf35;
+}

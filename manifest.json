@@ -15,15 +15,14 @@
         "page": "/options.html"
       },
     "background":{
-        "scripts":["background.js"],
+        "scripts":["backgroundBrowserActions.js","background.js"],
         "persistent": false
     },
     "content_scripts": [
         {
             "matches": ["*://*.tumblr.com/*"],
             "js": ["jquery-3.3.1.min.js", "content.js"],
-            "run_at": "document_start",
-            "all_frames": true
+            "run_at": "document_start"
         },
         {
             "matches": ["*://www.tumblr.com/settings*"],

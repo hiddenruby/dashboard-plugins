@@ -41,7 +41,7 @@
         {
             "matches":  ["https://www.tumblr.com/"],
             "js":       ["content.js"],
-            "css":      ["tumblelog_assets.css"],
+            "css":      ["dashboardPlugins_assets.css"],
             "run_at":   "document_start"
         },    
         {

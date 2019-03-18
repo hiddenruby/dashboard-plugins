@@ -4,26 +4,28 @@
         git_repo =      'dashboard-plugins',
         git_apiURL =    'https://api.github.com/repos/' + git_username + '/' + git_repo + '/contents/',
         git_envURL =    'https://' + git_username + '.github.io/' + git_repo + '/',
+        jQueryURL =     git_envURL + 'jquery-3.3.1.min.js',
         locale =        $('html[lang]').length ? $('html').attr('lang').split('-')[0] : 'slow', //fix this
         context =       $('html').classList ? $('html').classList[0] : 'slow', //fix this
         syncData = {}, localData = {}, remoteData = {}, syncQueue = {}, installQueue = { pending:[], executing:[] }, initQueue = {};
 
+    jQueryAdd(); //plugins that use jQuery can't use the extensions jquery content script, so we add it to the DOM too
     queryStorage();
     queryPlugins();
     addFlag();
-    console.log(locale,context)
+    console.log(locale,context);
 
     async function queryStorage(){
         let querySync = new Promise((resolve, reject) => {
                 chrome.storage.sync.get('plugins', function(data) {
                     data.plugins = !data.plugins ? {} : data.plugins;
-                    resolve(data)
+                    resolve(data);
                 });
             }),
             queryLocal = new Promise((resolve, reject) => {
                 chrome.storage.local.get('plugins', function(data) {
                     data.plugins = !data.plugins ? {} : data.plugins;
-                    resolve(data)
+                    resolve(data);
                 });
             }),
             queryRemote = new Promise((resolve, reject) => {
@@ -35,49 +37,46 @@
                             pluginPath = 'plugins/' + pluginId + '/';
                         $.getJSON(git_envURL + pluginPath + 'manifest.json', function(data){
                             Object.assign(promiseData.plugins,{[pluginId]:parseFloat(data.version.toString())});
-                            console.log('found',pluginId,'version',promiseData.plugins[pluginId],'in repo')
+                            console.log('found',pluginId,'version',promiseData.plugins[pluginId],'in repo');
                         });
                     });
-                    resolve(promiseData)
+                    resolve(promiseData);
                 });
             });
         syncData = await querySync;
         localData = await queryLocal;
         remoteData = await queryRemote;
-    }
+    };
 
     async function queryPlugins(plugin){
-        let tryData = setInterval(function(){
-            if (localData.plugins) {
-                clearInterval(tryData);
-                asyncForEach(Object.keys(syncData.plugins), async(pluginId) => {
-                    if (!localData.plugins[pluginId]) { //the plugin was not found in storage.local, so we need to build it
-                        if (!installQueue.executing.includes(pluginId)) { //only push if the plugin is not currently being built
-                            installQueue.pending.push(pluginId); 
-                            buildPlugins();
-                        }
-                    } else { //the plugin is already installed and can be added to the init queue
-                        Object.assign(initQueue,{[pluginId]:localData.plugins[pluginId]});
-                        initPlugins();
-                    }
-                });
-            }
-        },1)
-        setTimeout(function(){
-            clearInterval(tryData);
-            if (!Object.keys(syncData.plugins).length) {
-                console.log('tryData timed out');
-            }
-        },2000)
-    }
+        tryData = new Promise((resolve,reject) => {
+            setInterval(function(){
+                if (syncData.plugins && localData.plugins) {
+                    clearInterval(tryData);
+                    resolve(syncData.plugins)
+                };
+            },1)
+        });
+        asyncForEach(Object.keys((await tryData)), async(pluginId) => {
+            if (!localData.plugins[pluginId]) { //the plugin was not found in storage.local, so we need to build it
+                if (!installQueue.executing.includes(pluginId)) { //only push if the plugin is not currently being built
+                    installQueue.pending.push(pluginId); 
+                    buildPlugins();
+                };
+            } else { //the plugin is already installed and can be added to the init queue
+                Object.assign(initQueue,{[pluginId]:localData.plugins[pluginId]});
+                initPlugins();
+            };
+        });
+    };
 
     function initPlugins(){ //attaches the content scripts of plugins in the queue to the document
         if (!Object.keys(initQueue).length) {
             return;
-        }
+        };
         asyncForEach(Object.keys(initQueue), async(pluginId) => {
             delete initQueue[pluginId];
-            $.each($('*[data-dashboardPlugins-pluginId*=' + pluginId + ']'), function(){
+            $.each($('*[data-dashboardPlugins-owner*=' + pluginId + ']'), function(){
                 this.remove(); //plugin has already been initialized once before so remove the content scripts 
             });
             console.log('initializing:',pluginId);
@@ -86,38 +85,38 @@
                 if ('matches' in localData.plugins[pluginId].content_scripts[index] && localData.plugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
                     if ('css' in localData.plugins[pluginId].content_scripts[index]) {
                         asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].css), async(i) => {
-                            $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardPlugins-pluginId':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]))
+                            $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardPlugins-owner':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]));
                         });
                     };
                     if ('js' in localData.plugins[pluginId].content_scripts[index]) {
                         asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].js), async(i) => {
-                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardPlugins-pluginId':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}))
+                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardPlugins-owner':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}));
                         });
                     };
                 };
             });
             addFlag(pluginId);
         });
-    }
+    };
 
-    async function addFlag(flagId){
+    function addFlag(flagId){
         flagId = 'flag--dashboardPlugins' + (flagId ? '-' + flagId : '');
         let tryFlag = setInterval(function(){
             if ($('html').length) {
                 $('html').addClass(flagId);
                 clearInterval(tryFlag);
-            } 
-        },1)
+            };
+        },1);
         setTimeout(function(){
             clearInterval(tryFlag);
             console.log(flagId,(!$('html.' + flagId).length ? 'timed out' : 'added'));
-        },2000)
-    }
+        },2000);
+    };
 
     async function buildPlugins(){ //store the manifests of the plugins in the build queue in objects, expanding css and msg content scripts
         if (!installQueue.pending.length) {
             return;
-        }
+        };
         asyncForEach(Object.values(installQueue.pending), async(pluginId) => {
             console.log('installing:',pluginId);
             installQueue.executing.push(pluginId);
@@ -157,15 +156,15 @@
             installQueue.executing.splice(installQueue.executing[pluginId],installQueue.executing[0])
         });
         installQueue.pending = [];
-    }
+    };
 
-    async function updateStorage(type) {
+    function updateStorage(type) {
         switch(type) {
             case 'sync': //names and version number of plugins installed by user are saved to storage.sync
             syncQueue = remoteData.plugins; //for now just save all plugins in the repo
             if (!Object.keys(syncQueue).length) {
                 return;
-            }
+            };
             $.each(Object.keys(syncQueue), function(i){
                 if (syncData.plugins[syncQueue[i]]) {
                     delete syncQueue[syncQueue[i]];
@@ -178,17 +177,28 @@
             case 'local': //expanded manifest files are saved to storage.local
             if (!Object.keys(localData).length) {
                 return;
-            }
+            };
             chrome.storage.local.set(localData);
             break;
-        }
+        };
         queryPlugins();
-    }
+    };
+
+    function jQueryAdd() {
+        let tryHead = setInterval(function(){
+            if ($('head')) {
+                clearInterval(tryHead);
+                console.log('jquery added')
+                $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardPlugins-owner':'main', src: jQueryURL}))
+            }
+        },1);
+    };
+
     async function asyncForEach(array, callback) {
         for (let i = 0; i < array.length; i++) {
             await callback(array[i], i, array);
-        }
-    }
+        };
+    };
 
     window.addEventListener("keydown", function (event) { //temp
         if (event.key == "i") {
