@@ -47,6 +47,7 @@
         {
             "matches":  ["https://www.tumblr.com/settings/dashboard"],
             "js":       ["toggle.js"],
+            "css":      ["dashboardPlugins_cfg.css"],
             "msg":      ["settings.json"],
             "run_at":   "document_start"
         },

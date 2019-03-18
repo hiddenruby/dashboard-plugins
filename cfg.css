@@ -58,7 +58,7 @@
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
     font-size: 25px;
     background: none;
-    color: #00cf35;
+    color: var(--dashboardPlugins-eaud-green-bright);
     animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
     top: -2px;
     right: 27px;
