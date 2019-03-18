@@ -1,6 +1,8 @@
 :root{
     --dashboardPlugins-eaud-background: #36465d;
     --dashboardPlugins-eaud-background-bright: #001935;
+    --dashboardPlugins-eaud-glass: #36465df2;
+    --dashboardPlugins-eaud-glass-bright: #001935f2;
     --dashboardPlugins-eaud-green: #56bc8a;
     --dashboardPlugins-eaud-green-bright: #00cf35;
     --dashboardPlugins-eaud-blue: #529ecc;
