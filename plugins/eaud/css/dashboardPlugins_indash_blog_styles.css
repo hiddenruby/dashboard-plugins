@@ -3,6 +3,14 @@
     --eaud-green-bright: #00cf35;
 }
 
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='background-color: rgb(59, 194, 111)'] {
+    background-color: var(--eaud-green);
+}
+
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='background-color: rgb(59, 194, 111)'] {
+    background-color: var(--eaud-green-bright);
+}
+
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_64'] {
     background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_64.png) !important;
 }
