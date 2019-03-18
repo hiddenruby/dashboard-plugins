@@ -1,3 +1,8 @@
+:root{
+    --euad-green: #56bc8a;
+    --eaud-green-bright: #00cf35;
+}
+
 .flag--dashboardPlugins *[style*='8fa900b180f1_64'] {
     background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_64.png) !important;
 }
@@ -12,85 +17,83 @@
     background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_bright_128.png) !important;
 }
 
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #56bc8a;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: var(--eaud-green);
 }
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #00cf35;
-}
-
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #56bc8a;
-}
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: var(--eaud-green-bright);
 }
 
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
-    color: #56bc8a;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: var(--eaud-green);
 }
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
-    color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: var(--eaud-green-bright);
 }
 
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
-    color: #56bc8a;
-    opacity: 0.7;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
+    color: var(--eaud-green);
 }
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
-    color: #00cf35;
-}
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
-    color: #56bc8a;
-    opacity: 0.7;
-}
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
-    color: #00cf35;
-}
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
-    color: #56bc8a;
-    opacity: 0.7;
-}
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
-    color: #00cf35;
-}
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
-    color: #56bc8a;
-    opacity: 0.7;
-}
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
-    color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
+    color: var(--eaud-green-bright);
 }
 
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
-    background-color: #56bc8a;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
+    color: var(--eaud-green);
 }
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
-    background-color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
+    color: var(--eaud-green-bright);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
+    color: var(--eaud-green);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
+    color: var(--eaud-green-bright);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
+    color: var(--eaud-green);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
+    color: var(--eaud-green-bright);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
+    color: var(--eaud-green);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
+    color: var(--eaud-green-bright);
 }
 
-.tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
-    color: #56bc8a;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
+    background-color: var(--eaud-green);
 }
-.flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
-    color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
+    background-color: var(--eaud-green-bright);
 }
 
-.indash_blog .show_more_posts {
-    background-color: #56bc8a;
-    border-color: #56bc8a;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
+    color: var(--eaud-green);
 }
-.flag--accessibility-design-update .indash_blog .show_more_posts {
-    background-color: #00cf35;
-    border-color: #00cf35;
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
+    color: var(--eaud-green-bright);
+}
+
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .indash_blog .show_more_posts {
+    background-color: var(--eaud-green);
+    border-color: var(--eaud-green);
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .indash_blog .show_more_posts {
+    background-color: var(--eaud-green-bright);
+    border-color: var(--eaud-green-bright);
 }

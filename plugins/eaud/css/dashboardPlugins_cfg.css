@@ -1,12 +1,11 @@
+:root{
+    --euad-green: #56bc8a;
+    --eaud-green-bright: #00cf35;
+}
+
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-    color: #56bc8a;
+    color: var(--eaud-green);
 }
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-    color: #00cf35;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #56bc8a;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: #00cf35;
+    color: var(--eaud-green-bright);
 }
