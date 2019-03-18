@@ -85,12 +85,12 @@
                 if ('matches' in localData.plugins[pluginId].content_scripts[index] && localData.plugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
                     if ('css' in localData.plugins[pluginId].content_scripts[index]) {
                         asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].css), async(i) => {
-                            $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardPlugins-owner':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]));
+                            $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardplugins-owner':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]));
                         });
                     };
                     if ('js' in localData.plugins[pluginId].content_scripts[index]) {
                         asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].js), async(i) => {
-                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardPlugins-owner':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}));
+                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}));
                         });
                     };
                 };
@@ -189,7 +189,7 @@
             if ($('head')) {
                 clearInterval(tryHead);
                 console.log('jquery added')
-                $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardPlugins-owner':'main', src: jQueryURL}))
+                $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':'main', src: jQueryURL}))
             }
         },1);
     };
