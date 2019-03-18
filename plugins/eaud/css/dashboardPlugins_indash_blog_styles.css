@@ -12,6 +12,13 @@
     background-image: url(https://jorubyp.github.io/dashboard-plugins/plugins/eaud/css/images/tumblelog/blog_avatar_bright_128.png) !important;
 }
 
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: #56bc8a;
+}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3, .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
+    color: #00cf35;
+}
+
 .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
 .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
     color: #56bc8a;
