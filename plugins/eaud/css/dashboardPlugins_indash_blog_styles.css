@@ -9,8 +9,8 @@
     background-image: unset !important;
 }
 
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_64'] img,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_128'] img {
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='dc5b0d115173_64'] img,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='dc5b0d115173_128'] img {
     opacity: 1;
     height: auto;
     object-position: 999px;
@@ -18,8 +18,8 @@
     border-radius: 100%;
     background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
 }
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='8fa900b180f1_64'] img,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='8fa900b180f1_128'] img {
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='dc5b0d115173_64'] img,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='dc5b0d115173_128'] img {
     background-color: var(--dashboardPlugins-eaud-blue-bright);
 }
 
