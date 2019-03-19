@@ -34,7 +34,7 @@
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3 a,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 a {
-    color: inherit;
+    color: inherit !important;
 }
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
