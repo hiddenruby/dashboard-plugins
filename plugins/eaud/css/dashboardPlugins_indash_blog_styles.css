@@ -3,13 +3,6 @@
     --dashboardPlugins-branding-accent-bright: var(--dashboardPlugins-eaud-blue-bright);
 }
 
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins .Knight-Rider-bar {
-    background-color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins .Knight-Rider-bar {
-    background-color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='background-color: rgb(59, 194, 111)'] {
     background-color: var(--dashboardPlugins-branding-accent-bright) !important;
 }
