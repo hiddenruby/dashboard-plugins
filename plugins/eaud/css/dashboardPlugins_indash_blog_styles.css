@@ -1,6 +1,7 @@
 :root{
+    --dashboardPlugins-branding-logo: var(--dashboardPlugins-eaud-blue);
     --dashboardPlugins-branding-accent: var(--dashboardPlugins-eaud-blue);
-    --dashboardPlugins-branding-accent-bright: var(--dashboardPlugins-eaud-blue-bright);
+    --dashboardPlugins-branding-accent-bright: #213f52;
 }
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='background-color: rgb(59, 194, 111)'] {
@@ -20,7 +21,7 @@
     height: auto;
     object-position: 999px;
     border-radius: 100%;
-    background-color: var(--dashboardPlugins-branding-accent);
+    background-color: var(--dashboardPlugins-branding-logo);
     background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
     background-size: 101%;
 }
