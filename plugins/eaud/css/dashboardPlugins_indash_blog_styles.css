@@ -14,7 +14,7 @@
     object-position: 999px;
     background-color: var(--dashboardPlugins-eaud-blue);
     border-radius: 100%;
-    background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.png);
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
 }
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='8fa900b180f1_64'] img, .flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_128'] img {
     background-color: var(--dashboardPlugins-eaud-blue-bright);
