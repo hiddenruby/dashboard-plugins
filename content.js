@@ -1,103 +1,297 @@
-(function($){
+(async function($){
 
     let git_username =  'jorubyp',
         git_repo =      'dashboard-plugins',
         git_apiURL =    'https://api.github.com/repos/' + git_username + '/' + git_repo + '/contents/',
         git_envURL =    'https://' + git_username + '.github.io/' + git_repo + '/',
         jQueryURL =     git_envURL + 'jquery-3.3.1.min.js',
-        locale =        $('html[lang]').length ? $('html').attr('lang').split('-')[0] : 'slow', //fix this
-        context =       $('html').classList ? $('html').classList[0] : 'slow', //fix this
-        syncData = {}, localData = {}, remoteData = {}, syncQueue = {}, installQueue = { pending:[], executing:[] }, initQueue = {};
-
-    jQueryAdd(); //plugins that use jQuery can't use the extensions jquery content script, so we add it to the DOM too
-    queryStorage();
-    queryPlugins();
-    addFlag();
-    console.log(locale,context);
-
-    async function queryStorage(){
-        let querySync = new Promise((resolve, reject) => {
-                chrome.storage.sync.get('plugins', function(data) {
-                    data.plugins = !data.plugins ? {} : data.plugins;
-                    resolve(data);
-                });
-            }),
-            queryLocal = new Promise((resolve, reject) => {
-                chrome.storage.local.get('plugins', function(data) {
-                    data.plugins = !data.plugins ? {} : data.plugins;
-                    resolve(data);
-                });
-            }),
-            queryRemote = new Promise((resolve, reject) => {
-                let promiseData = {};
-                promiseData.plugins = {};
-                $.getJSON(git_apiURL + 'plugins', function(data){
-                    $.each(data, function(i){
-                        let pluginId = data[i].name,
-                            pluginPath = 'plugins/' + pluginId + '/';
-                        $.getJSON(git_envURL + pluginPath + 'manifest.json', function(data){
-                            Object.assign(promiseData.plugins,{[pluginId]:parseFloat(data.version.toString())});
-                            console.log('found',pluginId,'version',promiseData.plugins[pluginId],'in repo');
-                        });
-                    });
-                    resolve(promiseData);
-                });
+        context =       function(){ return $('html').classList[0] },
+        timeStamp =     function(){ return new Date().getTime() },
+        locale =        function(){ return $('html').attr('lang').split('-')[0] },
+        toastObserver = new MutationObserver(pushToast),
+        jQueryAdd =     new Promise((resolve, reject) => {
+            let tryAdd = setInterval(function(){
+                if ($('head')) {
+                    clearInterval(tryAdd);
+                    $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':'main', src: jQueryURL}));
+                    if (!$('script[scr="' + jQueryURL + '"]')) {
+                        reject('jquery not added');
+                    } else {
+                        resolve('jquery added');
+                    }
+                }
+            },1);
+        }),
+        querySync = new Promise((resolve, reject) => {
+            chrome.storage.sync.get('plugins', function(data) {
+                if (!Object.keys(data).length) {
+                    data.plugins = {};
+                }
+                resolve(data);
             });
-        syncData = await querySync;
-        localData = await queryLocal;
+        }),
+        queryLocal = new Promise((resolve, reject) => {
+            chrome.storage.local.get('plugins', function(data) {
+                if (!Object.keys(data).length) {
+                    data.plugins = {};
+                }
+                resolve(data);
+            });
+        }),
+        queryRemote = new Promise((resolve, reject) => {
+            let promiseData = {};
+            promiseData.plugins = {};
+            $.getJSON(git_apiURL + 'plugins', function(data){
+                $.each(data, function(i){
+                    let pluginId = data[i].name,
+                        pluginPath = 'plugins/' + pluginId + '/';
+                    $.getJSON(git_envURL + pluginPath + 'manifest.json' + '?_=' + timeStamp(), function(data){
+                        Object.assign(promiseData.plugins,{[pluginId]:{'version':parseFloat(data.version.toString())}});
+                        console.log('found',pluginId,'version',promiseData.plugins[pluginId].version,'in repo');
+                    });
+                });
+                resolve(promiseData);
+            });
+        }),
+        syncData = await querySync,
+        localData = await queryLocal,
         remoteData = await queryRemote;
+
+    console.log(await jQueryAdd);
+    
+    addFlag();
+
+    asyncForEach(Object.keys(syncData.plugins), function(pluginId){
+        queryPlugin(pluginId);
+    });
+
+    function updateStorage(namespace) {
+        switch(namespace) {
+            case 'sync':
+            chrome.storage.sync.set(syncData);
+            break;
+            case 'local':
+            chrome.storage.local.set(localData);
+            break;
+            default:
+            chrome.storage.sync.set(syncData);
+            chrome.storage.local.set(localData);
+        };
     };
 
-    async function queryPlugins(plugin){
-        tryData = new Promise((resolve,reject) => {
-            setInterval(function(){
-                if (syncData.plugins && localData.plugins) {
-                    clearInterval(tryData);
-                    resolve(syncData.plugins)
-                };
-            },1)
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+        asyncForEach(Object.keys(changes), function(key){
+            switch(namespace){
+                case 'local':
+                switch(key){
+                    case 'plugins':
+                    asyncForEach(Object.keys(changes[key].newValue), function(pluginId){
+                        if (syncData.plugins[pluginId]) {
+                            queryPlugin(pluginId);
+                        };
+                    });
+                    break;
+                    case 'toast':
+                    observeToast();
+                    break;
+                }
+                break;
+                case 'sync':
+                switch(key){
+                    case 'plugins':
+                    asyncForEach(Object.keys(changes[key].newValue), function(pluginId){
+                        if (!localData.plugins[pluginId]) {
+                            syncPlugin(pluginId);
+                        };
+                    });
+                    break;
+                }
+            }
         });
-        asyncForEach(Object.keys((await tryData)), async(pluginId) => {
-            if (!localData.plugins[pluginId]) { //the plugin was not found in storage.local, so we need to build it
-                if (!installQueue.executing.includes(pluginId)) { //only push if the plugin is not currently being built
-                    installQueue.pending.push(pluginId); 
-                    buildPlugins();
+    });
+
+    async function queryPlugin(pluginId){
+        if (!localData.plugins[pluginId]) {
+            syncPlugin(pluginId);
+            return
+        }
+        let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
+            pendingUpdate = !localData.plugins[pluginId].state && (parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version));
+            ready = Object.keys(localData.plugins[pluginId]).length > 2 && (localData.plugins[pluginId].state && !localData.plugins[pluginId].state != 'loaded');
+        switch(true) {
+            case pendingBuild:
+            localData.plugins[pluginId].state = 'pending build';
+            break;
+            case pendingUpdate: 
+            localData.plugins[pluginId].state = 'pending update';
+            break;
+            case ready:
+            localData.plugins[pluginId].state = 'ready';
+        }
+        console.log(pluginId,'is',localData.plugins[pluginId].state);
+        switch(localData.plugins[pluginId].state) {
+            case (/pending/.exec(localData.plugins[pluginId].state) || {}).input:
+            buildPlugin(pluginId);
+            break;
+            case 'ready':
+            localData.plugins[pluginId].state == 'loaded'
+            loadPlugin(pluginId);
+        }
+    }
+
+    function syncPlugin(pluginId) {
+        localData.plugins[pluginId] = syncData.plugins[pluginId];
+        updateStorage('local');
+    }
+
+    function loadPlugin(pluginId){
+        console.log('loading:',pluginId);
+        let pluginPath = 'plugins/' + pluginId + '/';
+        asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts), async(index) => {
+            if ('matches' in localData.plugins[pluginId].content_scripts[index] && localData.plugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.match(new RegExp(i.replace(/\*/g, '.*').replace(/\//g,'\\/'))) || $('link[href*="' + i + '"]').length)})) {
+                if ('css' in localData.plugins[pluginId].content_scripts[index]) {
+                    asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].css), async(i) => {
+                        $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardplugins-owner':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]));
+                    });
                 };
-            } else { //the plugin is already installed and can be added to the init queue
-                Object.assign(initQueue,{[pluginId]:localData.plugins[pluginId]});
-                initPlugins();
+                if ('js' in localData.plugins[pluginId].content_scripts[index]) {
+                    asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].js), async(i) => {
+                        $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}));
+                    });
+                };
             };
         });
+        addFlag(pluginId);
     };
 
-    function initPlugins(){ //attaches the content scripts of plugins in the queue to the document
-        if (!Object.keys(initQueue).length) {
-            return;
-        };
-        asyncForEach(Object.keys(initQueue), async(pluginId) => {
-            delete initQueue[pluginId];
-            $.each($('*[data-dashboardPlugins-owner*=' + pluginId + ']'), function(){
-                this.remove(); //plugin has already been initialized once before so remove the content scripts 
-            });
-            console.log('initializing:',pluginId);
-            let pluginPath = 'plugins/' + pluginId + '/';
-            asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts), async(index) => {
-                if ('matches' in localData.plugins[pluginId].content_scripts[index] && localData.plugins[pluginId].content_scripts[index].matches.some(function(i){return (window.location.href.indexOf(i) > -1 || $('link[href*="' + i + '"]').length)})) {
-                    if ('css' in localData.plugins[pluginId].content_scripts[index]) {
-                        asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].css), async(i) => {
-                            $('head').append($('<style>').attr({type: 'text/css', 'data-dashboardplugins-owner':pluginId}).text(localData.plugins[pluginId].content_scripts[index].css[i]));
+    async function installPlugin(pluginId){
+        let attributes = {
+            installDate:timeStamp()
+        }
+        Object.assign(syncData.plugins,{[pluginId]:attributes});
+        updateStorage('sync');
+    }
+
+    async function buildPlugin(pluginId){
+        let action = localData.plugins[pluginId].state.split(' ')[1];
+        localData.plugins[pluginId].state = 'processing ' + action;
+        let pluginPath = 'plugins/' + pluginId + '/',
+            contextTypes = ['matches','run_at'],
+            totalItems = 0, itemsLoaded = 0,
+            plugin = new Promise ((resolve,reject) => {
+                $.getJSON(git_envURL + pluginPath + 'manifest.json' + '?_=' + timeStamp(), function(data){
+                    Object.assign(localData.plugins[pluginId],data);
+                    plugin = localData.plugins[pluginId];
+                    asyncForEach(Object.keys(plugin.content_scripts), async(index) => {
+                        asyncForEach(Object.keys(plugin.content_scripts[index]), async(contentType) => {
+                            if (!contextTypes.includes(contentType)) {
+                                totalItems = totalItems + Object.values(plugin.content_scripts[index][contentType]).length;
+                                asyncForEach(Object.values(plugin.content_scripts[index][contentType]), async(path, i) => {
+                                    $.get(git_envURL + pluginPath + contentType +'/' + path + '?_=' + timeStamp(), function(data){
+                                        switch(contentType) {
+                                            case 'css' || 'msg':
+                                            console.log(pluginId + 'building: expanding content script',path)
+                                            plugin.content_scripts[index][contentType][i] = data;
+                                            break;
+                                        }
+                                        if (!itemsLoaded) { console.log(pluginId,'building:',Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
+                                        itemsLoaded++;
+                                        console.log(pluginId,'building:',Math.floor((itemsLoaded / totalItems) * 100) + '%');
+                                        if (itemsLoaded == totalItems) {
+                                            resolve(plugin)
+                                        }
+                                    });
+                                });
+                            }
                         });
-                    };
-                    if ('js' in localData.plugins[pluginId].content_scripts[index]) {
-                        asyncForEach(Object.keys(localData.plugins[pluginId].content_scripts[index].js), async(i) => {
-                            $('head').append($('<script>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':pluginId, src: git_envURL + pluginPath + 'js/' + localData.plugins[pluginId].content_scripts[index].js[i]}));
-                        });
-                    };
-                };
+                    });
+                });
             });
-            addFlag(pluginId);
-        });
+        localData.plugins[pluginId] = await plugin;
+        switch(action) {
+            case 'update':
+            buildToast(0,localData.plugins[pluginId].name[locale()],'was updated');
+            break;
+            case 'build':
+            buildToast(0,localData.plugins[pluginId].name[locale()],'was installed');
+        }
+        updateStorage('local');
     };
+
+    function buildToast(pre,subject,ap){
+        let plugin = localData.plugins[subject],
+            msgPre = pre ? (plugin ? plugin.msg[pre] ? plugin.msg[pre] : pre : pre) + ' ' : '',
+            msgSubject = $('<strong>').text((subject ? plugin ? plugin.msg[subject] : subject : '') + ' '),
+            msgAp = ap ? plugin ? plugin.msg[ap] ? plugin.msg[ap] : ap : ap : '',
+            toastId = timeStamp();
+            bread = $('<li>').attr({
+                        class:          'toast blog-sub',
+                        'data-subview': 'toast',
+                        'data-peepr':   '{"' + (plugin || (subject == 'Dashboard Plug-ins') ? 'tumblog' : 'misc') + '":"' + (plugin ? subject : subject == 'Dashboard Plug-ins' ? 'dashboard-plugins' : subject) + '"}',
+                        'data-dashboardplugins-toast-id': toastId
+                    }).append(
+                        $('<img>').attr({
+                            class: 'toaster avatar',
+                            src: git_envURL + 'images/icon_blue_bright.png'
+                        }),
+                        $('<span>').attr({class: 'toast-bread'}).append(
+                            msgPre, msgSubject, msgAp
+                        )
+                    );
+        !localData.toast ? localData.toast = {} : '';
+        Object.assign(localData.toast,{[toastId]:bread[0]});
+        updateStorage('local');
+    }
+
+    function observeToast(){
+        if ($('.sidebar_nav.clearfix.visible').length || $('.drawer.peepr-drawer-container.open').length) {
+            let target = document.body;
+            toastObserver.observe(target, {childList: true, subtree: true});
+        } else {
+            pushToast();
+        }
+    }
+
+    function pushToast(){
+        if (!localData.toast || $('.sidebar_nav.clearfix.visible').length || $('.drawer.peepr-drawer-container.open').length) {
+            return
+        }
+        toastObserver.disconnect();
+        if (!$('.toast-kit').attr('style')) {
+            $('.toast-kit').css({bottom: '10px'})
+        }
+        setTimeout(function(){
+            $.each(Object.keys(localData.toast), function(i,toastId){
+            let bread = localData.toast[toastId],
+                waitForNative;
+            i += $('ul.multi-toasts li').length + ($('ul.multi-toasts li').length ? 1 : 0); //gotta get this right
+            console.log(i)
+                setTimeout(function(){
+                    $('ul.multi-toasts').append(bread);
+                    setTimeout(function(){
+                        let checkPosition = setInterval(function(){
+                            if ($('ul.multi-toasts li[data-dashboardplugins-toast-id="' + toastId + '"]:first-child').length) {
+                                clearInterval(checkPosition);
+                                setTimeout(function(){
+                                    $('ul.multi-toasts li[data-dashboardplugins-toast-id="' + toastId + '"]').addClass('fade-out')
+                                    setTimeout(function(){
+                                        $('ul.multi-toasts li[data-dashboardplugins-toast-id="' + toastId + '"]').remove()
+                                        if (!$('ul.multi-toasts').children().length) {
+                                            $('.toast-kit').removeAttr('style');
+                                        };
+                                    },500);
+                                }, 300*(waitForNative & 1));
+                                return
+                            }
+                            waitForNative = !('data-dashboardplugins-toast-id' in $('ul.multi-toasts li:first-child')[0].attributes);
+                        },1);
+                    },5000);
+                }, 1000*i);
+            });
+            delete localData.toast;
+            updateStorage('local');
+        }, 300);
+    }
 
     function addFlag(flagId){
         flagId = 'flag--dashboardPlugins' + (flagId ? '-' + flagId : '');
@@ -113,96 +307,17 @@
         },2000);
     };
 
-    async function buildPlugins(){ //store the manifests of the plugins in the build queue in objects, expanding css and msg content scripts
-        if (!installQueue.pending.length) {
-            return;
-        };
-        asyncForEach(Object.values(installQueue.pending), async(pluginId) => {
-            console.log('installing:',pluginId);
-            installQueue.executing.push(pluginId);
-            let pluginPath = 'plugins/' + pluginId + '/',
-                contextTypes = ['matches','run_at'],
-                totalItems = 0, itemsLoaded = 0,
-                plugin = new Promise ((resolve,reject) => {
-                    $.getJSON(git_envURL + pluginPath + 'manifest.json', function(data){
-                        let plugin = new Object(data);
-                        asyncForEach(Object.keys(plugin.content_scripts), async(index) => {
-                            asyncForEach(Object.keys(plugin.content_scripts[index]), async(contentType) => {
-                                if (!contextTypes.includes(contentType)) {
-                                    totalItems = totalItems + Object.values(plugin.content_scripts[index][contentType]).length;
-                                    asyncForEach(Object.values(plugin.content_scripts[index][contentType]), async(i) => {
-                                        $.get(git_envURL + pluginPath + contentType +'/' + i, function(data){
-                                            switch(contentType) {
-                                                case 'css' || 'msg':
-                                                console.log('expanding content script',i,'in',pluginId)
-                                                plugin.content_scripts[index][contentType][0] = data;
-                                                break;
-                                            }
-                                            if (!itemsLoaded) { console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
-                                            itemsLoaded++;
-                                            console.log('installing',pluginId,Math.floor((itemsLoaded / totalItems) * 100) + '%');
-                                            if (itemsLoaded == totalItems) {
-                                                resolve({[pluginId]:plugin})
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                        });
-                    });
-                });
-            Object.assign(localData.plugins,(await plugin)); //sends the expanded plugin manifest as an object to the queue of plugins to be saved to storage.local
-            updateStorage('local');
-            installQueue.executing.splice(installQueue.executing[pluginId],installQueue.executing[0])
-        });
-        installQueue.pending = [];
-    };
-
-    function updateStorage(type) {
-        switch(type) {
-            case 'sync': //names and version number of plugins installed by user are saved to storage.sync
-            syncQueue = remoteData.plugins; //for now just save all plugins in the repo
-            if (!Object.keys(syncQueue).length) {
-                return;
-            };
-            $.each(Object.keys(syncQueue), function(i){
-                if (syncData.plugins[syncQueue[i]]) {
-                    delete syncQueue[syncQueue[i]];
-                }
-            });
-            syncData.plugins = Object.assign(syncData.plugins, syncQueue);
-            syncQueue = {};
-            chrome.storage.sync.set(syncData);
-            break;
-            case 'local': //expanded manifest files are saved to storage.local
-            if (!Object.keys(localData).length) {
-                return;
-            };
-            chrome.storage.local.set(localData);
-            break;
-        };
-        queryPlugins();
-    };
-
-    function jQueryAdd() {
-        let tryHead = setInterval(function(){
-            if ($('head')) {
-                clearInterval(tryHead);
-                console.log('jquery added')
-                $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':'main', src: jQueryURL}))
-            }
-        },1);
-    };
-
     async function asyncForEach(array, callback) {
         for (let i = 0; i < array.length; i++) {
             await callback(array[i], i, array);
         };
     };
 
-    window.addEventListener("keydown", function (event) { //temp
+    window.addEventListener("keydown", async function (event) { //temp
         if (event.key == "i") {
-            updateStorage('sync');
+            asyncForEach(Object.keys(remoteData.plugins), function(pluginId){
+                installPlugin(pluginId);
+            });
         }
     });
 

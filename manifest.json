@@ -7,7 +7,7 @@
     "version": "0.0.01",
     "author": "Jo Ruby P",
     "browser_action": {
-        "default_icon": "/images/icon_bright.png",
+        "default_icon": "/images/icon_blue_bright.png",
         "default_title": "Dashboard Plug-ins"
     },
     "options_ui": {

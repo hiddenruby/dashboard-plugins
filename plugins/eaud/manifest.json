@@ -39,13 +39,13 @@
     },
     "content_scripts": [
         {
-            "matches":  ["https://www.tumblr.com/"],
+            "matches":  ["*.tumblr.com*"],
             "js":       ["content.js"],
-            "css":      ["dashboardPlugins_global.css","dashboardPlugins_cfg.css","dashboardPlugins_indash_blog_styles.css"],
+            "css":      ["dashboardPlugins_global.css","dashboardPlugins_indash_blog_styles.css"],
             "run_at":   "document_start"
         },    
         {
-            "matches":  ["https://www.tumblr.com/settings/dashboard"],
+            "matches":  ["*.tumblr.com/settings*"],
             "js":       ["toggle.js"],
             "css":      ["dashboardPlugins_cfg.css"],
             "msg":      ["settings.json"],
