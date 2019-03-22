@@ -37,7 +37,7 @@
     },
     "content_scripts": [
         {
-            "matches":  ["*://www.tumblr.com/dashboard*","*://www.tumblr.com/edit*","*://www.tumblr.com/reblog/","*://tumblr.com/blog*"],
+            "contexts": ["dashboard"],
             "js":       ["content.js"],
             "css":      ["content.css"],
             "run_at":   "document_start"
