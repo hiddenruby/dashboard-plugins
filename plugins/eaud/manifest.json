@@ -57,14 +57,13 @@
         {
             "contexts": ["dashboard"],
             "css":      ["assets/styles/dashboard.css",
-                        "client/prod/app/context/dashboard/index.build.css",
-                        "client/prod/app/context/settings/index.build.css"],
+                        "client/prod/app/context/dashboard/index.build.css",],
             "run_at":   "document_start"
         },
         {
             "contexts": ["settings"],
             "js":       ["toggle.js"],
-            "css":      ["assets/styles/settings/settings.css","dashboardPlugins_cfg.css"],
+            "css":      ["assets/styles/settings/settings.css","client/prod/app/context/settings/index.build.css","dashboardPlugins_cfg.css"],
             "msg":      ["settings.json"],
             "run_at":   "document_start"
         },
