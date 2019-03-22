@@ -1,5 +1,6 @@
 {
     "manifest_version": 2,
+    "default_locale": "en",
     "name": "Dashboard Plug-ins",
     "description": "Additional options and features for Tumblr.",
     "homepage_url": "https://github.com/hiddenruby/dashboard-plugins",
@@ -20,14 +21,20 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*.tumblr.com/*"],
-            "js": ["jquery-3.3.1.min.js", "content.js"],
-            "run_at": "document_start"
+            "matches":  ["*://*.tumblr.com/*"],
+            "js":       ["jquery-3.3.1.min.js", "content.js"],
+            "css":      ["global.css"],
+            "run_at":   "document_start"
         },
         {
-            "matches": ["*://www.tumblr.com/settings/dashboard"],
-            "css": ["cfg.css"],
-            "run_at": "document_start"
+            "matches":  ["*://www.tumblr.com/settings*"],
+            "js":       ["cfg.js"],
+            "run_at":   "document_start"
+        },
+        {
+            "matches":  ["*://www.tumblr.com/settings/dashboard"],
+            "css":      ["cfg.css"],
+            "run_at":   "document_start"
         }
     ]
 }
