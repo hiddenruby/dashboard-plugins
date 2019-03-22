@@ -1,0 +1,13 @@
+:root{
+    --dashboardPlugins-background: #001935;
+    --dashboardPlugins-glass: #001935f2;
+    --dashboardPlugins-green: #00cf35;
+    --dashboardPlugins-blue: #00b8ff;
+    --dashboardPlugins-blue-focus: #00b1f5;
+    --dashboardPlugins-red: #ff492f;
+    --dashboardPlugins-purple: #7c5cff;
+    --dashboardPlugins-orange: #ff8a00;
+    --dashboardPlugins-blueGrey: #9da6af;
+    --dashboardPlugins-darkGrey: #000;
+    --dashboardPlugins-transparentWhite: #ffffff66;
+}
