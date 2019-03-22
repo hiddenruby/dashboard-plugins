@@ -1,8 +1,8 @@
 {
     "version": "0.01",
     "author": "Jo Ruby P",
-    "default": false,
-    "use_description": false,
+    "toggle_default": false,
+    "toggle_description": false,
     "name":{
         "de": "",
         "fr": "",
@@ -41,7 +41,7 @@
         {
             "contexts": ["*"],
             "js":       ["content.js"],
-            "css":      ["dashboardPlugins_global.css","dashboardPlugins_indash_blog_styles.css"],
+            "css":      ["eaud_global.css","eaud_indash_blog_styles.css"],
             "run_at":   "document_start"
         },
         {
