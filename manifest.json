@@ -25,11 +25,6 @@
             "run_at": "document_start"
         },
         {
-            "matches": ["*://www.tumblr.com/settings*"],
-            "js": ["cfg.js"],
-            "run_at": "document_start"
-        },
-        {
             "matches": ["*://www.tumblr.com/settings/dashboard"],
             "css": ["cfg.css"],
             "run_at": "document_start"

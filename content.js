@@ -116,7 +116,7 @@
             return
         }
         let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
-            pendingUpdate = !localData.plugins[pluginId].state && (parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version));
+            pendingUpdate = parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version);
             ready = Object.keys(localData.plugins[pluginId]).length > 2 && (localData.plugins[pluginId].state && !localData.plugins[pluginId].state != 'loaded');
         switch(true) {
             case pendingBuild:
