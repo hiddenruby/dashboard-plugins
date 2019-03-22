@@ -39,7 +39,7 @@
     },
     "content_scripts": [
         {
-            "matches":  ["*://*.tumblr.com*"],
+            "contexts": ["dashboard-context"],
             "js":       ["content.js"],
             "css":      ["dashboardPlugins_global.css","dashboardPlugins_indash_blog_styles.css"],
             "run_at":   "document_start"
