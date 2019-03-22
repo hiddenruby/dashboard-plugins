@@ -57,7 +57,7 @@
         {
             "contexts": ["dashboard"],
             "css":      ["assets/styles/dashboard.css",
-                        "client/prod/app/context/dashboard/index.build.css",],
+                        "client/prod/app/context/dashboard/index.build.css"],
             "run_at":   "document_start"
         },
         {
