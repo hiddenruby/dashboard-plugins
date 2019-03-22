@@ -1,6 +1,7 @@
 :root{
-    --dashboardPlugins-branding-logo: var(--dashboardPlugins-blue);
-    --dashboardPlugins-branding-accent: var(--dashboardPlugins-blue);
+    --dashboardPlugins-branding-logo: var(--dashboardPlugins-eaud-blue);
+    --dashboardPlugins-branding-logo-bright: var(--dashboardPlugins-blue);
+    --dashboardPlugins-branding-accent: var(--dashboardPlugins-eaud-blue);
     --dashboardPlugins-branding-accent-bright: #213f52;
 }
 
