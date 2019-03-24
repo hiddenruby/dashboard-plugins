@@ -64,7 +64,6 @@
             "contexts": ["settings"],
             "js":       ["toggle.js"],
             "css":      ["assets/styles/settings/settings.css","client/prod/app/context/settings/index.build.css","eaud_cfg.css"],
-            "msg":      ["settings.json"],
             "run_at":   "document_start"
         },
         {
