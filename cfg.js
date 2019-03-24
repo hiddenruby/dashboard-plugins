@@ -1,4 +1,4 @@
-(async ($) => {
+(async() => {
     let queryLocal = new Promise((resolve, reject) => {
             chrome.storage.local.get('plugins', (data)=> {
                 if (!Object.keys(data).length) {
@@ -32,36 +32,38 @@
                 } else {
                     clearInterval(cfg);
                     asyncForEach(Object.keys(localData.plugins), function(pluginId){
-                        let plugin = localData.plugins[pluginId];
-                        if ('msg' in plugin && 'name' in plugin.msg) {
-                            plugin.name = plugin.msg.name.message;
+                        if (!$('user_enable' + pluginId).length) {
+                            let plugin = localData.plugins[pluginId];
+                            if ('msg' in plugin && 'name' in plugin.msg) {
+                                plugin.name = plugin.msg.name.message;
+                            }
+                            $('.dashboardPlugins-cfg .group_content ').append( (plugin.toggle_description != false) ? $('.interface .group_content > div p').closest('.checkbox').clone()
+                                                                                                                : $('.interface .checkbox:last').clone());
+                            $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder');
+                            $('.dashboardPlugins-cfg .checkbox:last label:last').attr('for', 'user_enable_' + pluginId).text(plugin.name[locale()]).after($('<span>').addClass('dashboardPlugins-btn media-button media-killer settings-icon-hollow').attr('id','user_configure_' + pluginId));
+                            if ($('.dashboardPlugins-cfg .checkbox:last p').length) {
+                                $('.dashboardPlugins-cfg .checkbox:last p').text(plugin.description[locale()]);
+                            };
+                            $('.dashboardPlugins-cfg .checkbox:last input').prop('checked', false /*syncData[pluginId].settings.toggle*/).attr({id: 'user_enable_' + pluginId, name: 'user[enable_' + pluginId + ']'}).removeAttr('value');
+
+                            $(document).on('click', 'user_configure_' + pluginId, function(){
+                                //delete syncData.plugins[pluginId];
+                                delete localData.plugins[pluginId];
+                                //updateStorage();
+                                $('#plugin_info_' + pluginId).closest('.setting').addClass('invis');
+                                setTimeout(function(){
+                                    $('user_configure_' + pluginId).closest('.setting').remove();
+                                    if (!$('.dashboardPlugins-cfg .checkbox').length){
+                                        $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
+                                    }
+                                }, 300)
+                            });
+
+                            $(document).on('click', '#user_enable_' + pluginId, function(){
+                                //syncData[pluginId].settings.toggle = !syncData[pluginId].settings.toggle;
+                                //updateStorage('sync')
+                            })
                         }
-                        $('.dashboardPlugins-cfg .group_content ').append( (plugin.toggle_description != false) ? $('.interface .group_content > div p').closest('.checkbox').clone()
-                                                                                                            : $('.interface .checkbox:last').clone());
-                        $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder');
-                        $('.dashboardPlugins-cfg .checkbox:last label:last').attr('for', 'user_enable_' + pluginId).text(plugin.name[locale()]).after($('<span>').addClass('dashboardPlugins-btn media-button media-killer icon_help').attr('id','user_uninstall_' + pluginId));
-                        if ($('.dashboardPlugins-cfg .checkbox:last p').length) {
-                            $('.dashboardPlugins-cfg .checkbox:last p').text(plugin.description[locale()]);
-                        };
-                        $('.dashboardPlugins-cfg .checkbox:last input').prop('checked', false /*syncData[pluginId].settings.toggle*/).attr({id: 'user_enable_' + pluginId, name: 'user[enable_' + pluginId + ']'}).removeAttr('value');
-
-                        $(document).on('click', '#user_uninstall_' + pluginId, function(){
-                            //delete syncData.plugins[pluginId];
-                            delete localData.plugins[pluginId];
-                            //updateStorage();
-                            $('#user_uninstall_' + pluginId).closest('.setting').addClass('invis');
-                            setTimeout(function(){
-                                $('#user_uninstall_' + pluginId).closest('.setting').remove();
-                                if (!$('.dashboardPlugins-cfg .checkbox').length){
-                                    $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
-                                }
-                            }, 300)
-                        });
-
-                        $(document).on('click', '#user_enable_' + pluginId, function(){
-                            //syncData[pluginId].settings.toggle = !syncData[pluginId].settings.toggle;
-                            //updateStorage('sync')
-                        })
                     })
                 }
             }
@@ -73,4 +75,4 @@
         };
     };
 
-})(jQuery)
+})()

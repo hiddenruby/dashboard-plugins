@@ -1,0 +1,6 @@
+{
+    "name":{
+        "message": "Aktifkan desain UI aksesibilitas",
+        "description": "Name of the plugin's toggle switch in the Dashboard settings page"
+    }
+}

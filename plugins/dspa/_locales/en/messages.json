@@ -1,0 +1,6 @@
+{
+    "name":{
+        "message": "Dismiss suggested posts automatically",
+        "description": "Name of the plugin's toggle switch in the Dashboard settings page"
+    }
+}

@@ -48,16 +48,27 @@
     transform: scale(0.7);
 }
 
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn.icon_help {
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn {
     position: relative;
-    right: -11px;
+    right: -12px;
     display: inline-block;
-    font-size: 22px;
+    font-size: 21px;
     color: var(--dashboardPlugins-blueGrey);
     background-color: transparent;
-    border-color: transparent;
     top: 3px !important;
-    margin-top: -6px;
+    margin-top: -7px;
+    border: none;
+}
+
+
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn.settings-icon-hollow {
+    font-size: 22px;
+}
+
+.flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: all;
 }
 
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
@@ -79,10 +90,4 @@
 
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
     left: -3px;
-}
-
-.flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn.icon_help {
-    transform: scale(1);
-    opacity: 1;
-    pointer-events: all;
 }

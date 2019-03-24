@@ -1,0 +1,6 @@
+{
+    "name":{
+        "message": "Activer la conception de l'interface utilisateur d'accessibilité",
+        "description": "Name of the plugin's toggle switch in the Dashboard settings page"
+    }
+}

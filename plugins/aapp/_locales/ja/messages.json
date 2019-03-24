@@ -1,0 +1,6 @@
+{
+    "name":{
+        "message": "ユーザー補助UIデザインを有効にする",
+        "description": "Name of the plugin's toggle switch in the Dashboard settings page"
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "name":{
+        "message": "启用辅助功能UI设计",
+        "description": "Name of the plugin's toggle switch in the Dashboard settings page"
+    }
+}

@@ -1,3 +1,10 @@
+chrome.browserAction.onClicked.addListener(function(tab) {
+    optionsPage();
+});
+
+chrome.runtime.onInstalled.addListener(function() {
+});
+
 function optionsPage() {
     var optionsUrl = "https://www.tumblr.com/settings/dashboard"; 
     chrome.tabs.query({}, function(extensionTabs) {
@@ -8,7 +15,3 @@ function optionsPage() {
         }
     });
 }
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-    optionsPage();
-});

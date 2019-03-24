@@ -13,27 +13,23 @@
     },
     "options_ui": {
         "open_in_tab": true,
-        "page": "/options.html"
+        "page": "background/options.html"
       },
     "background":{
-        "scripts":["backgroundBrowserActions.js","background.js"],
-        "persistent": false
+        "scripts":["require/jquery.js", "global.js", "background/storageHandler.js", "background/pluginHandler.js", "background/browserActions.js"],
+        "persistent": true
     },
     "content_scripts": [
         {
             "matches":  ["*://*.tumblr.com/*"],
-            "js":       ["jquery-3.3.1.min.js", "content.js"],
-            "css":      ["global.css"],
+            "js":       ["require/jquery.js", "global.js", "main.js"],
+            "css":      ["css/global.css"],
             "run_at":   "document_start"
         },
         {
             "matches":  ["*://www.tumblr.com/settings*"],
             "js":       ["cfg.js"],
-            "run_at":   "document_start"
-        },
-        {
-            "matches":  ["*://www.tumblr.com/settings/dashboard"],
-            "css":      ["cfg.css"],
+            "css":      ["css/cfg.css"],
             "run_at":   "document_start"
         }
     ]
