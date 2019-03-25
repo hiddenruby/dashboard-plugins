@@ -63,7 +63,7 @@ function localDataHandler(namespace,changes) {
         });
         break;
         case 'toast':
-        //observeToast();
+        postMessage('tabs', {observeToast: localData.toast});
     }
 }
 

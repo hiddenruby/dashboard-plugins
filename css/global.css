@@ -12,7 +12,7 @@
     --dashboardPlugins-transparentWhite: #ffffff66;
 }
 
-.flag--dashboardPlugins .dashboardPlugins-btn {
+.flag--dashboardPlugins .dashboardPlugins-tumblr-icon {
     font-family: tumblr-icons,Blank;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -25,10 +25,10 @@
     text-transform: none;
 }
 
-.flag--dashboardPlugins .dashboardPlugins-btn.settings-icon:before {
+.flag--dashboardPlugins .dashboardPlugins-tumblr-icon.settings-icon:before {
     content: "\EA9B";
 }
 
-.flag--dashboardPlugins .dashboardPlugins-btn.settings-icon-hollow:before {
+.flag--dashboardPlugins .dashboardPlugins-tumblr-icon.settings-icon-hollow:before {
     content: "\EA9A";
 }

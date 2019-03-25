@@ -14,9 +14,12 @@
     "options_ui": {
         "open_in_tab": true,
         "page": "background/options.html"
-      },
+    },
+    "externally_connectable": {
+        "matches": ["*://*.tumblr.com/*"]
+    },
     "background":{
-        "scripts":["require/jquery.js", "global.js", "background/storageHandler.js", "background/pluginHandler.js", "background/browserActions.js"],
+        "scripts":["require/jquery.js", "global.js", "background/storageHandler.js", "background/pluginHandler.js", "background/toastHandler.js", "background/browserActions.js"],
         "persistent": true
     },
     "content_scripts": [

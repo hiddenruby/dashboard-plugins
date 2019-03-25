@@ -24,7 +24,8 @@ async function queryPlugin(pluginId){
         break;
         case 'ready':
         localData.plugins[pluginId].state = 'loaded';
-        postMessage({loadPlugin: localData.plugins[pluginId]});
+        postMessage('tabs', {loadPlugin: { [pluginId]: localData.plugins[pluginId] } });
+        postMessage('tabs', {loadCfg: localData.plugins});
     }
 }
 
@@ -79,6 +80,6 @@ async function buildPlugin(pluginId){
         });
     plugin = await plugin;
     localData.plugins[pluginId] = plugin;
-    //buildToast(0,plugin.name[locale()],action);
+    buildToast(0,plugin.name.en,action);
     updateStorage('local');
 };

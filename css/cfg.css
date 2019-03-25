@@ -11,6 +11,17 @@
     min-height: 64px;
 }
 
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon {
+    animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
+    top: -2px;
+    pointer-events: all;
+    border: none;
+    background-size: cover;
+    background-color: var(--dashboardPlugins-eaud-branding-logo);
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
+    right: 32px;
+}
+
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting {
     padding-right: 50px;
     margin-right: 0px;
@@ -48,9 +59,9 @@
     transform: scale(0.7);
 }
 
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn {
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-tumblr-icon {
     position: relative;
-    right: -12px;
+    right: -13px;
     display: inline-block;
     font-size: 21px;
     color: var(--dashboardPlugins-blueGrey);
@@ -60,24 +71,13 @@
     border: none;
 }
 
-
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-btn.settings-icon-hollow {
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-tumblr-icon.settings-icon-hollow {
     font-size: 22px;
 }
 
-.flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-btn {
+.flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-tumblr-icon {
     transform: scale(1);
     opacity: 1;
-    pointer-events: all;
-}
-
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus {
-    font-size: 25px;
-    background: none;
-    color: var(--dashboardPlugins-green);
-    animation: dashboardPlugins-btn-grow .3s cubic-bezier(.175,.885,.32,1.275) .4s forwards;
-    top: -2px;
-    right: 27px;
     pointer-events: all;
 }
 
@@ -88,6 +88,6 @@
     }
 }
 
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .dashboardPlugins-btn.icon_editor_plus:before {
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:before {
     left: -3px;
 }
