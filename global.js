@@ -14,9 +14,9 @@ function callBackgroundFunction(message, callback) {
 };
 
 function callContentFunction(message, callback) {
-    let uniqueName = ()=>{ return (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() };
+    let uniqueName = ()=>{ return (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() },
+        extensionTabs = [];
     chrome.tabs.query({url: '*://*.tumblr.com/*'}, async(queryTabs) => {
-        let extensionTabs = [];
         $.each(Object.keys(queryTabs), (i, tab) => {
             if (!queryTabs[tab].currentWindow && !queryTabs[tab].active) {
                 extensionTabs.push(queryTabs[tab].id);
