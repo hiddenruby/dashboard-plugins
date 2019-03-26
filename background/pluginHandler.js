@@ -4,7 +4,7 @@ async function queryPlugin(pluginId){
         return
     }
     let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
-        pendingUpdate = false, //parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version),
+        pendingUpdate = parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version),
         ready = Object.keys(localData.plugins[pluginId]).length > 2;
     switch(true) {
         case pendingBuild:
@@ -16,16 +16,14 @@ async function queryPlugin(pluginId){
         case ready:
         localData.plugins[pluginId].state = 'ready';
     }
-    //postMessage({loadPlugin: localData.plugins[pluginId]});
     console.log(pluginId,'is',localData.plugins[pluginId].state);
     switch(localData.plugins[pluginId].state) {
         case (/pending/.exec(localData.plugins[pluginId].state) || {}).input:
         buildPlugin(pluginId);
         break;
         case 'ready':
-        localData.plugins[pluginId].state = 'loaded';
-        postMessage('tabs', {loadPlugin: { [pluginId]: localData.plugins[pluginId] } });
-        postMessage('tabs', {loadCfg: localData.plugins});
+        callContentFunction({loadPlugin: {[pluginId]: localData.plugins[pluginId]}});
+        callContentFunction({loadCfg: localData.plugins});
     }
 }
 

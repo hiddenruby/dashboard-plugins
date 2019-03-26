@@ -7,12 +7,32 @@ let git_username =  'jorubyp',
     locale =        ()=>{ return $('html').attr('lang').split('-')[0] },
     context =       ()=>{ let context; $.each($('html').attr('class').split(" "), (i, c) =>{ if (c.match(/-context/)) { context = c } }); return context };
 
-postMessage('runtime', {getCurrentTab: ''})
+function callBackgroundFunction(message, callback) {
+    let uniqueName = {name: (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString()},
+        port = chrome.runtime.connect(uniqueName);
+    postMessage(port, message, callback);
+};
 
-async function postMessage(recipient, message, callback) {
-    let uniqueName = { name: (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() },
-        attributes = { tabs: [ window.currentTab, uniqueName ], runtime: [ uniqueName ] },
-        port = chrome[recipient].connect(...attributes[recipient]);
+function callContentFunction(message, callback) {
+    let uniqueName = ()=>{ return (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() };
+    chrome.tabs.query({url: '*://*.tumblr.com/*'}, async(queryTabs) => {
+        let extensionTabs = [];
+        $.each(Object.keys(queryTabs), (i, tab) => {
+            if (!queryTabs[tab].currentWindow && !queryTabs[tab].active) {
+                extensionTabs.push(queryTabs[tab].id);
+            } else {
+                extensionTabs.unshift(queryTabs[tab].id);
+            }
+        })
+        asyncForEach(extensionTabs, async(tab) => {
+            let port = chrome.tabs.connect(tab, {name: uniqueName()});
+            postMessage(port, message, callback);
+        })
+    })
+};
+
+async function postMessage(port, message, callback) {
+    let uniqueName = { name: (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() };
     port.postMessage(message);
     if (typeof callback == 'function') {
         port.onMessage.addListener( async(response) => {
@@ -23,23 +43,17 @@ async function postMessage(recipient, message, callback) {
 
 chrome.runtime.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(message,event) {
-        $.each(Object.keys(message), (i, taskId) => {
-            console.log(taskId,'function:',typeof window[taskId]);
-            if (typeof window[taskId] == 'function') {
-                window[taskId](message[taskId]).then(result => port.postMessage({data: result, sender: event.sender.tab.id}));
+        asyncForEach(Object.keys(message), async(id) => {
+            if (typeof window[id] == 'function') {
+                console.log(port.name)
+                window[id](message[id]).then(result => {
+                    message = {data: result, sender: ('tab' in event.sender ? event.sender.tab.id : event.sender)};
+                    port.postMessage(message)
+                });
             }
         });
     });
 });
-
-async function getCurrentTab() {
-    return new Promise((resolve, reject) => {
-        chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
-            window.currentTab = tabs[0].id;
-            resolve(tabs[0]);
-        })
-    })
-}
 
 async function asyncForEach(array, callback) {
     for (let i = 0; i < array.length; i++) {

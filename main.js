@@ -1,53 +1,58 @@
 let toastObserver = new MutationObserver(pushToast);
 jQueryAdd();
 addFlag();
-postMessage('runtime', {queryStorage: 'sync'}, async(response) => {
-    //window.currentTab = response.sender;
+callBackgroundFunction({queryStorage: 'sync'}, async(response) => {
     console.log('sync',response.data.plugins)
     asyncForEach(Object.keys(response.data.plugins), async(pluginId) => {
-        postMessage('runtime', {queryPlugin: pluginId});
+        callBackgroundFunction({queryPlugin: pluginId});
     });
 });
 
-function loadPlugin(plugin){
-    let pluginId = Object.keys(plugin)[0],
-        pluginPath = 'plugins/' + pluginId + '/';
-    plugin = plugin[pluginId];
-    console.log('loading',pluginId,plugin)
-    asyncForEach(plugin.content_scripts, async(content) => {
-        let matches = 'matches' in content && content.matches.some( (i) => {
-                return window.location.href.match(new RegExp(i.replace(/\*/g, '.*').replace(/\//g,'\\/')))
-            }),
-            contexts = 'contexts' in content && content.contexts.some( (i) => {
-                return context().match(new RegExp(i.replace(/\*/g, '.*')))
-            });
-        if (matches || contexts) {
-            asyncForEach(Object.keys(content), async(contentType) => {
-                switch(contentType) {
-                    case 'css':
-                    asyncForEach(content.css, async(css) => {
-                        let attributes = {
-                            type: 'text/css',
-                            'data-dashboardplugins-owner':  pluginId
-                        };
-                        $('head').append($('<style>').attr(attributes).text(css));
-                    });
-                    break;
-                    case 'js':
-                    asyncForEach(content.js, async(js) => {
-                        let attributes = {
-                            type: 'text/javascript',
-                            'data-dashboardplugins-owner':pluginId, 
-                            src: git_envURL + pluginPath + 'js/' + js + '?=' + timeStamp()
-                        };
-                        $('head').append($('<script>').attr(attributes));
-                    });
-                    break;
-                }
-            });
-        };
+async function loadPlugin(plugin){
+    return new Promise((resolve, reject) => {
+        let pluginId = Object.keys(plugin)[0],
+            pluginPath = 'plugins/' + pluginId + '/';
+        plugin = plugin[pluginId];
+        if ($('.flag--dashboardPlugins-' + pluginId).length) {
+            resolve({[pluginId]:'not newer'});
+        }
+        console.log('loading',pluginId,plugin)
+        asyncForEach(plugin.content_scripts, async(content) => {
+            let matches = 'matches' in content && content.matches.some( (i) => {
+                    return window.location.href.match(new RegExp(i.replace(/\*/g, '.*').replace(/\//g,'\\/')))
+                }),
+                contexts = 'contexts' in content && content.contexts.some( (i) => {
+                    return context().match(new RegExp(i.replace(/\*/g, '.*')))
+                });
+            if (matches || contexts) {
+                asyncForEach(Object.keys(content), async(contentType) => {
+                    switch(contentType) {
+                        case 'css':
+                        asyncForEach(content.css, async(css) => {
+                            let attributes = {
+                                type: 'text/css',
+                                'data-dashboardplugins-owner':  pluginId
+                            };
+                            $('head').append($('<style>').attr(attributes).text(css));
+                        });
+                        break;
+                        case 'js':
+                        asyncForEach(content.js, async(js) => {
+                            let attributes = {
+                                type: 'text/javascript',
+                                'data-dashboardplugins-owner':pluginId, 
+                                src: git_envURL + pluginPath + 'js/' + js + '?=' + timeStamp()
+                            };
+                            $('head').append($('<script>').attr(attributes));
+                        });
+                        break;
+                    }
+                });
+            };
+        });
+        addFlag(pluginId);
+        resolve({[pluginId]:'loaded'});
     });
-    addFlag(pluginId);
 };
 
 function observeToast(toastQueue) {
@@ -103,12 +108,22 @@ function pushToast(toastQueue) {
 
 window.addEventListener("keydown", (event) => { //temp
     switch(event.key) {
-        case 'i' || 'I':
-        postMessage('runtime', {queryStorage: 'remote'}, async(response) => {
-            console.log('remote',response.data)
-            asyncForEach(Object.keys(response.data.plugins), async(pluginId) => {
-                postMessage('runtime', {installPlugin: [pluginId]})
-            });
+        case 'e' || 'E':
+        callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
+            console.log('remote',response.data);
+            callBackgroundFunction({installPlugin: 'eaud'})
+        });
+        break;
+        case 'a' || 'A':
+        callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
+            console.log('remote',response.data);
+            callBackgroundFunction( {installPlugin: 'aapp'})
+        });
+        break;
+        case 'd' || 'D':
+        callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
+            console.log('remote',response.data);
+            callBackgroundFunction({installPlugin: 'dspa'})
         });
         break;
     };

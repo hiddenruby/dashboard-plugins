@@ -39,7 +39,7 @@ async function queryStorage(namespace) {
 function updateStorage(namespace) {
     if (namespace) {
         let data = window[namespace + 'Data'];
-        console.log(data);
+        console.log(namespace + ':', data);
         chrome.storage[namespace].set(data);
     } else {
         chrome.storage.sync.set(syncData);
@@ -63,7 +63,7 @@ function localDataHandler(namespace,changes) {
         });
         break;
         case 'toast':
-        postMessage('tabs', {observeToast: localData.toast});
+        //callContentFunction({observeToast: localData.toast});
     }
 }
 

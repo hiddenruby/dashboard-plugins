@@ -1,5 +1,5 @@
 function loadCfg(plugins){
-    cfg =   setInterval(() =>{
+    let cfg =   setInterval(() =>{
                 let descDash = $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text'),
                     descDashStr = chrome.i18n.getMessage("pluginsWord").toLowerCase();
                 if (descDash.length && descDash.text().indexOf(descDashStr) < 0) { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
@@ -22,7 +22,7 @@ function loadCfg(plugins){
                     } else {
                         clearInterval(cfg);
                         asyncForEach(Object.keys(plugins), function(pluginId){
-                            if ($('.dashboardPlugins-cfg .checkbox').length <= Object.keys(plugins).length - 1) {
+                            if (!$('#user_enable_' + pluginId).length) {
                                 let plugin = plugins[pluginId];
                                 if ('msg' in plugin && 'name' in plugin.msg) {
                                     plugin.name = plugin.msg.name.message;
