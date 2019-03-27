@@ -1,6 +1,6 @@
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .settings_group.dashboardPlugins-cfg  .group_label .dashboardPlugins-tumblr-icon {
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .settings_group.dashboardPlugins-cfg  .group_label .dashboardPlugins-tumblr-icon:before {
     background-color: var(--dashboardPlugins-eaud-blue);
 }
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon {
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:before {
     background-color: var(--dashboardPlugins-blue);
 }
