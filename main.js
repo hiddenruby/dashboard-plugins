@@ -1,12 +1,7 @@
 let toastObserver = new MutationObserver(pushToast);
 jQueryAdd();
 addFlag();
-callBackgroundFunction({queryStorage: 'sync'}, async(response) => {
-    console.log('sync',response.data.plugins)
-    asyncForEach(Object.keys(response.data.plugins), async(pluginId) => {
-        callBackgroundFunction({queryPlugin: pluginId});
-    });
-});
+callBackgroundFunction({queryPlugins: ''});
 
 async function loadPlugin(plugin){
     return new Promise((resolve, reject) => {
@@ -16,7 +11,6 @@ async function loadPlugin(plugin){
         if ($('.flag--dashboardPlugins-' + pluginId).length) {
             resolve({[pluginId]:'not newer'});
         }
-        console.log('loading',pluginId,plugin)
         asyncForEach(plugin.content_scripts, async(content) => {
             let matches = 'matches' in content && content.matches.some( (i) => {
                     return window.location.href.match(new RegExp(i.replace(/\*/g, '.*').replace(/\//g,'\\/')))
@@ -110,19 +104,16 @@ window.addEventListener("keydown", (event) => { //temp
     switch(event.key) {
         case 'e' || 'E':
         callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
-            console.log('remote',response.data);
             callBackgroundFunction({installPlugin: 'eaud'})
         });
         break;
         case 'a' || 'A':
         callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
-            console.log('remote',response.data);
             callBackgroundFunction( {installPlugin: 'aapp'})
         });
         break;
         case 'd' || 'D':
         callBackgroundFunction({queryStorage: 'remote'}, async(response) => {
-            console.log('remote',response.data);
             callBackgroundFunction({installPlugin: 'dspa'})
         });
         break;
@@ -130,24 +121,17 @@ window.addEventListener("keydown", (event) => { //temp
 })
 
 async function jQueryAdd() {
-    let jQueryAdd = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         let tryAdd = setInterval(() => {
             if ($('head')) {
                 clearInterval(tryAdd);
                 $('head').append($('<script async>').attr({type: 'text/javascript', 'data-dashboardplugins-owner':'main', src: jQueryURL}));
-                if (!$('script[scr="' + jQueryURL + '"]')) {
-                    reject('jquery not added');
-                } else {
-                    resolve('jquery added');
-                };
             };
         },1);
     });
-    console.log(await jQueryAdd);
 };
 
 function addFlag(flagId) {
     flagId = 'flag--dashboardPlugins' + (flagId ? '-' + flagId : '');
     $('html').addClass(flagId);
-    console.log(flagId,(!$('html.' + flagId).length ? 'was not added' : 'added'));
 };

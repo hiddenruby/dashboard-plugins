@@ -5,8 +5,8 @@ queryStorage('remote').then(data => {window.remoteData = data});
 async function queryStorage(namespace) {
     return new Promise((resolve, reject) => {
         if (window[namespace + 'Data']) {
-            console.log(namespace + 'Data already exists')
-            resolve(window[namespace + 'Data'])
+            console.log('installed plugins:',syncData.plugins);
+            resolve(window[namespace + 'Data']);
         }
         switch(namespace){
             case 'remote':
@@ -56,11 +56,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 function localDataHandler(namespace,changes) {
     switch(namespace){
         case 'plugins':
-        asyncForEach(Object.keys(changes.newValue), (pluginId) => {
-            if (syncData.plugins[pluginId]) {
-                queryPlugin(pluginId)
-            };
-        });
+        queryPlugins();
         break;
         case 'toast':
         //callContentFunction({observeToast: localData.toast});

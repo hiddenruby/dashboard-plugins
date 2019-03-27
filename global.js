@@ -15,20 +15,21 @@ function callBackgroundFunction(message, callback) {
 
 function callContentFunction(message, callback) {
     let uniqueName = ()=>{ return (timeStamp() + (Math.random() * (+1000 - +1) + +1)).toString() },
-        extensionTabs = [];
-    chrome.tabs.query({url: '*://*.tumblr.com/*'}, async(queryTabs) => {
-        $.each(Object.keys(queryTabs), (i, tab) => {
-            if (!queryTabs[tab].currentWindow && !queryTabs[tab].active) {
-                extensionTabs.push(queryTabs[tab].id);
-            } else {
-                extensionTabs.unshift(queryTabs[tab].id);
-            }
-        })
-        asyncForEach(extensionTabs, async(tab) => {
-            let port = chrome.tabs.connect(tab, {name: uniqueName()});
-            postMessage(port, message, callback);
-        })
-    })
+        match = '*://*.tumblr.com/*',
+        currentTab;
+    chrome.tabs.query({url: match, currentWindow: true, active: true}, function (tabs) {
+        currentTab = tabs[0].id;
+        let port = chrome.tabs.connect(currentTab, {name: uniqueName()});
+        postMessage(port, message, callback);
+    });
+    chrome.tabs.query({url: match}, (queryTabs) => {
+        asyncForEach(queryTabs, async(tab) => {
+            if (tab.id !== currentTab) {
+                let port = chrome.tabs.connect(tab.id, {name: uniqueName()});
+                postMessage(port, message, callback);
+            };
+        });
+    });
 };
 
 async function postMessage(port, message, callback) {
@@ -45,7 +46,6 @@ chrome.runtime.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(message,event) {
         asyncForEach(Object.keys(message), async(id) => {
             if (typeof window[id] == 'function') {
-                console.log(port.name)
                 window[id](message[id]).then(result => {
                     message = {data: result, sender: ('tab' in event.sender ? event.sender.tab.id : event.sender)};
                     port.postMessage(message)

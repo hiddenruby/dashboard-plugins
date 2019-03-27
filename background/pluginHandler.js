@@ -1,30 +1,33 @@
-async function queryPlugin(pluginId){
-    if (!localData.plugins[pluginId]) {
-        syncPlugin(pluginId);
-        return
-    }
-    let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
-        pendingUpdate = parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version),
-        ready = Object.keys(localData.plugins[pluginId]).length > 2;
-    switch(true) {
-        case pendingBuild:
-        localData.plugins[pluginId].state = 'pending build';
-        break;
-        case pendingUpdate: 
-        localData.plugins[pluginId].state = 'pending update';
-        break;
-        case ready:
-        localData.plugins[pluginId].state = 'ready';
-    }
-    console.log(pluginId,'is',localData.plugins[pluginId].state);
-    switch(localData.plugins[pluginId].state) {
-        case (/pending/.exec(localData.plugins[pluginId].state) || {}).input:
-        buildPlugin(pluginId);
-        break;
-        case 'ready':
-        callContentFunction({loadPlugin: {[pluginId]: localData.plugins[pluginId]}});
-        callContentFunction({loadCfg: localData.plugins});
-    }
+async function queryPlugins(){
+    asyncForEach(Object.keys(syncData.plugins), async(pluginId) => {
+        if (!localData.plugins[pluginId]) {
+            syncPlugin(pluginId);
+            return
+        }
+        let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
+            pendingUpdate = parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version),
+            ready = Object.keys(localData.plugins[pluginId]).length > 2;
+        switch(true) {
+            case pendingBuild:
+            localData.plugins[pluginId].state = 'pending build';
+            break;
+            case pendingUpdate: 
+            localData.plugins[pluginId].state = 'pending update';
+            break;
+            case ready:
+            localData.plugins[pluginId].state = 'ready';
+        }
+        console.log(pluginId,'is',localData.plugins[pluginId].state);
+        switch(localData.plugins[pluginId].state) {
+            case (/pending/.exec(localData.plugins[pluginId].state) || {}).input:
+            buildPlugin(pluginId);
+            break;
+            case 'ready':
+            console.log('loading',pluginId)
+            callContentFunction({loadPlugin: {[pluginId]: localData.plugins[pluginId]}});
+            callContentFunction({loadCfg: localData.plugins});
+        }
+    });
 }
 
 function installPlugin(pluginId){

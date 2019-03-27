@@ -3,10 +3,6 @@
     pointer-events: none !important;
 }
 
-.flag--dashboardPlugins .inline_notification {
-    pointer-events: none;
-}
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg {
     min-height: 64px;
 }
@@ -23,11 +19,36 @@
     pointer-events: all;
     border: none;
     background-size: cover;
-    background-color: var(--dashboardPlugins-blue);
-    background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
+    background-color: var(--dashboardPlugins-blueGrey);
     right: -16px;
+    overflow: hidden;
     position: relative;
-    transition: transform .3s cubic-bezier(.175,.885,.32,1.275),opacity .1s cubic-bezier(.165,.84,.44,1)
+}
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:before {
+    content: " ";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    left: 0px;
+    top: 0px;
+    background-color: var(--dashboardPlugins-blue);
+    border-radius: 100%;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform .4s cubic-bezier(0.18, 0.89, 0.25, 1.01) 0s,opacity .2s cubic-bezier(.165,.84,.44,1)
+}
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:hover:before {
+    transform: scale(1);
+    opacity: 1;
+}
+.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:after {
+    background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
+    content: " ";
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    left: 0px;
+    top: 0px;
 }
 
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting {
@@ -48,21 +69,17 @@
     margin-bottom: 0px;
     padding-bottom: 10px;
 }
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox .help_text {
     margin: 0 0 10px;
 }
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type {
     margin-bottom: -20px;
     padding-bottom: 19px;
 }
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox:last-of-type .help_text {
     margin: 0px;
     padding-bottom: 0px;
 }
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting.checkbox.invis {
     transform: scale(0.7);
 }
@@ -78,12 +95,10 @@
     background-color: transparent;
     border: none;
 }
-
 .flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .setting .dashboardPlugins-tumblr-icon.settings-icon-hollow {
     font-size: 22px;
     transition: transform .3s cubic-bezier(.175,.885,.32,1.275),opacity .1s cubic-bezier(.165,.84,.44,1);
 }
-
 .flag--dashboardPlugins .dashboardPlugins-cfg .setting.checkbox:hover .dashboardPlugins-tumblr-icon {
     transform: scale(1);
     opacity: 1;
@@ -95,8 +110,4 @@
     transform: scale(1);
     opacity: 1;
     }
-}
-
-.flag--dashboardPlugins .settings_group.dashboardPlugins-cfg .group_label .dashboardPlugins-tumblr-icon:before {
-    left: -3px;
 }
