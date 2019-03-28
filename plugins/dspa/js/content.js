@@ -5,11 +5,11 @@
     let top = $(window).scrollTop();
     $(window).scroll(function(){
         $.each($('*[data-dashboardplugins-influencer="dspa"]'), function() {
-            console.log(this)
-            let btn = this.find('.post_dismiss'),
-                postBottom = this.offset().top + this.outerHeight();
+            console.log($(this))
+            let btn = $(this).find('.post_dismiss'),
+                postBottom = $(this).offset().top + $(this).outerHeight();
             if (postBottom < top){
-                this.find('.post').addClass('is_audio');
+                $(this).find('.post').addClass('is_audio');
                 setTimeout(()=>{
                     if (postBottom < top){
                         btn.click()
