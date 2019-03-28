@@ -1,20 +1,20 @@
 (function($){
     $(document).bind('DOMNodeInserted', (event) => {
-        console.log('ooo')
+        console.log('aaa')
         $(event.target).find('.post_dismiss').closest('.post_container').attr({'data-dashboardplugins-influencer': 'dspa'})
     });
     let top = $(window).scrollTop();
     $(window).scroll(() => {
-        $.each($('*[data-dashboardplugins-influencer="dspa"]'), (i) => {
-            console.log('bastard spotted',$('*[data-dashboardplugins-influencer="dspa"]')[i].find('.post').attr('data-id'))
-            let postBottom = $('*[data-dashboardplugins-influencer="dspa"]')[i].offset().top + $('*[data-dashboardplugins-influencer="dspa"]')[i].outerHeight();
+        $.each($('*[data-dashboardplugins-influencer="dspa"]'), (i,e) => {
+            console.log('bastard spotted',$(e).find('.post').attr('data-id'))
+            let postBottom = $(e).offset().top + $(e).outerHeight();
             if (postBottom < top){
-                console.log('preparing attack',$('*[data-dashboardplugins-influencer="dspa"]')[i].find('.post').attr('data-id'))
-                $('*[data-dashboardplugins-influencer="dspa"]')[i].find('.post').addClass('is_audio');
+                console.log('preparing attack',$(e).find('.post').attr('data-id'))
+                $(e).find('.post').addClass('is_audio');
                 setTimeout(() => {
                     if (postBottom < top){
-                        console.log('taking out target',$('*[data-dashboardplugins-influencer="dspa"]')[i].find('.post').attr('data-id'))
-                        $('*[data-dashboardplugins-influencer="dspa"]')[i].find('.post_dismiss').click()
+                        console.log('taking out target',$(e).find('.post').attr('data-id'))
+                        $(e).find('.post_dismiss').click()
                     };
                 },5000)
             };
