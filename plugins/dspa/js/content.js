@@ -1,6 +1,6 @@
 (function($){
     $(document).bind('DOMNodeInserted', (event) => {
-        console.log('ay')
+        console.log('ooo')
         $(event.target).find('.post_dismiss').closest('.post_container').attr({'data-dashboardplugins-influencer': 'dspa'})
     });
     let top = $(window).scrollTop();
