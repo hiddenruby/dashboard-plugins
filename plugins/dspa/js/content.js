@@ -13,7 +13,7 @@
                 setTimeout(() => {
                     if (postBottom < top){
                         console.log('taking out target',$(e).find('.post_dismiss'))
-                        $(e).find('.post_dismiss').click()
+                        $(e).find('.post_dismiss')[0].click()
                     };
                 },5000)
             };
