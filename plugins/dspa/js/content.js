@@ -4,14 +4,16 @@
     });
     let top = $(window).scrollTop();
     $(window).scroll(() => {
-        $.each($('*[data-dashboardplugins-influencer="dspa"]'), () => {
-            console.log(this)
-            let postBottom = this.offset().top + this.outerHeight();
+        $.each($('*[data-dashboardplugins-influencer="dspa"]'), (i) => {
+            console.log('bastard spotted',$(this).find('.post').attr('data-id'))
+            let postBottom = $(this).offset().top + $(this).outerHeight();
             if (postBottom < top){
-                this.find('.post').addClass('is_audio');
+                console.log('preparing attack',$(this).find('.post').attr('data-id'))
+                $(this).find('.post').addClass('is_audio');
                 setTimeout(() => {
                     if (postBottom < top){
-                        this.find('.post_dismiss').click()
+                        console.log('taking out target',$(this).find('.post').attr('data-id'))
+                        $(this).find('.post_dismiss').click()
                     };
                 },5000)
             };
