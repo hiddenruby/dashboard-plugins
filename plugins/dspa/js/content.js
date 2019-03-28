@@ -2,9 +2,10 @@
     $(window).scroll(() => {
         $.each($('.post_container').find('.post_dismiss'), (i,e) => {
             let top = $(window).scrollTop(),
-                postBottom = $(e).offset().top + $(e).outerHeight();
-            $(e).find('.post').addClass('is_audio');
-            if (postBottom + 300 < top){
+            container = $(e).closest('post_container');
+            containerBottom = container.offset().top + container.outerHeight();
+            $(container).find('.post').addClass('is_audio');
+            if (containerBottom + 300 < top){
                 $(e).find('.icon_close').click()
             };
         });
