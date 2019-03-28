@@ -1,6 +1,6 @@
 (function($){
     $(document).bind('DOMNodeInserted', (event) => {
-        console.log($(event.target).find('.post_dismiss').length ? $('*[data-dashboardplugins-influencer="dspa"]').length ? 'bastard spotted' : '' : 'searching...')
+        console.log($(event.target).find('.post_dismiss').length ? !$('*[data-dashboardplugins-influencer="dspa"]').length ? 'bastard spotted' : nop : 'searching...')
         $(event.target).find('.post_dismiss').closest('.post_container').attr({'data-dashboardplugins-influencer': 'dspa'});
     });
     $(window).scroll(() => {
@@ -8,12 +8,14 @@
             let top = $(window).scrollTop(),
                 postBottom = $(e).offset().top + $(e).outerHeight();
             if (postBottom < top){
-                console.log(!$(e).find('.is_audio') ? 'preparing attack ' + $(e).find('.post').attr('data-id') : '')
-                $(e).find('.post').addClass('is_audio');
+                if (!$(e).find('.is_audio')) {
+                    console.log('preparing attack')
+                    $(e).find('.post').addClass('is_audio');
+                }
                 setTimeout(() => {
                     if (postBottom < top){
-                        console.log('taking out target',$(e).find('.post_dismiss'))
-                        $(e).find('.post_dismiss')[0].click()
+                        console.log('taking out target',$(e).find('.icon_close'))
+                        $(e).find('.icon_close').click()
                     };
                 },5000)
             };
