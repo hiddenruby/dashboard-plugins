@@ -4,16 +4,14 @@
     });
     let top = $(window).scrollTop();
     $(window).scroll(() => {
-        $.each($('*[data-dashboardplugins-influencer="dspa"]'), () => {
-            console.log($(this))
-            let btn = $(this).find('.post_dismiss'),
-                postBottom = $(this).offset().top + $(this).outerHeight();
+        $.each($('*[data-dashboardplugins-influencer="dspa"]'), (i) => {
+            this = $('*[data-dashboardplugins-influencer="dspa"]')[i]
+            let postBottom = this.offset().top + this.outerHeight();
             if (postBottom < top){
-                $(this).find('.post').addClass('is_audio');
+                this.find('.post').addClass('is_audio');
                 setTimeout(() => {
-                    console.log(btn)
                     if (postBottom < top){
-                        btn.click()
+                        this.find('.post_dismiss').click()
                     };
                 },5000)
             };
