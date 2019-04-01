@@ -54,6 +54,8 @@ async function buildPlugin(pluginId){
             $.getJSON(git_envURL + pluginPath + 'manifest.json' + '?_=' + timeStamp(), (data) => {
                 plugin = localData.plugins[pluginId];
                 Object.assign(plugin,data);
+                plugin.source = git_repoURL + '/tree/master/' + pluginPath;
+                plugin.repo = git_repoURL;
                 asyncForEach(plugin.content_scripts, async(content) => {
                     asyncForEach(Object.keys(content), async(contentType) => {
                         if (!contextTypes.includes(contentType)) {

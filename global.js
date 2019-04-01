@@ -2,7 +2,8 @@ let git_username =  'jorubyp',
     git_repo =      'dashboard-plugins',
     git_apiURL =    'https://api.github.com/repos/' + git_username + '/' + git_repo + '/contents/',
     git_envURL =    'https://' + git_username + '.github.io/' + git_repo + '/',
-    jQueryURL =     git_envURL + '/require/jquery.js',
+    git_repoURL =   'https://github.com/' + git_username + '/' + git_repo,
+    jQueryURL =     git_envURL + 'require/jquery.js',
     timeStamp =     ()=>{ return new Date().getTime() },
     locale =        ()=>{ return $('html').attr('lang').split('-')[0] },
     context =       ()=>{ let context; $.each($('html').attr('class').split(" "), (i, c) =>{ if (c.match(/-context/)) { context = c } }); return context };
@@ -60,3 +61,14 @@ async function asyncForEach(array, callback) {
         await callback(array[i], i, array);
     };
 };
+
+function formatDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+  }

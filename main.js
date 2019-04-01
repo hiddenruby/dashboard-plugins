@@ -8,7 +8,7 @@ async function loadPlugin(plugin){
         let pluginId = Object.keys(plugin)[0],
             pluginPath = 'plugins/' + pluginId + '/';
         plugin = plugin[pluginId];
-        if ($('.flag--dashboardPlugins-' + pluginId).length) {
+        if ($('*[data-dashboardplugins-owner="' + pluginId + '"]').length) {
             resolve({[pluginId]:'not newer'});
         }
         asyncForEach(plugin.content_scripts, async(content) => {
