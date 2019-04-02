@@ -1,4 +1,4 @@
-:root :not(.flag--accessibility-design-update) {
+body:not(.flag--accessibility-design-update) {
     --dashboardPlugins-background: #36465d;
     --dashboardPlugins-glass: #36465df2;
     --dashboardPlugins-green: #56bc8a;
