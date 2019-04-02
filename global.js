@@ -21,14 +21,20 @@ function callContentFunction(message, callback) {
     chrome.tabs.query({url: match, currentWindow: true, active: true}, function (tabs) {
         currentTab = tabs[0].id;
         let port = chrome.tabs.connect(currentTab, {name: uniqueName()});
-        postMessage(port, message, callback);
-    });
-    chrome.tabs.query({url: match}, (queryTabs) => {
-        asyncForEach(queryTabs, async(tab) => {
-            if (tab.id !== currentTab) {
-                let port = chrome.tabs.connect(tab.id, {name: uniqueName()});
-                postMessage(port, message, callback);
-            };
+        postMessage(port, message, async(response) => {
+            try {
+                callback(response);
+            } catch(error) {
+                console.log(error)
+            }
+            chrome.tabs.query({url: match}, (queryTabs) => {
+                asyncForEach(queryTabs, async(tab) => {
+                    if (tab.id !== currentTab) {
+                        let port = chrome.tabs.connect(tab.id, {name: uniqueName()});
+                        postMessage(port, message, callback);
+                    };
+                });
+            });
         });
     });
 };
@@ -47,10 +53,14 @@ chrome.runtime.onConnect.addListener(function(port) {
     port.onMessage.addListener(function(message,event) {
         asyncForEach(Object.keys(message), async(id) => {
             if (typeof window[id] == 'function') {
-                window[id](message[id]).then(result => {
-                    message = {data: result, sender: ('tab' in event.sender ? event.sender.tab.id : event.sender)};
-                    port.postMessage(message)
-                });
+                try {
+                    window[id](message[id]).then(result => {
+                        message = {data: result, sender: ('tab' in event.sender ? event.sender.tab.id : event.sender)};
+                        port.postMessage(message)
+                    });
+                } catch(error) {
+                    console.error(error);
+                }
             }
         });
     });

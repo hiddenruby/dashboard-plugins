@@ -263,7 +263,7 @@ function pluginDrawer(plugin,pluginId) {
                                                 installDate
                                             )
                                         )
-                                    ),
+                                    ),/*
                                     $('<li>').attr({
                                         class:'keycommand-guide-section-item'
                                     }).append(
@@ -281,7 +281,7 @@ function pluginDrawer(plugin,pluginId) {
                                                 Object.keys(plugin.name).toString().toLocaleUpperCase().replace(/,/g,", ")
                                             )
                                         )
-                                    ),
+                                    ),*/
                                 ),
                                 $('<ul>').attr({
                                     class:'keycommand-guide-section'
@@ -290,7 +290,7 @@ function pluginDrawer(plugin,pluginId) {
                                         class:'section_header'
                                     }).text(
                                         'preferences'
-                                    ),
+                                    ),/*
                                     $('<li>').attr({
                                         class:'keycommand-guide-section-item'
                                     }).append(
@@ -315,7 +315,7 @@ function pluginDrawer(plugin,pluginId) {
                                                 class:'binary_switch_button'
                                             })
                                         )
-                                    ),
+                                    ),*/
                                     $('<li>').attr({
                                         class:'keycommand-guide-section-item'
                                     }).append(
@@ -329,8 +329,8 @@ function pluginDrawer(plugin,pluginId) {
                                         }).append(
                                             $('<input>').attr({
                                                 type:'checkbox',
-                                                name: 'user[enable_' + pluginId + ']',
-                                                id: 'user_enable_' + pluginId,
+                                                name: 'user[update_' + pluginId + ']',
+                                                id: 'user_update_' + pluginId,
                                                 checked: ''
                                             }),
                                             $('<span>').attr({
@@ -354,8 +354,8 @@ function pluginDrawer(plugin,pluginId) {
                                         }).append(
                                             $('<input>').attr({
                                                 type:'checkbox',
-                                                name: 'user[enable_' + pluginId + ']',
-                                                id: 'user_enable_' + pluginId,
+                                                name: 'user[sync_' + pluginId + ']',
+                                                id: 'user_sync_' + pluginId,
                                                 checked: ''
                                             }),
                                             $('<span>').attr({
@@ -383,9 +383,9 @@ function pluginDrawer(plugin,pluginId) {
             )
         )
         setTimeout(() => {
-            $('body').addClass('peepr');
+            $('body').addClass('peepr peepr--dashboardPlugins-plugincfg');
             $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
-                style: 'opacity: 1'
+                style: 'opacity: .95'
             });
             $('.drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .avatar').removeClass('invis');
             $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').addClass('open');
@@ -402,7 +402,7 @@ function pluginDrawer(plugin,pluginId) {
             },500)
         });
         $(document).on('click', '.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"] .delete', function(){
-            $('body').removeClass('peepr');
+            $('body').removeClass('peepr peepr--dashboardPlugins-plugincfg');
             $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
                 style: 'opacity: 0'
             })

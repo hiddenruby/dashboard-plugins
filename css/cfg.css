@@ -191,3 +191,7 @@
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-plugin-actions {
     margin: 20px auto 15px auto;
 }
+
+.flag--dashboardPlugins .peepr.peepr--dashboardPlugins-plugincfg .messaging-conversation-popovers .messaging-conversations-container {
+    transform: translateX(-488px);
+}
