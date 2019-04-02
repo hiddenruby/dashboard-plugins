@@ -24,28 +24,19 @@ body:not(.flag--accessibility-design-update) {
     background-size: 101%;
 }
 
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3 a,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 a,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3 a,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 a,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation h3 a,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .nav_icon,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .blog-search-input,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .blog-search-input::-webkit-input-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .blog-search-input::-moz-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .blog-search-input:-moz-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation .blog-search-input:-ms-input-placeholder,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
     color: var(--dashboardPlugins-branding-accent) !important;
 }
 
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .navigation button,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .indash_blog .show_more_posts {
     background-color: var(--dashboardPlugins-branding-accent) !important;
     border-color: var(--dashboardPlugins-branding-accent) !important;
