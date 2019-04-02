@@ -1,9 +1,9 @@
 body {
     --dashboardPlugins-branding-logo: var(--dashboardPlugins-blue);
-    --dashboardPlugins-branding-accent: var(--dashboardPlugins-blue);
+    --dashboardPlugins-branding-accent: #213f52;
 }
 body:not(.flag--accessibility-design-update) {
-    --dashboardPlugins-branding-accent: #213f52;
+    --dashboardPlugins-branding-accent: var(--dashboardPlugins-blue);
 }
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_64'],
