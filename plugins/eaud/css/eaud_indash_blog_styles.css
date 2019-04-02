@@ -1,11 +1,9 @@
-:root{
+body {
     --dashboardPlugins-branding-logo: var(--dashboardPlugins-blue);
     --dashboardPlugins-branding-accent: var(--dashboardPlugins-blue);
-    --dashboardPlugins-branding-accent-bright: #213f52;
 }
-
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update *[style*='background-color: rgb(59, 194, 111)'] {
-    background-color: var(--dashboardPlugins-branding-accent-bright) !important;
+body:not(.flag--accessibility-design-update) {
+    --dashboardPlugins-branding-accent: #213f52;
 }
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud *[style*='8fa900b180f1_64'],
@@ -25,83 +23,28 @@
     background-image: url(https://jorubyp.github.io/dashboard-plugins/images/icon-plus-only_white.svg);
     background-size: 101%;
 }
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
 
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3 a,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 a {
-    color: inherit !important;
-}
-
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 a,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation h3,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3 {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation h3,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .nav_icon,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .nav_icon,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation .blog-search-input,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
-    color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-webkit-input-placeholder.
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
-    background-color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button {
-    background-color: var(--dashboardPlugins-branding-accent-bright) !important;
-}
-
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
     color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
-    color: var(--dashboardPlugins-branding-accent-bright) !important;
 }
 
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .indash_blog .show_more_posts {
     background-color: var(--dashboardPlugins-branding-accent) !important;
     border-color: var(--dashboardPlugins-branding-accent) !important;
-}
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .flag--accessibility-design-update .indash_blog .show_more_posts {
-    background-color: var(--dashboardPlugins-branding-accent-bright) !important;
-    border-color: var(--dashboardPlugins-branding-accent-bright) !important;
 }
