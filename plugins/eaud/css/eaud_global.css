@@ -1,12 +1,24 @@
+.flag--accessibility-design-update:root{
+    --dashboardPlugins-background: #001935;
+    --dashboardPlugins-glass: #001935f2;
+    --dashboardPlugins-green: #00cf35;
+    --dashboardPlugins-blue: #00b8ff;
+    --dashboardPlugins-blue-focus: #00b1f5;
+    --dashboardPlugins-red: #ff492f;
+    --dashboardPlugins-purple: #7c5cff;
+    --dashboardPlugins-orange: #ff8a00;
+    --dashboardPlugins-darkGrey: #000;
+    --dashboardPlugins-transparentWhite: #ffffff66;
+}
 :root{
-    --dashboardPlugins-eaud-background: #36465d;
-    --dashboardPlugins-eaud-glass: #36465df2;
-    --dashboardPlugins-eaud-green: #56bc8a;
-    --dashboardPlugins-eaud-blue: #529ecc;
-    --dashboardPlugins-eaud-blue-focus: #4a9aca;
-    --dashboardPlugins-eaud-red: #d95e40;
-    --dashboardPlugins-eaud-purple: #a77dc2;
-    --dashboardPlugins-eaud-orange: #f2992e;
-    --dashboardPlugins-eaud-darkGrey: #444;
-    --dashboardPlugins-eaud-transparentWhite: #ffffff33;
+    --dashboardPlugins-background: #36465d;
+    --dashboardPlugins-glass: #36465df2;
+    --dashboardPlugins-green: #56bc8a;
+    --dashboardPlugins-blue: #529ecc;
+    --dashboardPlugins-blue-focus: #4a9aca;
+    --dashboardPlugins-red: #d95e40;
+    --dashboardPlugins-purple: #a77dc2;
+    --dashboardPlugins-orange: #f2992e;
+    --dashboardPlugins-darkGrey: #444;
+    --dashboardPlugins-transparentWhite: #ffffff33;
 }

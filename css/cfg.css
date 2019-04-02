@@ -126,7 +126,7 @@
     flex: 1;
 }
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info {
-    color: var(--dashboardPlugins-eaud-darkGrey);
+    color: var(--dashboardPlugins-darkGrey);
     background: white;
 }
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .navigation {
