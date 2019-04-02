@@ -144,7 +144,7 @@
     border-style: solid;
     text-decoration: none;
     border-radius: 2px;
-    border-color: #9da6af;
+    border-color: var(--dashboardPlugins-darkGrey);
 }
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .navigation button.chrome:hover {
     background-color: var(--dashboardPlugins-red);

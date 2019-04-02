@@ -83,6 +83,7 @@ function loadCfg(plugins){
 
 function pluginDrawer(plugin,pluginId) {
     if (!$('body.peepr').length) {
+        $('body').removeClass('flag--always-opaque-peepr')
         let installDate = formatDate(new Date(plugin.installDate));
         $('body').append(
             $('<div>').attr({
@@ -385,7 +386,7 @@ function pluginDrawer(plugin,pluginId) {
         setTimeout(() => {
             $('body').addClass('peepr peepr--dashboardPlugins-plugincfg');
             $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
-                style: 'opacity: .95'
+                style: 'opacity: 1'
             });
             $('.drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .avatar').removeClass('invis');
             $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').addClass('open');
