@@ -38,12 +38,12 @@ body:not(.flag--accessibility-design-update) {
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input::-moz-placeholder,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-moz-placeholder,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation .blog-search-input:-ms-input-placeholder,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
-.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper .description a {
     color: var(--dashboardPlugins-branding-accent) !important;
 }
 
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_header_image .navigation button,
+.flag--dashboardPlugins.flag--dashboardPlugins-eaud .tumblelog_name_dashboard-plugins.indash_header_wrapper.no_stretch_header .navigation button,
 .flag--dashboardPlugins.flag--dashboardPlugins-eaud .indash_blog .show_more_posts {
     background-color: var(--dashboardPlugins-branding-accent) !important;
     border-color: var(--dashboardPlugins-branding-accent) !important;
