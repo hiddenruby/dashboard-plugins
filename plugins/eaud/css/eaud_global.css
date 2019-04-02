@@ -1,4 +1,4 @@
-.flag--accessibility-design-update:root{
+:root .flag--accessibility-design-update {
     --dashboardPlugins-background: #001935;
     --dashboardPlugins-glass: #001935f2;
     --dashboardPlugins-green: #00cf35;
