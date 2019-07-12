@@ -33,7 +33,7 @@
         "zh": "",
         "id": "",
         "hi": "",
-        "en": "Allows clicking the album art of audio posts on your dashboard to play and pause."
+        "en": "Allows audio posts on your dashboard to be played and paused by clicking their album art."
     },
     "content_scripts": [
         {

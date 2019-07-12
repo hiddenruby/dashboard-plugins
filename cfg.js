@@ -1,89 +1,89 @@
 function loadCfg(plugins){
-    let cfg =   setInterval(() =>{
-                let descDash = $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text'),
-                    descDashStr = chrome.i18n.getMessage("pluginsWord").toLowerCase();
-                if (descDash.length && descDash.text().indexOf(descDashStr) < 0) { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
-                    descDash.append(', ' + descDashStr)
-                }
+    let cfg = setInterval(() => {
+        let descDash = $('.controls_section.controls_section_settings .controls_item_anchor[href="/settings/dashboard"] .small_text'),
+            descDashStr = chrome.i18n.getMessage("pluginsWord").toLowerCase();
+        if (descDash.length && descDash.text().indexOf(descDashStr) < 0) { //appends ', plug-ins' text to description of settings pages sidebar entry for 'Dashboard'
+            descDash.append(', ' + descDashStr)
+        };
 
-                if ($('.settings_group.interface').length) { //create plug-ins section
-                    if (!$('.dashboardPlugins-cfg').length){
-                        $('.settings_group.interface').after(
-                            $('.settings_group.interface').clone().removeClass('interface').addClass('dashboardPlugins-cfg editor')
+        if ($('#settings_form > .settings_group.interface').length) { //create plug-ins section
+            if (!$('.dashboardPlugins-cfg').length){
+                $('.settings_group.interface').after(
+                    $('.settings_group.interface').clone().removeClass('interface').addClass('dashboardPlugins-cfg editor')
+                );
+                $('.dashboardPlugins-cfg .setting:not(:last)').remove();
+                $('.dashboardPlugins-cfg .group_label').addClass('media-holder').append(
+                    $('<span>').addClass('dashboardPlugins-tumblr-icon media-button media-killer').attr({
+                        id:'user_findPlugins'
+                    })
+                );
+                $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder' + (Object.keys(plugins).length ? ' invis' : ''));
+                $('.dashboardPlugins-cfg .setting label').text(chrome.i18n.getMessage("cfg_nothingInstalled"));
+                $('.dashboardPlugins-cfg .setting .binary_switch').remove();
+                $('.dashboardPlugins-cfg .settings_subheading').text(chrome.i18n.getMessage("pluginsWord"));
+
+                $(document).on('click', '#user_findPlugins', () => {
+                    window.location.href = '/dashboard/blog/dashboard-plugins';
+                });
+            } else {
+                clearInterval(cfg);
+                asyncForEach(Object.keys(plugins), (pluginId) => {
+                    if (!$('#user_enable_' + pluginId).length) {
+                        let plugin = plugins[pluginId];
+                        if ('msg' in plugin && 'name' in plugin.msg) {
+                            plugin.name = plugin.msg.name.message;
+                        };
+                        $('.dashboardPlugins-cfg .group_content ').append(
+                            (plugin.toggle_description != false) ?
+                            $('.interface .group_content > div p').closest('.checkbox').clone() :
+                            $('.interface .checkbox:last').clone()
                         );
-                        $('.dashboardPlugins-cfg .setting:not(:last)').remove();
-                        $('.dashboardPlugins-cfg .group_label').addClass('media-holder').append(
-                            $('<span>').addClass('dashboardPlugins-tumblr-icon media-button media-killer').attr({
-                                id:'user_findPlugins'
+                        $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder');
+                        $('.dashboardPlugins-cfg .checkbox:last label:last').attr({
+                            'for': 'user_enable_' + pluginId
+                        }).text(
+                            plugin.name[locale()]
+                        ).after(
+                            $('<span>').addClass('dashboardPlugins-tumblr-icon media-button media-killer settings-icon-hollow').attr({
+                                id: 'user_configure_' + pluginId
                             })
                         );
-                        $('.dashboardPlugins-cfg .setting').removeClass('checkbox').addClass('placeholder media-holder' + (Object.keys(plugins).length ? ' invis' : ''));
-                        $('.dashboardPlugins-cfg .setting label').text(chrome.i18n.getMessage("cfg_nothingInstalled"));
-                        $('.dashboardPlugins-cfg .setting .binary_switch').remove();
-                        $('.dashboardPlugins-cfg .settings_subheading').text(chrome.i18n.getMessage("pluginsWord"));
-
-                        $(document).on('click', '#user_findPlugins', function(){
-                            window.location.href = '/dashboard/blog/dashboard-plugins';
+                        if ($('.dashboardPlugins-cfg .checkbox:last p').length) {
+                            $('.dashboardPlugins-cfg .checkbox:last p').text(plugin.description[locale()]);
+                        };
+                        $('.dashboardPlugins-cfg .checkbox:last input').prop('checked', false /*syncData[pluginId].settings.toggle*/).attr({
+                            id: 'user_enable_' + pluginId,
+                            name: 'user[enable_' + pluginId + ']',
+                            value: ''
                         });
-                    } else {
-                        clearInterval(cfg);
-                        asyncForEach(Object.keys(plugins), function(pluginId){
-                            if (!$('#user_enable_' + pluginId).length) {
-                                let plugin = plugins[pluginId];
-                                if ('msg' in plugin && 'name' in plugin.msg) {
-                                    plugin.name = plugin.msg.name.message;
+
+                        $(document).on('click', '#user_configure_' + pluginId, () => {
+                            pluginDrawer(plugin,pluginId);
+                            /*
+                            $('#plugin_info_' + pluginId).closest('.setting').addClass('invis');
+                            setTimeout(function(){
+                                $('user_configure_' + pluginId).closest('.setting').remove();
+                                if (!$('.dashboardPlugins-cfg .checkbox').length){
+                                    $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
                                 }
-                                $('.dashboardPlugins-cfg .group_content ').append(
-                                    (plugin.toggle_description != false) ?
-                                    $('.interface .group_content > div p').closest('.checkbox').clone() :
-                                    $('.interface .checkbox:last').clone()
-                                );
-                                $('.dashboardPlugins-cfg .checkbox:last').addClass('media-holder');
-                                $('.dashboardPlugins-cfg .checkbox:last label:last').attr({
-                                    'for': 'user_enable_' + pluginId
-                                }).text(
-                                    plugin.name[locale()]
-                                ).after(
-                                    $('<span>').addClass('dashboardPlugins-tumblr-icon media-button media-killer settings-icon-hollow').attr({
-                                        id: 'user_configure_' + pluginId
-                                    })
-                                );
-                                if ($('.dashboardPlugins-cfg .checkbox:last p').length) {
-                                    $('.dashboardPlugins-cfg .checkbox:last p').text(plugin.description[locale()]);
-                                };
-                                $('.dashboardPlugins-cfg .checkbox:last input').prop('checked', false /*syncData[pluginId].settings.toggle*/).attr({
-                                    id: 'user_enable_' + pluginId,
-                                    name: 'user[enable_' + pluginId + ']',
-                                    value: ''
-                                });
+                            }, 300)
+                            */
+                        });
 
-                                $(document).on('click', '#user_configure_' + pluginId, function(){
-                                    pluginDrawer(plugin,pluginId);
-                                    /*
-                                    $('#plugin_info_' + pluginId).closest('.setting').addClass('invis');
-                                    setTimeout(function(){
-                                        $('user_configure_' + pluginId).closest('.setting').remove();
-                                        if (!$('.dashboardPlugins-cfg .checkbox').length){
-                                            $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
-                                        }
-                                    }, 300)
-                                    */
-                                });
-
-                                $(document).on('click', '#user_enable_' + pluginId, function(){
-                                    //syncData[pluginId].settings.toggle = !syncData[pluginId].settings.toggle;
-                                    //updateStorage('sync')
-                                })
-                            }
-                        })
-                    }
-                }
-            }, 1);
-}
+                        $(document).on('click', '#user_enable_' + pluginId, () => {
+                            //syncData[pluginId].settings.toggle = !syncData[pluginId].settings.toggle;
+                            //updateStorage('sync')
+                        });
+                    };
+                });
+            };
+        };
+    }, 1);
+};
 
 function pluginDrawer(plugin,pluginId) {
     if (!$('body.peepr').length) {
-        $('body').removeClass('flag--always-opaque-peepr')
+        $('body').removeClass('flag--always-opaque-peepr');
         let installDate = formatDate(new Date(plugin.installDate));
         $('body').append(
             $('<div>').attr({
@@ -264,25 +264,59 @@ function pluginDrawer(plugin,pluginId) {
                                                 installDate
                                             )
                                         )
-                                    ),/*
+                                    ),
                                     $('<li>').attr({
                                         class:'keycommand-guide-section-item'
                                     }).append(
                                         $('<div>').attr({
-                                            class:'controls-item'
+                                            class:'controls-item switch'
                                         }).text(
-                                            'Locales'
-                                        ),                         
-                                        $('<span>').attr({
-                                            class:'shortcut'
-                                        }).append(
-                                            $('<b>').attr({
-                                                class:'key'
-                                            }).text(
-                                                Object.keys(plugin.name).toString().toLocaleUpperCase().replace(/,/g,", ")
+                                            'Keep up to date'
+                                        ).append(          
+                                            $('<label>').attr({
+                                                class:'binary_switch'
+                                            }).append(
+                                                $('<input>').attr({
+                                                    type:'checkbox',
+                                                    name: 'user[sync_' + pluginId + ']',
+                                                    id: 'user_sync_' + pluginId,
+                                                    checked: ''
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_track'
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_button'
+                                                })
                                             )
                                         )
-                                    ),*/
+                                    ),
+                                    $('<li>').attr({
+                                        class:'keycommand-guide-section-item'
+                                    }).append(
+                                        $('<div>').attr({
+                                            class:'controls-item switch'
+                                        }).text(
+                                            'Save to Chrome Sync'
+                                        ).append(          
+                                            $('<label>').attr({
+                                                class:'binary_switch'
+                                            }).append(
+                                                $('<input>').attr({
+                                                    type:'checkbox',
+                                                    name: 'user[sync_' + pluginId + ']',
+                                                    id: 'user_sync_' + pluginId,
+                                                    checked: ''
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_track'
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_button'
+                                                })
+                                            ),
+                                        )
+                                    ),
                                 ),
                                 $('<ul>').attr({
                                     class:'keycommand-guide-section'
@@ -291,92 +325,78 @@ function pluginDrawer(plugin,pluginId) {
                                         class:'section_header'
                                     }).text(
                                         'preferences'
-                                    ),/*
-                                    $('<li>').attr({
-                                        class:'keycommand-guide-section-item'
-                                    }).append(
-                                        $('<div>').attr({
-                                            class:'controls-item'
-                                        }).text(
-                                            'Enabled'
-                                        ),                         
-                                        $('<label>').attr({
-                                            class:'binary_switch'
-                                        }).append(
-                                            $('<input>').attr({
-                                                type:'checkbox',
-                                                name: 'user[enable_' + pluginId + ']',
-                                                id: 'user_enable_' + pluginId,
-                                                checked: ''
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_track'
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_button'
-                                            })
-                                        )
-                                    ),*/
-                                    $('<li>').attr({
-                                        class:'keycommand-guide-section-item'
-                                    }).append(
-                                        $('<div>').attr({
-                                            class:'controls-item'
-                                        }).text(
-                                            'Keep up to date'
-                                        ),                         
-                                        $('<label>').attr({
-                                            class:'binary_switch'
-                                        }).append(
-                                            $('<input>').attr({
-                                                type:'checkbox',
-                                                name: 'user[update_' + pluginId + ']',
-                                                id: 'user_update_' + pluginId,
-                                                checked: ''
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_track'
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_button'
-                                            })
-                                        )
                                     ),
                                     $('<li>').attr({
                                         class:'keycommand-guide-section-item'
                                     }).append(
                                         $('<div>').attr({
-                                            class:'controls-item'
+                                            class:'controls-item switch'
                                         }).text(
-                                            'Save to Chrome Sync'
-                                        ),                         
-                                        $('<label>').attr({
-                                            class:'binary_switch'
-                                        }).append(
-                                            $('<input>').attr({
-                                                type:'checkbox',
-                                                name: 'user[sync_' + pluginId + ']',
-                                                id: 'user_sync_' + pluginId,
-                                                checked: ''
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_track'
-                                            }),
-                                            $('<span>').attr({
-                                                class:'binary_switch_button'
-                                            })
-                                        )
+                                            'Test item'
+                                        ).append(
+                                            $('<label>').attr({
+                                                class:'binary_switch'
+                                            }).append(
+                                                $('<input>').attr({
+                                                    type:'checkbox',
+                                                    name: 'user[sync_' + pluginId + ']',
+                                                    id: 'user_sync_' + pluginId,
+                                                    checked: ''
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_track'
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_button'
+                                                })
+                                            ),
+                                            $('<p>').attr({
+                                                class:'help_text'
+                                            }).text(
+                                                'test description'
+                                            ),
+                                        ),
+                                        $('<img>').attr({
+                                            class: 'module-description-image',
+                                            src: 'https://assets.tumblr.com/images/labs/members-only.png'
+                                        })
                                     ),
+                                    $('<li>').attr({
+                                        class:'keycommand-guide-section-item'
+                                    }).append(
+                                        $('<div>').attr({
+                                            class:'controls-item switch'
+                                        }).text(
+                                            'Test item'
+                                        ).append(
+                                            $('<label>').attr({
+                                                class:'binary_switch'
+                                            }).append(
+                                                $('<input>').attr({
+                                                    type:'checkbox',
+                                                    name: 'user[sync_' + pluginId + ']',
+                                                    id: 'user_sync_' + pluginId,
+                                                    checked: ''
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_track'
+                                                }),
+                                                $('<span>').attr({
+                                                    class:'binary_switch_button'
+                                                })
+                                            ),                                     
+                                            $('<p>').attr({
+                                                class:'help_text'
+                                            }).text(
+                                                'test description'
+                                            ),
+                                        ),
+                                        $('<img>').attr({
+                                            class: 'module-description-image',
+                                            src: 'https://assets.tumblr.com/images/labs/members-only.png'
+                                        })
+                                    )
                                 ),
-                                $('<ul>').attr({
-                                    class:'keycommand-guide-section'
-                                }).append(
-                                    $('<li>').attr({
-                                        class:'section_header'
-                                    }).text(
-                                        'configuration'
-                                    ),
-                                )
                             )
                         )
                     )
@@ -384,6 +404,11 @@ function pluginDrawer(plugin,pluginId) {
             )
         )
         setTimeout(() => {
+            if ($('.peepr-body').get(0).scrollHeight > $(window).height()) {
+                $('.indash_header_wrapper.has_info .navigation').attr({
+                    style: 'width: 476px'
+                });
+            };
             $('body').addClass('peepr peepr--dashboardPlugins-plugincfg');
             $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
                 style: 'opacity: 1'
@@ -391,36 +416,34 @@ function pluginDrawer(plugin,pluginId) {
             $('.drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .avatar').removeClass('invis');
             $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').addClass('open');
         },100);
-        $(document).on('click', '.ui_peepr_glass[data-dashboardplugins-owner="main"]', function(){
+        $(document).on('click', '.ui_peepr_glass[data-dashboardplugins-owner="main"]', () => {
+            $('body').addClass('flag--always-opaque-peepr')
             $('body').removeClass('peepr');
-            $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
-                style: 'opacity: 0'
-            })
+            $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').addClass('invis')
             $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').removeClass('open');
             setTimeout(() => {
                 $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').remove();
                 $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').remove();
-            },500)
+            },500);
         });
-        $(document).on('click', '.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"] .delete', function(){
+        $(document).on('click', '.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"] .delete', () => {
+            $('body').addClass('flag--always-opaque-peepr')
             $('body').removeClass('peepr peepr--dashboardPlugins-plugincfg');
-            $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').attr({
-                style: 'opacity: 0'
-            })
+            $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').addClass('invis')
             $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').removeClass('open');
             setTimeout(() => {
                 $('.drawer.peepr-drawer-container[data-dashboardplugins-owner="main"]').remove();
                 $('.ui_peepr_glass[data-dashboardplugins-owner="main"]').remove();
-            },500)
+            },500);
             setTimeout(() => {
                 $('#user_configure_' + pluginId).closest('.setting').addClass('invis');
-                setTimeout(function(){
+                setTimeout(() => {
                     $('#user_configure_' + pluginId).closest('.setting').remove();
-                    if (!$('.dashboardPlugins-cfg .checkbox').length){
+                    if (!$('.dashboardPlugins-cfg .checkbox').length) {
                         $('.dashboardPlugins-cfg .setting.placeholder').removeClass('invis');
-                    }
+                    };
                 }, 300);
             },300);
         });
-    }
-}
+    };
+};

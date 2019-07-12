@@ -1,8 +1,8 @@
-chrome.browserAction.onClicked.addListener(function(tab) {
+chrome.browserAction.onClicked.addListener((tab) => {
     optionsPage();
 });
 
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(() => {
 });
 
 function optionsPage() {
@@ -12,6 +12,6 @@ function optionsPage() {
                 chrome.tabs.update(window.optionsTab.id, {"selected": true});
             } else {
                 chrome.tabs.create({url: optionsUrl});
-        }
+        };
     });
-}
+};

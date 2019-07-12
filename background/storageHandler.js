@@ -7,8 +7,8 @@ async function queryStorage(namespace) {
         if (window[namespace + 'Data']) {
             console.log('installed plugins:',syncData.plugins);
             resolve(window[namespace + 'Data']);
-        }
-        switch(namespace){
+        };
+        switch(namespace) {
             case 'remote':
             $.getJSON(git_apiURL + 'plugins', (directories) => {
                 let data = {
@@ -32,7 +32,7 @@ async function queryStorage(namespace) {
                 };
                 resolve(data);
             });
-        }
+        };
     });
 };
 
@@ -54,17 +54,17 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 });
 
 function localDataHandler(namespace,changes) {
-    switch(namespace){
+    switch(namespace) {
         case 'plugins':
         queryPlugins();
         break;
         case 'toast':
         //callContentFunction({observeToast: localData.toast});
-    }
-}
+    };
+};
 
 function syncDataHandler(namespace,changes) {
-    switch(namespace){
+    switch(namespace) {
         case 'plugins':
         asyncForEach(Object.keys(changes.newValue), (pluginId) => {
             if (!localData.plugins[pluginId]) {
@@ -72,5 +72,5 @@ function syncDataHandler(namespace,changes) {
             };
         });
         break;
-    }
-}
+    };
+};

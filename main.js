@@ -67,7 +67,7 @@ function pushToast(toastQueue) {
         $('.toast-kit').css({bottom: '10px'})
     }
     setTimeout(() => {
-        $.each(Object.keys(toastQueue), (i,toastId)=>{
+        $.each(Object.keys(toastQueue), (i,toastId => {
         let bread = toastQueue[toastId];
         i += $('ul.multi-toasts li').length + ($('ul.multi-toasts li').length ? 1 : 0); //gotta get this right
         console.log(i)

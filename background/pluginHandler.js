@@ -1,9 +1,9 @@
-async function queryPlugins(){
+async function queryPlugins() {
     asyncForEach(Object.keys(syncData.plugins), async(pluginId) => {
         if (!localData.plugins[pluginId]) {
             syncPlugin(pluginId);
             return
-        }
+        };
         let pendingBuild = !localData.plugins[pluginId].state && !localData.plugins[pluginId].context_scripts,
             pendingUpdate = parseFloat(remoteData.plugins[pluginId].version) > parseFloat(localData.plugins[pluginId].version),
             ready = Object.keys(localData.plugins[pluginId]).length > 2;
@@ -24,27 +24,29 @@ async function queryPlugins(){
             break;
             case 'ready':
             console.log('loading',pluginId)
-            callContentFunction({loadPlugin: {[pluginId]: localData.plugins[pluginId]}});
+            callContentFunction({loadPlugin: {[pluginId]: localData.plugins[pluginId]}}, (response) => {
+                console.log(response.sender, response.data);
+            });
             callContentFunction({loadCfg: localData.plugins});
-        }
+        };
     });
-}
+};
 
-function installPlugin(pluginId){
+function installPlugin(pluginId) {
     let attributes = {
         installDate: timeStamp(),
         version: remoteData.plugins[pluginId].version
-    }
+    };
     Object.assign(syncData.plugins,{[pluginId]:attributes});
     updateStorage('sync');
-}
+};
 
 function syncPlugin(pluginId) {
     localData.plugins[pluginId] = syncData.plugins[pluginId];
     updateStorage('local');
-}
+};
 
-async function buildPlugin(pluginId){
+async function buildPlugin(pluginId) {
     let action = localData.plugins[pluginId].state.split(' ')[1];
     localData.plugins[pluginId].state = 'processing ' + action;
     let pluginPath = 'plugins/' + pluginId + '/',
@@ -67,16 +69,16 @@ async function buildPlugin(pluginId){
                                         console.log(pluginId,'building: expanding',contentType,'content script',path)
                                         content[contentType][i] = data;
                                         break;
-                                    }
-                                    if (!itemsLoaded) { console.log(pluginId,'building:',Math.floor((itemsLoaded / totalItems) * 100) + '%'); }
+                                    };
+                                    if (!itemsLoaded) { console.log(pluginId,'building:',Math.floor((itemsLoaded / totalItems) * 100) + '%'); };
                                     itemsLoaded++;
                                     console.log(pluginId,'building:',Math.floor((itemsLoaded / totalItems) * 100) + '%');
                                     if (itemsLoaded == totalItems) {
                                         resolve(plugin)
-                                    }
+                                    };
                                 });
                             });
-                        }
+                        };
                     });
                 });
             });

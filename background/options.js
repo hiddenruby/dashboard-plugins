@@ -4,6 +4,6 @@ chrome.tabs.query({}, function(extensionTabs) {
             chrome.tabs.update(window.optionsTab.id, {"selected": true});
             window.close();
         } else {
-            window.location.href=optionsUrl
-    }
+            window.location.href=optionsUrl;
+    };
 });

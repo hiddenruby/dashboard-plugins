@@ -131,6 +131,7 @@
 }
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .navigation {
     width: 488px;
+    background: linear-gradient(to bottom, #fff 90%, transparent 100%);content: "";
 }
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .header .indash_header_wrapper.has_info .navigation a .full_url{
     max-width: 270px;
@@ -183,9 +184,27 @@
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section {
     margin: 10px 0 0;
 }
-.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section  .keycommand-guide-section-item .binary_switch {
-    margin: 11px auto;
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .keycommand-guide-section-item .shortcut .key {
+    max-width: 325px;
+    text-overflow: ellipsis;
+    white-space: pre;
+    overflow: hidden;
+}
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .controls-item.switch {
+    width: 100%;
+}
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .binary_switch {
+    margin: 2px auto;
+}
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .keycommand-guide-section-item .binary_switch {
     float: right;
+}
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .keycommand-guide-section-item .help_text {
+    margin-top: 4px;
+}
+.flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-body .indash_blog .keycommand-guide .keycommand-guide-section .keycommand-guide-section-item img {
+    margin-bottom: 9px;
+    border-radius: 3px;
 }
 
 .flag--dashboardPlugins .drawer.peepr-drawer-container.plugin-cfg-drawer .peepr-plugin-actions {

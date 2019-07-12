@@ -19,14 +19,23 @@ function callContentFunction(message, callback) {
         match = '*://*.tumblr.com/*',
         currentTab;
     chrome.tabs.query({url: match, currentWindow: true, active: true}, function (tabs) {
-        currentTab = tabs[0].id;
-        let port = chrome.tabs.connect(currentTab, {name: uniqueName()});
-        postMessage(port, message, async(response) => {
-            try {
-                callback(response);
-            } catch(error) {
-                console.log(error)
-            }
+        if (tabs.length) {
+            currentTab = tabs[0].id;
+            let port = chrome.tabs.connect(currentTab, {name: uniqueName()});
+            postMessage(port, message, async(response) => {
+                if (typeof callback == 'function') {
+                    callback(response);
+                }
+                chrome.tabs.query({url: match}, (queryTabs) => {
+                    asyncForEach(queryTabs, async(tab) => {
+                        if (tab.id !== currentTab) {
+                            let port = chrome.tabs.connect(tab.id, {name: uniqueName()});
+                            postMessage(port, message, callback);
+                        };
+                    });
+                });
+            });
+        } else {
             chrome.tabs.query({url: match}, (queryTabs) => {
                 asyncForEach(queryTabs, async(tab) => {
                     if (tab.id !== currentTab) {
@@ -35,7 +44,7 @@ function callContentFunction(message, callback) {
                     };
                 });
             });
-        });
+        };
     });
 };
 
@@ -46,7 +55,7 @@ async function postMessage(port, message, callback) {
         port.onMessage.addListener( async(response) => {
             await callback(response)
         });
-    }
+    };
 };
 
 chrome.runtime.onConnect.addListener(function(port) {
@@ -60,8 +69,8 @@ chrome.runtime.onConnect.addListener(function(port) {
                     });
                 } catch(error) {
                     console.error(error);
-                }
-            }
+                };
+            };
         });
     });
 });
@@ -81,4 +90,4 @@ function formatDate(date) {
     minutes = minutes < 10 ? '0'+minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
-  }
+};
